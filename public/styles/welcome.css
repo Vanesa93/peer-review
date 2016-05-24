@@ -40,3 +40,9 @@ body {
     border-radius: 4px;
     box-shadow: none;
 }
+
+.wrapper{
+    height: 200px;
+    overflow: hidden;
+    margin-top: -4px;
+}

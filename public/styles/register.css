@@ -1,0 +1,13 @@
+.panel{
+    border-radius: 0;
+}
+.panel-heading {
+    color: #333333;
+    background-color: white!important;
+    border-color: white!important;
+    text-align: center;
+    font-size:26px;
+    font-weight: 500;
+    
+    
+}
