@@ -29,7 +29,7 @@ class Registrar implements RegistrarContract {
      * @return User
      */
     public function create(array $data) {
-        return User::create([
+        $user = User::create([
                     'forename' => $data['forename'],
                     'email' => $data['email'],
                     'password' => bcrypt($data['password']),
@@ -39,10 +39,13 @@ class Registrar implements RegistrarContract {
                     'group' => $data['group'],
                     'department' => $data['department'],
                     'degree' => $data['degree'],
-                    'profilePhoto' => $data['profilePhoto'],
                     'mobile' => $data['mobile'],
                     'position' => $data['position'],
         ]);
+
+        
+        
+        return $user;
     }
 
 }

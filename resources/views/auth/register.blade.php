@@ -6,7 +6,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-8 col-md-offset-2" >
-            <div class="panel panel-default" style="height:470px">
+            <div class="panel panel-default" style="height:500px;padding-top: 2%;">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
                     @if (count($errors) > 0)
@@ -20,7 +20,7 @@
                     </div>
                     @endif
 
-                    <form class="form-horizontal" role="form" method="POST" action="/auth/register">
+                    <form class="form-horizontal" files="true" role="form" method="POST" action="/auth/register" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div id='firstForm'>  
                             <div class="form-group">
@@ -122,30 +122,13 @@
                                     <button type="button" class="btn btn-primary" id='backToFirstForm' style="float:left;">
                                         Back
                                     </button>
-                                    <button type="button" id='nextToThirdForm' class="btn btn-primary" style="float:right;">
-                                        Next
-                                    </button>                                   
-                                </div>
-                            </div>
-                        </div>
-                        <div id='thirdForm'> 
-                            <div class="form-group">  
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Profile picture</label>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="profilePhoto" value="{{ old('profilePhoto') }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="button" class="btn btn-primary" id='backToSecondForm' style="float:left;">
-                                        Back
-                                    </button>
-                                    <button type="submit" id='submit' class="btn btn-primary" style="float:right;">
+                                     <button type="submit" id='submit' class="btn btn-primary" style="float:right;">
                                         Register
-                                    </button>                                 
+                                    </button>                                    
                                 </div>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -174,16 +157,13 @@
             $('#firstForm').show();
             $('#thirdForm').hide();
         });
-        $('#nextToThirdForm').click(function () {
-            $('#secondForm').hide();
-            $('#firstForm').hide();
-            $('#thirdForm').show();
+    
+        $(' input:file').change(function (e) {
+            var img = URL.createObjectURL(e.target.files[0]);
+            $('#show_Image').attr('src', img);
+
         });
-        $('#backToSecondForm').click(function () {
-            $('#secondForm').show();
-            $('#firstForm').hide();
-            $('#thirdForm').hide();
-        });
+
     });
 
 </script>
