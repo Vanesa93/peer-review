@@ -19,8 +19,7 @@ class FileEntryController extends Controller {
      * @return Response
      */
     public function index() {
-        $entries= DB::table('fileentries')->get();
-       
+        $entries= DB::table('fileentries')->get();       
         return view('fileentries.index',  compact('entries'));
     }
 

@@ -2,11 +2,16 @@
 
 @section('content')
 <link href='{{ URL::asset('styles/register.css')}}' rel='stylesheet' type='text/css'>
-
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-8 col-md-offset-2" >
-            <div class="panel panel-default" style="height:500px;padding-top: 2%;">
+            <div class="panel panel-default" style="padding-top: 2%;">
+                <ul id="progressbar">
+                    <li class="active" id='firstActive'></li>
+                    <li id='secondActive'></li>                
+                </ul>
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
                     @if (count($errors) > 0)
@@ -20,114 +25,11 @@
                     </div>
                     @endif
 
-                    <form class="form-horizontal" files="true" role="form" method="POST" action="/auth/register" enctype="multipart/form-data">
+                    <form class="form-horizontal" id="registerForm"  method="POST" action="/auth/register" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <div id='firstForm'>  
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Forename</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="forename" value="{{ old('forename') }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Family Name</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="familyName" value="{{ old('familyName') }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">E-Mail Address</label>
-                                <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-                                </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Password</label>
-                                <div class="col-md-6">
-                                    <input type="password" class="form-control" name="password">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Confirm Password</label>
-                                <div class="col-md-6">
-                                    <input type="password" class="form-control" name="password_confirmation">
-                                </div>
-                            </div>                           
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Rank</label>
-                                <div class="col-md-6">
-                                    <input type="radio" id='tutor' name="position" value="1"> Tutor<br>
-                                    <input type="radio" id='student' name="position" value="2"> Student<br>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="button" class="btn btn-primary" id='nextToSecondForm' style="float:right;">
-                                        Next
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div id='secondForm'> 
-                            <div id='studentInfo'>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Faculty number</label>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="facNumber" value="{{ old('facNumber') }}">
-                                    </div>
-                                </div>                                
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Semester</label>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="semester" value="{{ old('semester') }}">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Group</label>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="group" value="{{ old('group') }}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Major</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="department" value="{{ old('department') }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Degree</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="degree" value="{{ old('degree') }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Mobile</label>
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="mobile" value="{{ old('mobile') }}">
-                                </div>
-                            </div>                           
-                            <div id='teacherInfo'>                             
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Cabinet Number</label>
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="cabinet" value="{{ old('cabinet') }}">
-                                    </div>
-                                </div>                               
-                            </div>
-                            <div class="form-group">  
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="button" class="btn btn-primary" id='backToFirstForm' style="float:left;">
-                                        Back
-                                    </button>
-                                     <button type="submit" id='submit' class="btn btn-primary" style="float:right;">
-                                        Register
-                                    </button>                                    
-                                </div>
-                            </div>
-                        </div>
+                        @include('partials.firstRegistrationForm')
+                        @include('partials.secondRegistrationForm')
 
                     </form>
                 </div>
@@ -137,13 +39,22 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        $('#secondForm').hide();
-        $('#thirdForm').hide();
-        $('#nextToSecondForm').click(function () {
-            $('#firstForm').hide();
-            $('#thirdForm').hide();
-            $('#secondForm').show();
+$(document).ready(function () {
+    $('#secondForm').hide();
+    var current_fs, next_fs, previous_fs; //fieldsets
+    var left, opacity, scale; //fieldset properties which we will animate
+    var animating; //flag to prevent quick multi-click glitches
+
+    $('#nextToSecondForm').click(function () {
+
+        $('#username').valid();
+        $('#forename').valid();
+        $('#familyName').valid();
+        $('#email').valid();
+        $('#password').valid();
+        $('input[name=position]').valid();
+        if ($('#username').valid() && $('#forename').valid() && $('#familyName').valid()
+                && $('#email').valid() && $('#password').valid() && $('input[name=position]').valid()) {
             if ($('input[name=position]:checked').val() == 2) {
                 $('#studentInfo').show();
                 $('#teacherInfo').hide();
@@ -151,20 +62,111 @@
                 $('#teacherInfo').show();
                 $('#studentInfo').hide();
             }
-        });
-        $('#backToFirstForm').click(function () {
-            $('#secondForm').hide();
-            $('#firstForm').show();
-            $('#thirdForm').hide();
-        });
-    
-        $(' input:file').change(function (e) {
-            var img = URL.createObjectURL(e.target.files[0]);
-            $('#show_Image').attr('src', img);
-
-        });
-
+            $('#firstForm').hide();
+            $('#secondForm').show();
+            $("#secondActive").addClass("active");
+         $("#firstActive").removeClass("active");
+     }
     });
+
+
+    $("#backToFirstForm").click(function () {       
+        $('#secondForm').hide();
+        $('#firstForm').show();
+        $("#secondActive").removeClass("active");
+         $("#firstActive").addClass("active");
+    });
+
+//TO DO show image - later to implement
+//        $(' input:file').change(function (e) {
+//            var img = URL.createObjectURL(e.target.files[0]);
+//            $('#show_Image').attr('src', img);
+//
+//        });
+    var form = $('#registerForm');
+    form.validate({
+// Specify the validation rules
+        rules: {
+            username: {
+                required: true
+            },
+            forename: {
+                required: true
+            },
+            familyName: {
+                required: true
+            },
+            position: {
+                required: true
+            },
+            group: {
+                required: true
+            },
+            degree: {
+                required: true
+            },
+            semester: {
+                required: true
+            },
+            email: {
+                required: true
+            },
+            password: {
+                required: true
+            },
+            facNumber: {
+                required: true
+            },
+            department: {
+                required: true
+            },
+            mobile: {
+                required: true
+            },
+        },
+        // Specify the validation error messages
+        messages: {
+            username: {
+                required: "Please enter your username"
+            },
+            forename: {
+                required: "Please enter your first name"
+            },
+            email: {
+                required: "Please enter your email"
+            },
+            password: {
+                required: "Please enter your password"
+            },
+            position: {
+                required: "Please enter your position"
+            },
+            facNumber: {
+                required: "Please enter your faculty number"
+            },
+            familyName: {
+                required: "Please enter your family name"
+            },
+            group: {
+                required: "Please enter your group"
+            },
+            degree: {
+                required: "Please enter your degree"
+            },
+            semester: {
+                required: "Please enter your semester"
+            },
+            department: {
+                required: "Please enter your department name"
+            },
+            mobile: {
+                required: "Please enter your mobile number"
+            },
+        }
+    });
+});
+
+
 
 </script>
 @endsection
