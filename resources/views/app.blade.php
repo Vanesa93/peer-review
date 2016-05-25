@@ -16,6 +16,8 @@
         <div  style=" position: relative;padding-top: 55px;">
             @yield('content')
             @yield('welcome')
+            @yield('upload')
+            @yield('files')
         </div>
     </body>
 </html>

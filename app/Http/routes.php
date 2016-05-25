@@ -19,3 +19,9 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+//files
+Route::get('fileentry', 'FileEntryController@index');
+Route::get('fileentry/get/{filename}', [
+	'as' => 'getentry', 'uses' => 'FileEntryController@get']);
+Route::post('/add',[ 
+        'as' => 'addentry', 'uses' => 'FileEntryController@add']);
