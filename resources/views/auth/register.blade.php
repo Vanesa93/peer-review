@@ -12,7 +12,7 @@
                     <li class="active" id='firstActive'></li>
                     <li id='secondActive'></li>                
                 </ul>
-                <div class="panel-heading">Register</div>
+                <div class="panel-heading">{{trans('messages.register')}}</div>
                 <div class="panel-body">
                     @if (count($errors) > 0)
                     <div class="alert alert-danger">

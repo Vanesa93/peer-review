@@ -12,7 +12,7 @@
         <div class="col-md-offset-1 col-md-10 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
-                    <div class="title">Welcome</div>
+                    <div class="title">{{trans('messages.welcome')}}</div>
                 </div>
             </div>
         </div>

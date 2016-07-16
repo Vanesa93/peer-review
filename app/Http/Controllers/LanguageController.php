@@ -4,15 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Session;
 use Illuminate\Http\Request;
 use Input;
-class UserController extends Controller {
+use App;
 
-    public function __construct()
-	{
-		$this->middleware('auth');
-                $this->middleware('language');
-	}
+class LanguageController extends Controller {
+
+    public function chooser($locale) {
+        if (!empty($locale)) {
+            Session::set('locale', $locale);
+            App::setLocale($locale);
+            
+        } else {
+            App::setLocale('en');
+            Session::set('locale', 'en');
+        }
+     
+       return redirect()->back();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -79,7 +90,5 @@ class UserController extends Controller {
     public function destroy($id) {
         //
     }
-
-
 
 }
