@@ -2,7 +2,7 @@
 
 return [
     'welcome' => 'Welcome!',
-    'register'=>'Registration',
+    'register'=>'Sign up',
     'username'=>'Username',
     'forename'=>'Forename',
     'familyName'=>'Family name',
@@ -14,17 +14,20 @@ return [
     'student'=>'Student',
     'next'=>'Next',
     'back'=>'Back',
-    'majorTeacher'=>'Major',
-    'degreeTeacher'=>'Degree',
+    'major'=>'Major',
+    'degree'=>'Degree',
     'mobile'=>'Mobile',
     'cabinetNumber'=>'Cabinet Number',
     'facultyNumber'=>'Faculty number',
     'semester'=>'Semester',
     'group'=>'Group',
     'mobile'=>'Mobile',
-    'majorStudent'=>'Major',
-    'degreeStudent'=>'Degree',
-    'finishReg'=>'Finish registration'
+    'finishReg'=>'Finish registration',
+    'home'=>'Home',
+    'login'=>'Login',
+    'logout'=>'Logout',
+    'rememberMe'=>'Remember me',
+    'forgotPassword'=>'Forgot your password?'
     
 ];
 

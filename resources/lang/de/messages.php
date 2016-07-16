@@ -2,9 +2,7 @@
 
 return [
     'welcome' => 'Willkommen!',
-    'register'=>'Anmeldung',
-    'username'=>'Benutzername',
-    'forename'=>'Vorname',
+    'register'=>'Registrierung',
     'familyName'=>'Familienname',
     'email'=>'Email',
     'password'=>'Kennwort',
@@ -14,16 +12,19 @@ return [
     'student'=>'Student',
     'next'=>'Vorwärts',
     'back'=>'Zurück',
-    'majorTeacher'=>'Major',
-    'degreeTeacher'=>'Akademischer Grad',
+    'major'=>'Major',
+    'degree'=>'Akademischer Grad',
     'mobile'=>'Mobile',
     'cabinetNumber'=>'Cabinet Number',
     'facultyNumber'=>'Fakultät Nummer',
     'semester'=>'Semester',
     'group'=>'Gruppe',
-    'majorStudent'=>'Major',
-    'degreeStudent'=>'Akademischer Grad',
-    'finishReg'=>'Anmeldung '
+    'finishReg'=>'Registrierung',
+    'home'=>'Home',
+    'login'=>'Anmelden',
+    'logout'=>'Abmelden',
+    'rememberMe'=>'Eingelogt bleiben',
+    'forgotPassword'=>'Passwort vergessen?'
 ];
 
 ?>

@@ -14,13 +14,13 @@
 
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="/">Home</a></li>
+                    <li><a href="/">{{trans('messages.home')}}</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
-                    <li><a href="/auth/login">Login</a></li>
-                    <li><a href="/auth/register">Register</a></li>
+                    <li><a href="/auth/login">{{trans('messages.login')}}</a></li>
+                    <li><a href="/auth/register">{{trans('messages.register')}}</a></li>
                     <li class="dropdown" style="float:right">                        
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="float:right">
                             <span class="glyphicons glyphicons-globe"></span>
@@ -39,7 +39,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="/auth/logout">Logout</a></li>
+                            <li><a href="/auth/logout">{{trans('messages.logout')}}</a></li>
                         </ul>
                     </li>
                     @endif
