@@ -65,16 +65,16 @@ $(document).ready(function () {
             $('#firstForm').hide();
             $('#secondForm').show();
             $("#secondActive").addClass("active");
-         $("#firstActive").removeClass("active");
-     }
+            $("#firstActive").removeClass("active");
+        }
     });
 
 
-    $("#backToFirstForm").click(function () {       
+    $("#backToFirstForm").click(function () {
         $('#secondForm').hide();
         $('#firstForm').show();
         $("#secondActive").removeClass("active");
-         $("#firstActive").addClass("active");
+        $("#firstActive").addClass("active");
     });
 
 //TO DO show image - later to implement
@@ -83,15 +83,49 @@ $(document).ready(function () {
 //            $('#show_Image').attr('src', img);
 //
 //        });
-    var form = $('#registerForm');
-    form.validate({
-// Specify the validation rules
+
+    ;
+
+
+    $.validator.addMethod("checkExistingUsername", function (value, element)
+    {
+        var inputElem = $('#registerForm :input[name="username"]'),
+                data = {"username": inputElem.val(), "_token": "{{ csrf_token() }}"};
+        var isSuccess;
+        $.ajax(
+                {
+                    method: "POST",
+                    url: '/checkUsername/' + data,
+                    dataType: "json",
+                    data: data,
+                    success: function (returnData)
+                    {
+                        console.log('return data:'+' '+returnData);
+                        if (returnData == false)
+                        {
+                            isSuccess = true;
+                            console.log('rezultat true:' + ' ' + isSuccess);
+                            return true
+                        } else {
+                            isSuccess = false;
+                            console.log('rezultat false:' + ' ' + isSuccess);
+                            return false;
+                        }
+                    }
+
+                });
+
+    }, 'Message');
+
+
+    $('#registerForm').validate({
         rules: {
             username: {
-                required: true
+                required: true,
+                checkExistingUsername: true
             },
             forename: {
-                required: true
+                required: true,
             },
             familyName: {
                 required: true
@@ -127,7 +161,8 @@ $(document).ready(function () {
         // Specify the validation error messages
         messages: {
             username: {
-                required: "Please enter your username"
+                required: "Please enter your username",
+                checkExistingUsername: "Not unique",
             },
             forename: {
                 required: "Please enter your first name"

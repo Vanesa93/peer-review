@@ -37,7 +37,7 @@
             <input type="password" class="form-control" name="password_confirmation">
         </div>
     </div>  
-  
+
     <div class="form-group">
         <label class="col-md-4 control-label"> {{trans('messages.rank')}}</label>
         <div class="col-md-6">
@@ -47,11 +47,12 @@
         </div>
 
     </div>
-<div class="form-group">  
-    <div class="col-md-6 col-md-offset-4">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+    <div class="form-group">  
+        <div class="col-md-6 col-md-offset-4">
 
-        <input type="button" id="nextToSecondForm"  class="btn btn-primary" style="float:right;" value=" {{trans('messages.next')}}">
-                 
+            <input type="button" id="nextToSecondForm"  class="btn btn-primary" style="float:right;" value=" {{trans('messages.next')}}">
+
+        </div>
     </div>
-</div>
 </div>

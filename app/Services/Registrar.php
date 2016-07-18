@@ -30,6 +30,7 @@ class Registrar implements RegistrarContract {
      */
     public function create(array $data) {
         $user = User::create([
+                    'username' => $data['username'],
                     'forename' => $data['forename'],
                     'email' => $data['email'],
                     'password' => bcrypt($data['password']),
@@ -43,8 +44,8 @@ class Registrar implements RegistrarContract {
                     'position' => $data['position'],
         ]);
 
-        
-        
+
+
         return $user;
     }
 
