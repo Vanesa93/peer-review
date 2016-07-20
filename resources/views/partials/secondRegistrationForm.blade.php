@@ -3,7 +3,7 @@
         <div class="form-group">
             <label class="col-md-4 control-label"> {{trans('messages.facultyNumber')}}</label>
             <div class="col-md-6">
-                <input type="text" class="form-control" name="facNumber" value="{{ old('facNumber') }}">
+                <input type="text" class="form-control" id='facNumber' name="facNumber" value="{{ old('facNumber') }}">
             </div>
         </div>                                
         <div class="form-group">

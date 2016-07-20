@@ -57,5 +57,14 @@ use AuthenticatesAndRegistersUsers;
         }
         return \Response::json(array('msg' => 'false'));
     }
+      public function checkExistingFacNumber() {
+        $facNumber = Request::input('facNumber');
+
+        $facNumbers = DB::table('users')->where('facNumber', $facNumber)->first();
+        if (empty($facNumbers)) {   // <-- if no database match
+            return \Response::json(array('msg' => 'true'));
+        }
+        return \Response::json(array('msg' => 'false'));
+    }
 
 }

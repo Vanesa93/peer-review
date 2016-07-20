@@ -34,4 +34,6 @@ Route::post('/add', [
 
 Route::get('/checkUsername','Auth\AuthController@checkExistingUseraname');
 Route::get('/checkEmail','Auth\AuthController@checkExistingEmail');
+Route::get('/checkFacNumbers','Auth\AuthController@checkExistingFacNumber');
+
 

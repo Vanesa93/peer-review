@@ -150,6 +150,23 @@ $(document).ready(function () {
                 required: true
             },
             facNumber: {
+                remote: {
+                    url: "{{ url('/checkFacNumbers')}}",
+                    type: "get",
+                    data: {
+                        facNumber: function () {
+                            return $("#facNumber").val();
+                        }
+                    },
+                    dataFilter: function (data) {
+                        var json = JSON.parse(data);
+                        if (json.msg === "false") {
+                            return 'false';
+                        } else {
+                            return 'true';
+                        }
+                    }
+                },
                 required: true
             },
             department: {
