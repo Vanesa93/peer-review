@@ -32,4 +32,6 @@ Route::get('fileentry/get/{filename}', [
 Route::post('/add', [
     'as' => 'addentry', 'uses' => 'FileEntryController@add']);
 
-Route::post('/checkUsername/{name}','Auth\AuthController@checkExistingUseraname');
+Route::get('/checkUsername','Auth\AuthController@checkExistingUseraname');
+Route::get('/checkEmail','Auth\AuthController@checkExistingEmail');
+

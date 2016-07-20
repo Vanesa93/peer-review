@@ -7,8 +7,8 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use DB;
-use Input;
 use Request;
+use Response;
 
 class AuthController extends Controller {
     /*
@@ -38,19 +38,24 @@ use AuthenticatesAndRegistersUsers;
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
-    public function checkExistingUseraname($name) {
-        $registeredUsernames=DB::table('users')->get();
-        foreach ($registeredUsernames as $usernames)
-        {
-            $username[]=$usernames->username;
+    public function checkExistingUseraname() {
+        $username = Request::input('username');
+
+        $usernames = DB::table('users')->where('username', $username)->first();
+        if (empty($usernames)) {   // <-- if no database match
+            return \Response::json(array('msg' => 'true'));
         }
-        $requestedUsername = Request::get('username');
-        
-        if (in_array($requestedUsername, $username)) {
-            return 'true';
-        } else {
-            return 'false';
+        return \Response::json(array('msg' => 'false'));
+    }
+
+    public function checkExistingEmail() {
+        $email = Request::input('email');
+
+        $emails = DB::table('users')->where('email', $email)->first();
+        if (empty($emails)) {   // <-- if no database match
+            return \Response::json(array('msg' => 'true'));
         }
+        return \Response::json(array('msg' => 'false'));
     }
 
 }

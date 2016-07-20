@@ -84,45 +84,29 @@ $(document).ready(function () {
 //
 //        });
 
-    ;
-
-
-    $.validator.addMethod("checkExistingUsername", function (value, element)
-    {
-        var inputElem = $('#registerForm :input[name="username"]'),
-                data = {"username": inputElem.val(), "_token": "{{ csrf_token() }}"};
-        var isSuccess;
-        $.ajax(
-                {
-                    method: "POST",
-                    url: '/checkUsername/' + data,
-                    dataType: "json",
-                    data: data,
-                    success: function (returnData)
-                    {
-                        console.log('return data:'+' '+returnData);
-                        if (returnData == false)
-                        {
-                            isSuccess = true;
-                            console.log('rezultat true:' + ' ' + isSuccess);
-                            return true
-                        } else {
-                            isSuccess = false;
-                            console.log('rezultat false:' + ' ' + isSuccess);
-                            return false;
-                        }
-                    }
-
-                });
-
-    }, 'Message');
 
 
     $('#registerForm').validate({
         rules: {
             username: {
-                required: true,
-                checkExistingUsername: true
+                remote: {
+                    url: "{{ url('/checkUsername')}}",
+                    type: "get",
+                    data: {
+                        username: function () {
+                            return $("#username").val();
+                        }
+                    },
+                    dataFilter: function (data) {
+                        var json = JSON.parse(data);
+                        if (json.msg === "false") {
+                            return 'false';
+                        } else {
+                            return 'true';
+                        }
+                    }
+                },
+                required: true
             },
             forename: {
                 required: true,
@@ -143,6 +127,23 @@ $(document).ready(function () {
                 required: true
             },
             email: {
+                remote: {
+                    url: "{{ url('/checkEmail')}}",
+                    type: "get",
+                    data: {
+                        username: function () {
+                            return $("#email").val();
+                        }
+                    },
+                    dataFilter: function (data) {
+                        var json = JSON.parse(data);
+                        if (json.msg === "false") {
+                            return 'false';
+                        } else {
+                            return 'true';
+                        }
+                    }
+                },
                 required: true
             },
             password: {
@@ -162,13 +163,14 @@ $(document).ready(function () {
         messages: {
             username: {
                 required: "Please enter your username",
-                checkExistingUsername: "Not unique",
+                remote: "Not unique",
             },
             forename: {
                 required: "Please enter your first name"
             },
             email: {
-                required: "Please enter your email"
+                required: "Please enter your email",
+                remote: "Not unique",
             },
             password: {
                 required: "Please enter your password"
