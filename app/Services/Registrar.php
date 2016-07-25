@@ -19,6 +19,8 @@ class Registrar implements RegistrarContract {
                     'forename' => 'required|max:255',
                     'email' => 'required|email|max:255|unique:users',
                     'password' => 'required|confirmed|min:6',
+                    'position'=>'required',
+                    'mobile'=>'required'
         ]);
     }
 
