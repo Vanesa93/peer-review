@@ -118,12 +118,14 @@ $(document).ready(function () {
                 required: true
             },
             group: {
-                required: true
+                required: true,
+                number: true
             },
             degree: {
                 required: true
             },
             semester: {
+                number: true,
                 required: true
             },
             email: {
@@ -149,6 +151,9 @@ $(document).ready(function () {
             password: {
                 required: true
             },
+            password_confirmation: {
+                equalTo: "#password"
+            },
             facNumber: {
                 remote: {
                     url: "{{ url('/checkFacNumbers')}}",
@@ -167,13 +172,15 @@ $(document).ready(function () {
                         }
                     }
                 },
-                required: true
+                required: true,
+                number: true
             },
             department: {
                 required: true
             },
             mobile: {
-                required: true
+                required: true,
+                number: true
             },
         },
         // Specify the validation error messages
@@ -190,31 +197,39 @@ $(document).ready(function () {
                 remote: "Not unique",
             },
             password: {
-                required: "Please enter your password"
+                required: "Please enter your password",
+            },
+            password_confirmation: {
+                equalTo: "Password doesn't match"
             },
             position: {
                 required: "Please enter your position"
             },
             facNumber: {
-                required: "Please enter your faculty number"
+                required: "Please enter your faculty number",
+                remote: "Not unique",
+                number: "Enter valid faculty number"
             },
             familyName: {
                 required: "Please enter your family name"
             },
             group: {
-                required: "Please enter your group"
+                required: "Please enter your group",
+                number: "Enter valid group"
             },
             degree: {
                 required: "Please enter your degree"
             },
             semester: {
-                required: "Please enter your semester"
+                required: "Please enter your semester",
+                number: "Enter valid semester"
             },
             department: {
                 required: "Please enter your department name"
             },
             mobile: {
-                required: "Please enter your mobile number"
+                required: "Please enter your mobile number",
+                number: "Enter valid mobile"
             },
         }
     });
