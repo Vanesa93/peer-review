@@ -41,8 +41,8 @@
 <script>
 $(document).ready(function () {
     $('#secondForm').hide();
-     $('#studentMajor').hide();
-               $('#teacherMajor').hide();
+    $('#studentMajor').hide();
+    $('#teacherMajor').hide();
     var current_fs, next_fs, previous_fs; //fieldsets
     var left, opacity, scale; //fieldset properties which we will animate
     var animating; //flag to prevent quick multi-click glitches
@@ -63,20 +63,20 @@ $(document).ready(function () {
                 $('#studentInfo').show();
                 $('#teacherInfo').hide();
                 $('#studentMajor').show();
-               $('#teacherMajor').hide();
-               
+                $('#teacherMajor').hide();
+
             } else {
                 $('#teacherInfo').show();
                 $('#studentInfo').hide();
                 $('#studentMajor').hide();
-               $('#teacherMajor').show();
+                $('#teacherMajor').show();
             }
-            
+
             $("#secondActive").addClass("active");
             $("#firstActive").removeClass("active");
         }
-        
-        
+
+
     });
 
 
@@ -93,6 +93,11 @@ $(document).ready(function () {
 //            $('#show_Image').attr('src', img);
 //
 //        });
+    jQuery.validator.addMethod("phone", function (phone_number, element) {
+        phone_number = phone_number.replace(/\s+/g, "");
+        return this.optional(element) || phone_number.length > 9 &&
+                phone_number.match(/[0-9 -()+]+$/);
+    }, "Please specify a valid phone number");
 
 
 
@@ -123,13 +128,13 @@ $(document).ready(function () {
                 required: true,
             },
             familyName: {
-                required: true
+                required: true,                
             },
             position: {
                 required: true
             },
-            faculty:{
-                required:true
+            faculty: {
+                required: true
             },
             group: {
                 required: true,
@@ -194,7 +199,7 @@ $(document).ready(function () {
             },
             mobile: {
                 required: true,
-                number: true
+                phone:true
             },
         },
         // Specify the validation error messages
@@ -219,34 +224,34 @@ $(document).ready(function () {
             position: {
                 required: "Please enter your position"
             },
-            faculty:{
+            faculty: {
                 required: "Please enter your faculty"
             },
             facNumber: {
                 required: "Please enter your faculty number",
                 remote: "Not unique",
-                number: "Enter valid faculty number"
+                number: "Please enter valid faculty number"
             },
             familyName: {
                 required: "Please enter your family name"
             },
             group: {
                 required: "Please enter your group",
-                number: "Enter valid group"
+                number: "Please enter valid group"
             },
             degree: {
                 required: "Please enter your degree"
             },
             semester: {
                 required: "Please enter your semester",
-                number: "Enter valid semester"
+                number: "Please enter valid semester"
             },
             department: {
                 required: "Please enter your department name"
             },
             mobile: {
                 required: "Please enter your mobile number",
-                number: "Enter valid mobile"
+                phone:'Please enter valid mobile'
             },
         }
     });
