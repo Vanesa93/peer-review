@@ -32,6 +32,7 @@ class Registrar implements RegistrarContract {
         $user = User::create([
                     'username' => $data['username'],
                     'forename' => $data['forename'],
+                    'familyName'=>$data['familyName'],
                     'email' => $data['email'],
                     'password' => bcrypt($data['password']),
                     'cabinet' => $data['cabinet'],
@@ -42,6 +43,7 @@ class Registrar implements RegistrarContract {
                     'degree' => $data['degree'],
                     'mobile' => $data['mobile'],
                     'position' => $data['position'],
+                    'faculty'=>$data['faculty']
         ]);
 
 

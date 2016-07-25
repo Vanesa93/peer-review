@@ -15,6 +15,8 @@ return [
     'next'=>'Next',
     'back'=>'Back',
     'major'=>'Major',
+    'department'=>'Department',
+    'faculty'=>"Faculty",
     'degree'=>'Degree',
     'mobile'=>'Mobile',
     'cabinetNumber'=>'Cabinet Number',

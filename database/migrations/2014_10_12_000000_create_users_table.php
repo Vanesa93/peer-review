@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration {
             $table->integer('facNumber')->nullable();
             $table->integer('semester')->nullable();
             $table->integer('group')->nullable();
+            $table->string('faculty')->nullable();
             $table->string('department'); // for students major
             $table->string('degree'); //for students(ex.bachelor)for teahers(ex.prof.)       
             $table->string('profilePhoto')->nullable();

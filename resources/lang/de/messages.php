@@ -13,6 +13,8 @@ return [
     'next'=>'Vorwärts',
     'back'=>'Zurück',
     'major'=>'Major',
+    'department'=>'Institut',
+    'faculty'=>"Fakultät",
     'degree'=>'Akademischer Grad',
     'mobile'=>'Mobile',
     'cabinetNumber'=>'Cabinet Number',

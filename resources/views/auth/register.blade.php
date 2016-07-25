@@ -41,6 +41,8 @@
 <script>
 $(document).ready(function () {
     $('#secondForm').hide();
+     $('#studentMajor').hide();
+               $('#teacherMajor').hide();
     var current_fs, next_fs, previous_fs; //fieldsets
     var left, opacity, scale; //fieldset properties which we will animate
     var animating; //flag to prevent quick multi-click glitches
@@ -55,18 +57,26 @@ $(document).ready(function () {
         $('input[name=position]').valid();
         if ($('#username').valid() && $('#forename').valid() && $('#familyName').valid()
                 && $('#email').valid() && $('#password').valid() && $('input[name=position]').valid()) {
+            $('#firstForm').hide();
+            $('#secondForm').show();
             if ($('input[name=position]:checked').val() == 2) {
                 $('#studentInfo').show();
                 $('#teacherInfo').hide();
+                $('#studentMajor').show();
+               $('#teacherMajor').hide();
+               
             } else {
                 $('#teacherInfo').show();
                 $('#studentInfo').hide();
+                $('#studentMajor').hide();
+               $('#teacherMajor').show();
             }
-            $('#firstForm').hide();
-            $('#secondForm').show();
+            
             $("#secondActive").addClass("active");
             $("#firstActive").removeClass("active");
         }
+        
+        
     });
 
 
@@ -87,6 +97,7 @@ $(document).ready(function () {
 
 
     $('#registerForm').validate({
+        ignore: ":hidden",
         rules: {
             username: {
                 remote: {
@@ -116,6 +127,9 @@ $(document).ready(function () {
             },
             position: {
                 required: true
+            },
+            faculty:{
+                required:true
             },
             group: {
                 required: true,
@@ -204,6 +218,9 @@ $(document).ready(function () {
             },
             position: {
                 required: "Please enter your position"
+            },
+            faculty:{
+                required: "Please enter your faculty"
             },
             facNumber: {
                 required: "Please enter your faculty number",

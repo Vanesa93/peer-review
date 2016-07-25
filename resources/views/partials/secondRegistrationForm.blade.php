@@ -1,6 +1,12 @@
 <div id='secondForm'> 
     <div id='studentInfo'>
         <div class="form-group">
+            <label class="col-md-4 control-label"> {{trans('messages.faculty')}}</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="faculty" value="{{ old('faculty') }}">
+            </div>
+        </div>
+        <div class="form-group">
             <label class="col-md-4 control-label"> {{trans('messages.facultyNumber')}}</label>
             <div class="col-md-6">
                 <input type="text" class="form-control" id='facNumber' name="facNumber" value="{{ old('facNumber') }}">
@@ -18,13 +24,16 @@
                 <input type="text" class="form-control" name="group" value="{{ old('group') }}">
             </div>
         </div>
+        
     </div>
     <div class="form-group">
-        <label class="col-md-4 control-label"> {{trans('messages.major')}}</label>
+        <label class="col-md-4 control-label" id="studentMajor" > {{trans('messages.major')}}</label>
+        <label class="col-md-4 control-label" id="teacherMajor" > {{trans('messages.department')}}</label>
         <div class="col-md-6">
             <input type="text" class="form-control" name="department" value="{{ old('department') }}">
         </div>
     </div>
+  
     <div class="form-group">
         <label class="col-md-4 control-label"> {{trans('messages.degree')}}</label>
         <div class="col-md-6">
