@@ -54,12 +54,12 @@ $(document).ready(function () {
         $('#familyName').valid();
         $('#email').valid();
         $('#password').valid();
-        $('input[name=position]').valid();
+        $('input[name=account_type]').valid();
         if ($('#username').valid() && $('#forename').valid() && $('#familyName').valid()
-                && $('#email').valid() && $('#password').valid() && $('input[name=position]').valid()) {
+                && $('#email').valid() && $('#password').valid() && $('input[name=account_type]').valid()) {
             $('#firstForm').hide();
             $('#secondForm').show();
-            if ($('input[name=position]:checked').val() == 2) {
+            if ($('input[name=account_type]:checked').val() == 2) {
                 $('#studentInfo').show();
                 $('#teacherInfo').hide();
                 $('#studentMajor').show();
@@ -130,7 +130,7 @@ $(document).ready(function () {
             familyName: {
                 required: true,                
             },
-            position: {
+            account_type: {
                 required: true
             },
             faculty: {
@@ -221,7 +221,7 @@ $(document).ready(function () {
             password_confirmation: {
                 equalTo: "Password doesn't match"
             },
-            position: {
+            account_type: {
                 required: "Please enter your position"
             },
             faculty: {

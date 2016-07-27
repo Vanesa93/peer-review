@@ -11,8 +11,7 @@ class RegistrationController extends Controller {
 
     public function checkExistingUseraname() {
         $username = Request::input('username');
-
-        $usernames = DB::table('users')->where('username', $username)->first();
+        $usernames= DB::table('users')->where('username', $username)->first();
         if (empty($usernames)) {   // <-- if no database match
             return \Response::json(array('msg' => 'true'));
         }
@@ -21,7 +20,6 @@ class RegistrationController extends Controller {
 
     public function checkExistingEmail() {
         $email = Request::input('email');
-
         $emails = DB::table('users')->where('email', $email)->first();
         if (empty($emails)) {   // <-- if no database match
             return \Response::json(array('msg' => 'true'));
@@ -31,9 +29,8 @@ class RegistrationController extends Controller {
 
     public function checkExistingFacNumber() {
         $facNumber = Request::input('facNumber');
-
-        $facNumbers = DB::table('users')->where('facNumber', $facNumber)->first();
-        if (empty($facNumbers)) {   // <-- if no database match
+        $facNumbersStudents = DB::table('students')->where('facNumber', $facNumber)->first();
+        if (empty($facNumbersStudents)) {   // <-- if no database match
             return \Response::json(array('msg' => 'true'));
         }
         return \Response::json(array('msg' => 'false'));

@@ -2,13 +2,13 @@
 
 namespace App;
 
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
+class Students extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
     use Authenticatable,
         CanResetPassword;
@@ -18,27 +18,25 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var string
      */
-    protected $table = 'users';
+    protected $table = 'students';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['account_type', 'username', 'forename', 'familyName', 'email','password'];
-    protected $hidden = ['password', 'remember_token'];
+    protected $fillable = ['mobile', 'facNumber',
+        'semester', 'group', 'department', 'faculty', 'degree','user_id_students'];
+                  
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-//    public function lecturer() {
-//        return $this->hasMany('Lecturer');
-//    }
-//
-//    public function students() {
-//        return $this->hasMany('Students');
+
+//    public function user() {
+//        return $this->belongsTo('User');
 //    }
 
 }

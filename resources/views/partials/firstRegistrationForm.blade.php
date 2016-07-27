@@ -41,9 +41,9 @@
     <div class="form-group">
         <label class="col-md-4 control-label"> {{trans('messages.rank')}}</label>
         <div class="col-md-6">
-            <input type="radio" id='tutor' name="position" value="1">  {{trans('messages.tutor')}}<br>
-            <input type="radio" id='student' name="position" value="2">  {{trans('messages.student')}}<br>
-            <label id="position-error" class="error" for="position" hidden></label>
+            <input type="radio" id='tutor' name="account_type" value="1">  {{trans('messages.tutor')}}<br>
+            <input type="radio" id='student' name="account_type" value="2">  {{trans('messages.student')}}<br>
+            <label id="position-error" class="error" for="account_type" hidden></label>
         </div>
 
     </div>
