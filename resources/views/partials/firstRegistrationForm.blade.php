@@ -1,6 +1,17 @@
-<div id='firstForm'>  
+<div id='firstForm'> 
     <div class="form-group">
-        <label class="col-md-4 control-label">  {{trans('messages.username')}}</label>
+        <label class="col-md-4 control-label"> {{trans('messages.rank')}}</label>
+        <div class="col-md-6">
+            <input type="radio" id='tutor' name="account_type" value="1">  {{trans('messages.tutor')}}<br>
+            <input type="radio" id='student' name="account_type" value="2">  {{trans('messages.student')}}<br>
+            <label id="position-error" class="error" for="account_type" hidden></label>
+        </div>
+
+    </div>
+    <div id="showFormForAccountType">
+    <div class="form-group">
+        <label class="col-md-4 control-label" id="usernameLabelStudent"> {{trans('messages.facultyNumber')}}</label>
+        <label class="col-md-4 control-label" id="usernameLabelLecturer">  {{trans('messages.username')}}</label>
         <div class="col-md-6">
             <input type="text" id='username' class="form-control" name="username">
         </div>
@@ -38,15 +49,7 @@
         </div>
     </div>  
 
-    <div class="form-group">
-        <label class="col-md-4 control-label"> {{trans('messages.rank')}}</label>
-        <div class="col-md-6">
-            <input type="radio" id='tutor' name="account_type" value="1">  {{trans('messages.tutor')}}<br>
-            <input type="radio" id='student' name="account_type" value="2">  {{trans('messages.student')}}<br>
-            <label id="position-error" class="error" for="account_type" hidden></label>
-        </div>
-
-    </div>
+    
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <div class="form-group">  
         <div class="col-md-6 col-md-offset-4">
@@ -56,3 +59,4 @@
         </div>
     </div>
 </div>
+    </div>

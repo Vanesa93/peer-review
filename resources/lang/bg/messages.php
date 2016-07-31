@@ -28,6 +28,7 @@ return [
     'login' => 'Влизане',
     'logout' => 'Излизане',
     'rememberMe' => 'Запомни ме',
-    'forgotPassword' => 'Забравена парола?'
+    'forgotPassword' => 'Забравена парола?',
+    'year'=>'Година'
 ];
 ?>

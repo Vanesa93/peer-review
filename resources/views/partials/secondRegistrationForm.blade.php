@@ -7,9 +7,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-4 control-label"> {{trans('messages.facultyNumber')}}</label>
+            <label class="col-md-4 control-label"> {{trans('messages.year')}}</label>
             <div class="col-md-6">
-                <input type="text" class="form-control" id='facNumber' name="facNumber" value="{{ old('facNumber') }}">
+                <input type="text" class="form-control" id='year' name="year" value="{{ old('year') }}">
             </div>
         </div>                                
         <div class="form-group">

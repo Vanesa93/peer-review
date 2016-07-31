@@ -42,10 +42,25 @@
 $(document).ready(function () {
     $('#secondForm').hide();
     $('#studentMajor').hide();
-    $('#teacherMajor').hide();
-    var current_fs, next_fs, previous_fs; //fieldsets
-    var left, opacity, scale; //fieldset properties which we will animate
-    var animating; //flag to prevent quick multi-click glitches
+    $('#teacherMajor').hide();  
+    $('#showFormForAccountType').hide();
+            
+    $('input[type=radio][name=account_type]').change(function () {
+        if ($('input[name=account_type]:checked').val() == 2) {
+            $('#usernameLabelLecturer').hide();
+            $('#usernameLabelStudent').show();
+             $('#showFormForAccountType').show(1000);
+
+
+        } else {
+            $('#usernameLabelStudent').hide();
+            $('#usernameLabelLecturer').show();
+             $('#showFormForAccountType').show(1000);
+
+        }
+    });
+
+
 
     $('#nextToSecondForm').click(function () {
 
@@ -57,8 +72,8 @@ $(document).ready(function () {
         $('input[name=account_type]').valid();
         if ($('#username').valid() && $('#forename').valid() && $('#familyName').valid()
                 && $('#email').valid() && $('#password').valid() && $('input[name=account_type]').valid()) {
-            $('#firstForm').hide();
-            $('#secondForm').show();
+            $('#firstForm').hide(1000);
+            $('#secondForm').show(1000);
             if ($('input[name=account_type]:checked').val() == 2) {
                 $('#studentInfo').show();
                 $('#teacherInfo').hide();
@@ -81,8 +96,8 @@ $(document).ready(function () {
 
 
     $("#backToFirstForm").click(function () {
-        $('#secondForm').hide();
-        $('#firstForm').show();
+        $('#secondForm').hide(1000);
+        $('#firstForm').show(1000);
         $("#secondActive").removeClass("active");
         $("#firstActive").addClass("active");
     });
@@ -128,7 +143,7 @@ $(document).ready(function () {
                 required: true,
             },
             familyName: {
-                required: true,                
+                required: true,
             },
             account_type: {
                 required: true
@@ -173,24 +188,7 @@ $(document).ready(function () {
             password_confirmation: {
                 equalTo: "#password"
             },
-            facNumber: {
-                remote: {
-                    url: "{{ url('/checkFacNumbers')}}",
-                    type: "get",
-                    data: {
-                        facNumber: function () {
-                            return $("#facNumber").val();
-                        }
-                    },
-                    dataFilter: function (data) {
-                        var json = JSON.parse(data);
-                        if (json.msg === "false") {
-                            return 'false';
-                        } else {
-                            return 'true';
-                        }
-                    }
-                },
+            year: {
                 required: true,
                 number: true
             },
@@ -199,13 +197,13 @@ $(document).ready(function () {
             },
             mobile: {
                 required: true,
-                phone:true
+                phone: true
             },
         },
         // Specify the validation error messages
         messages: {
             username: {
-                required: "Please enter your username",
+                required: "Please enter your username/faculty number(for students)",            
                 remote: "Not unique",
             },
             forename: {
@@ -227,10 +225,9 @@ $(document).ready(function () {
             faculty: {
                 required: "Please enter your faculty"
             },
-            facNumber: {
-                required: "Please enter your faculty number",
-                remote: "Not unique",
-                number: "Please enter valid faculty number"
+            year: {
+                required: "Please enter first year",
+                number: "Please enter valid first year"
             },
             familyName: {
                 required: "Please enter your family name"
@@ -251,7 +248,7 @@ $(document).ready(function () {
             },
             mobile: {
                 required: "Please enter your mobile number",
-                phone:'Please enter valid mobile'
+                phone: 'Please enter valid mobile'
             },
         }
     });

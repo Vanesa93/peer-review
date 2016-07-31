@@ -29,7 +29,8 @@ return [
     'login'=>'Login',
     'logout'=>'Logout',
     'rememberMe'=>'Remember me',
-    'forgotPassword'=>'Forgot your password?'
+    'forgotPassword'=>'Forgot your password?',
+    'year'=>'Year'
     
 ];
 

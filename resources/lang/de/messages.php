@@ -26,7 +26,8 @@ return [
     'login'=>'Anmelden',
     'logout'=>'Abmelden',
     'rememberMe'=>'Eingelogt bleiben',
-    'forgotPassword'=>'Passwort vergessen?'
+    'forgotPassword'=>'Passwort vergessen?',
+    'year'=>'Jahr'
 ];
 
 ?>

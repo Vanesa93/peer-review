@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration {
 
         Schema::create('students', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('facNumber')->nullable();
+            $table->integer('year')->nullable();
             $table->integer('semester')->nullable();
             $table->integer('group')->nullable();
             $table->integer('mobile');

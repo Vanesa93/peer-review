@@ -19,11 +19,11 @@ class Registrar implements RegistrarContract {
      */
     public function validator(array $data) {
         return Validator::make($data, [
-//                    'forename' => 'required|max:255',
-//                    'email' => 'required|email|max:255|unique:users',
-//                    'password' => 'required|confirmed|min:6',
-//                    'position' => 'required',
-//                    'mobile' => 'required'
+                    'forename' => 'required|max:255',
+                    'email' => 'required|email|max:255|unique:users',
+                    'password' => 'required|confirmed|min:6',
+                    'account_type' => 'required',
+                    'mobile' => 'required'
         ]);
     }
 
@@ -56,7 +56,7 @@ class Registrar implements RegistrarContract {
             $lecturer->save();
         } else {
             $student = new Students([
-                'facNumber' => $data['facNumber'],
+                'year' => $data['year'],
                 'semester' => $data['semester'],
                 'group' => $data['group'],
                 'department' => $data['department'],
