@@ -21,11 +21,19 @@ body {
 
 }
 
-.title {
-    font-size: 96px;
-    margin-bottom: 40px;
-    padding-left:33%;
+@media screen and (min-width: 991px) {
+    .welcomeTitle{
+        font-size: 85px;
+        margin-bottom: 40px;
+    }    
 }
+@media screen and (max-width: 991px) {
+    .welcomeTitle{
+        font-size: 70px;
+        margin-bottom: 40px;
+    }    
+}
+
 .quote {
     font-size: 24px;
 }
