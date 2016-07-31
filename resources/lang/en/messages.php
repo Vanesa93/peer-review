@@ -30,7 +30,21 @@ return [
     'logout'=>'Logout',
     'rememberMe'=>'Remember me',
     'forgotPassword'=>'Forgot your password?',
-    'year'=>'Year'
+    'year'=>'Year',
+    'login'=>'Login',
+    'logout'=>'Logout',
+    'rememberMe'=>'Remember me',
+    'forgotPassword'=>'Forgot your password?',
+    'tasks'=>'Tasks',
+    'courses'=>'Courses',
+    'assignTasks'=>'Assign task',
+    'questionnaires'=>'Questionnaires',
+     'groups'=>'Groups',
+    'messages'=>'Messages',
+    'upload'=>'Datei hochladen'
+    
+
+    
     
 ];
 

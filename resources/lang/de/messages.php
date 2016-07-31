@@ -27,7 +27,14 @@ return [
     'logout'=>'Abmelden',
     'rememberMe'=>'Eingelogt bleiben',
     'forgotPassword'=>'Passwort vergessen?',
-    'year'=>'Jahr'
+    'year'=>'Jahr',
+     'tasks' => 'Aufgaben',
+    'courses' => 'Kurse',
+    'assignTasks' => 'Aufgaben betrauen',
+    'questionnaires' => 'Fragebögen',
+    'groups' => 'Gruppen',
+    'messages'=>'Meldungen',
+    'upload'=>'Качи файл'
 ];
 
 ?>

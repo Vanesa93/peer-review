@@ -29,6 +29,13 @@ return [
     'logout' => 'Излизане',
     'rememberMe' => 'Запомни ме',
     'forgotPassword' => 'Забравена парола?',
-    'year'=>'Година'
+    'year'=>'Година',
+     'tasks'=>'Задачи',
+    'courses'=>'Курсове',
+    'assignTasks'=>'Възлагане на задачи',
+    'questionnaires'=>'Въпросници',
+     'groups'=>'Групи',
+    'messages'=>'Съобщения',
+    'upload'=>'Качи файл'
 ];
 ?>
