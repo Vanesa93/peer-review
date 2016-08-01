@@ -5,24 +5,29 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateGroupsTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		//
-	}
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up() {
+        Schema::create('groups', function(Blueprint $table) {
+            $table->increments('id');
+            $table->integer('tutor_id');
+            $table->string('name');
+            $table->string('description'); 
+            $table->string('course_id'); 
+            $table->timestamps();
+        });
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		//
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down() {
+        Schema::drop('groups');
+    }
 
 }
