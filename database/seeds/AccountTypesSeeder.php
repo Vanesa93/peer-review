@@ -13,14 +13,14 @@ class AccountTypesSeeder extends Seeder {
                 array(
                     //tutor
                     [
-                        'number' => 1,
+                        'account_type' => 1,
                         'bg_name' => 'Преподавател',
                         'en_name' => 'Tutor',
                         'de_name' => 'Tutor'
                     ],
                     //student
                     [
-                        'number' => 2,
+                        'account_type' => 2,
                         'bg_name' => 'Студент',
                         'en_name' => 'Student',
                         'de_name' => 'Student'
