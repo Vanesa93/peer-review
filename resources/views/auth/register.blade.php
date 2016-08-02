@@ -42,25 +42,28 @@
 $(document).ready(function () {
     $('#secondForm').hide();
     $('#studentMajor').hide();
-    $('#teacherMajor').hide();  
+    $('#teacherMajor').hide();
     $('#showFormForAccountType').hide();
-            
+
     $('input[type=radio][name=account_type]').change(function () {
         if ($('input[name=account_type]:checked').val() == 2) {
             $('#usernameLabelLecturer').hide();
             $('#usernameLabelStudent').show();
-             $('#showFormForAccountType').show(1000);
+            $('#showFormForAccountType').show(1000);
 
 
         } else {
             $('#usernameLabelStudent').hide();
             $('#usernameLabelLecturer').show();
-             $('#showFormForAccountType').show(1000);
+            $('#showFormForAccountType').show(1000);
 
         }
     });
 
 
+    $('#registerForm').keydown(function (e) {
+        return e.which !== 13
+    });
 
     $('#nextToSecondForm').click(function () {
 
@@ -203,7 +206,7 @@ $(document).ready(function () {
         // Specify the validation error messages
         messages: {
             username: {
-                required: "Please enter your username/faculty number(for students)",            
+                required: "Please enter your username/faculty number(for students)",
                 remote: "Not unique",
             },
             forename: {
