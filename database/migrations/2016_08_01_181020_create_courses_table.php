@@ -16,6 +16,9 @@ class CreateCoursesTable extends Migration {
             $table->integer('tutor_id');
             $table->string('name');
             $table->string('description');
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->string('requirments');
             $table->string('language');
             $table->timestamps();
         });

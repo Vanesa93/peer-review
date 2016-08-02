@@ -10,6 +10,7 @@
         <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script> 
 
     </head>
     <body>
@@ -21,6 +22,8 @@
             @yield('welcome')
             @yield('upload')
             @yield('files')
+            @yield('courses')
+            @yield('create_courses')
         </div>
     </body>
 </html>

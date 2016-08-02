@@ -10,6 +10,7 @@ class CoursesController extends Controller {
 
     public function __construct() {
         $this->middleware('auth');
+        $this->middleware('language');
     }
 
     /**
@@ -18,7 +19,7 @@ class CoursesController extends Controller {
      * @return Response
      */
     public function index() {
-        //
+        return view('courses.courses');
     }
 
     /**
@@ -27,7 +28,7 @@ class CoursesController extends Controller {
      * @return Response
      */
     public function create() {
-        //
+        return view('courses.create');
     }
 
     /**

@@ -32,8 +32,13 @@ Route::get('fileentry/get/{filename}', [
 Route::post('/add', [
     'as' => 'addentry', 'uses' => 'FileEntryController@add']);
 
+//registration validation
 Route::get('/checkUsername','RegistrationController@checkExistingUseraname');
 Route::get('/checkEmail','RegistrationController@checkExistingEmail');
 Route::get('/checkFacNumbers','RegistrationController@checkExistingFacNumber');
+
+//courses
+Route::get('courses/create', 'CoursesController@create');
+Route::get('courses', 'CoursesController@index');
 
 

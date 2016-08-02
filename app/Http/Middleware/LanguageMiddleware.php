@@ -14,6 +14,7 @@ class LanguageMiddleware {
      * @param  \Closure  $next
      * @return mixed
      */
+  
     public function handle($request, Closure $next) {
         if (!\Session::has('locale')) {
             \Session::put('locale', \Config::get('app.locale'));
