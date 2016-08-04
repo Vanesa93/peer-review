@@ -2,8 +2,7 @@
 
 @section('content')
 <link href='{{ URL::asset('styles/register.css')}}' rel='stylesheet' type='text/css'>
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
-<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-8 col-md-offset-2" >

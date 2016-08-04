@@ -13,7 +13,8 @@ class CreateCoursesTable extends Migration {
     public function up() {
         Schema::create('courses', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('tutor_id');
+            $table->integer('tutor_id')->unsigned();
+            $table->foreign('tutor_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->string('description');
             $table->string('duration');

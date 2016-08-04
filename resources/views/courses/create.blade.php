@@ -47,11 +47,65 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                
+                </div>  
+
             </div>
         </div>
     </form>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        $('#createCourses').validate({
+            ignore: ":hidden",
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 100
+                },
+                description: {
+                    required: true,
+                    maxlength: 1000
+                },
+                language: {
+                    required: true,
+                    maxlength: 100
+                },
+                duration: {
+                    required: true,
+                    maxlength: 100
+                },
+                requirments: {
+                    required: true,
+                    maxlength: 255
+                },
+            },
+            // Specify the validation error messages
+            messages: {
+                name: {
+                    required: "Please enter your name",
+                    maxlength: 100
+                },
+                description: {
+                    required: "Please enter your description",
+                    maxlength: 1000
+                },
+                language: {
+                    required: "Please enter the language of your course",
+                    maxlength: 100
+                },
+                duration: {
+                    required: "Please enter the duration of your course",
+                    maxlength: 100
+                },
+                requirments: {
+                    required: "Please enter the duration of your course",
+                    maxlength: 100
+                }
+            }
+        });
+    });
+</script>
 
 @stop

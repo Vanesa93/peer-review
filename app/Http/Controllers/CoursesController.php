@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Courses;
+use Auth;
 
 class CoursesController extends Controller {
 
@@ -20,7 +20,9 @@ class CoursesController extends Controller {
      * @return Response
      */
     public function index() {
-        return view('courses.courses');
+        $userId = Auth::user()->id;
+        $courses = Courses::where('tutor_id',$userId)->get();
+        return view('courses.courses')->with('courses',$courses);
     }
 
     /**
@@ -38,27 +40,18 @@ class CoursesController extends Controller {
      * @return Response
      */
     public function store(Requests\CreateCoursesFormRequest $request) {
-
+        $userId = Auth::user()->id;
         $course = new Courses([
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'language' => $request->get('language'),
             'requirments' => $request->get('requirments'),
-            'duration' => $request->get('duration')
+            'duration' => $request->get('duration'),
         ]);
-
+        $course->tutor_id = $userId;
         $course->save();
 
         return redirect('courses');
-
-//        $category = new Category;
-//
-//        $category->name = $request->get('name');
-//
-//        $category->save();
-//
-//        return \Redirect::route('categories.show', array($category->id))
-//                        ->with('message', 'Your category has been created!');
     }
 
     /**

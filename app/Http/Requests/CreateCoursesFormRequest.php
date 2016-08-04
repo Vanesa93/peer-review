@@ -24,7 +24,9 @@ class CreateCoursesFormRequest extends Request {
         return [
             'name' => 'required|max:100',
             'description' => 'required|max:1000',
-            'language' => 'required',
+            'language' => 'required|max:100',
+             'duration' => 'max:100',
+             'requirments' => 'max:100',
         ];
     }
 
