@@ -38,8 +38,12 @@
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
+
                     <center>
-                        <h2>Edit course</h2>
+                        <div class="form-group">
+                            <h2 style="margin-left: -55%;">Edit course</h2> 
+
+                        </div>
                         {!! Form::model($course, array('route' => array('updateCourse', $course->id), 'method' => 'PUT')) !!}
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> Course name</label>
@@ -73,12 +77,13 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::button('Back to courses', array('class' => 'btn buttonBack')) !!}
+                                {!! Form::button('Back to courses', array('class' => 'btn buttonBack','id'=>'back')) !!}
                             </div>
                             <div class="col-md-6 " style="margin-bottom: 1%;">
                                 {!! Form::submit('Update', array('class' => 'btn button')) !!}
                             </div>
-                            {!! Form::close() !!}
+                        </div>
+                        {!! Form::close() !!}
 
                     </center>
                 </div>
@@ -88,4 +93,12 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+
+        $("#back").on("click", function () {
+            location.href = "{{url("courses")}}";
+        });
+    });
+</script>
 @stop

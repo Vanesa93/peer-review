@@ -98,7 +98,7 @@
         //hide datatable info tag
         $('.dataTables_info').hide();
         $("#create").on("click", function () {
-            location.href = "{{url("courses / create")}}";
+            location.href = "{{url("courses/create")}}";
         });
 
 
