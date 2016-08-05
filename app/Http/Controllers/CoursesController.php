@@ -9,6 +9,7 @@ use Auth;
 use Input;
 use Redirect;
 use Illuminate\Validation\Validator;
+use Session;
 class CoursesController extends Controller {
 
     public function __construct() {
@@ -118,7 +119,11 @@ class CoursesController extends Controller {
      * @return Response
      */
     public function destroy($id) {
-        //
+        
+        $course = Courses::find($id);
+        $course->delete();
+        Session::flash('message', 'Successfully deleted the nerd!');
+        return Redirect::to('courses');
     }
 
 }

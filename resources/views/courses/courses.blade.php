@@ -54,6 +54,7 @@
                                 <th>Prerequisites</th>
                                 <th>Language</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,6 +76,14 @@
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </td>
+                                <td>
+                                    {!! Form::open(array('url' => 'courses/remove/' . $course->id)) !!}
+                                    {!! Form::hidden('_method', 'DELETE') !!}
+                                    <button type="submit" class="buttonEdit"  id="delete{{$course->id}}">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                    {!! Form::close() !!}
+                                </td>
                             </tr>
 
                             @endforeach
@@ -91,21 +100,22 @@
 
 <script>
     $(document).ready(function () {
-        //datepicker
-        $("#datepicker").datepicker("option", "dateFormat", 'd MM, y');
-        //datatable create
-        $('#coursesTable').DataTable();
-        //hide datatable info tag
-        $('.dataTables_info').hide();
-        $("#create").on("click", function () {
-            location.href = "{{url("courses/create")}}";
-        });
-
-
+    //datepicker
+    $("#datepicker").datepicker("option", "dateFormat", 'd MM, y');
+    //datatable create
+    $('#coursesTable').DataTable();
+    //hide datatable info tag
+    $('.dataTables_info').hide();
+    $("#create").on("click", function () {
+    location.href = "{{url("courses / create")}}";
+    });
 <?php foreach ($courses as $course) { ?>
-            $("#edit{{$course->id}}").on("click", function () {
-                location.href="{{url("courses/edit/")}}"+"/"+{{$course->id}};
-            });
+        $("#edit{{$course->id}}").on("click", function () {
+        location.href = "{{url("courses/edit/")}}" + "/" + {{$course -> id}};
+        });
+//        $("#delete{{$course->id}}").on("click", function () {
+//        location.href = "{{url("courses/remove/ ")}}" + "/" + {{$course -> id}};
+//        });
 <?php } ?>
 
 

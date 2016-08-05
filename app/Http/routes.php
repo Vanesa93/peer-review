@@ -45,5 +45,6 @@ Route::get('courses/edit/{id}', 'CoursesController@edit');
 Route::put('courses/edit/{id}/update', [
     'as' => 'updateCourse', 'uses' => 'CoursesController@update'
 ]);
+Route::delete('courses/remove/{id}', 'CoursesController@destroy');
 
 
