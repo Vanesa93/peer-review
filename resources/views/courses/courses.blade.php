@@ -71,7 +71,7 @@
 
                                 <td>{{$course->language}}</td>
                                 <td>
-                                    <button type="button" class="buttonEdit" value="{{$course->id}}" id="edit{{$course->id}}">
+                                    <button type="button" class="buttonEdit"  id="edit{{$course->id}}">
                                         <span class="glyphicon glyphicon-edit"></span>
                                     </button>
                                 </td>
@@ -98,10 +98,17 @@
         //hide datatable info tag
         $('.dataTables_info').hide();
         $("#create").on("click", function () {
-            location.href = "{{url("courses/create")}}";
+            location.href = "{{url("courses / create")}}";
         });
-        
-       
+
+
+<?php foreach ($courses as $course) { ?>
+            $("#edit{{$course->id}}").on("click", function () {
+                location.href="{{url("courses/edit/")}}"+"/"+{{$course->id}};
+            });
+<?php } ?>
+
+
 
     });
 </script>

@@ -33,14 +33,17 @@ Route::post('/add', [
     'as' => 'addentry', 'uses' => 'FileEntryController@add']);
 
 //registration validation
-Route::get('/checkUsername','RegistrationController@checkExistingUseraname');
-Route::get('/checkEmail','RegistrationController@checkExistingEmail');
-Route::get('/checkFacNumbers','RegistrationController@checkExistingFacNumber');
+Route::get('/checkUsername', 'RegistrationController@checkExistingUseraname');
+Route::get('/checkEmail', 'RegistrationController@checkExistingEmail');
+Route::get('/checkFacNumbers', 'RegistrationController@checkExistingFacNumber');
 
 //courses
 Route::get('courses', 'CoursesController@index');
 Route::get('courses/create', 'CoursesController@create');
 Route::post('/storeCourse', 'CoursesController@store');
-Route::get('/edit', 'CoursesController@edit');
+Route::get('courses/edit/{id}', 'CoursesController@edit');
+Route::put('courses/edit/{id}/update', [
+    'as' => 'updateCourse', 'uses' => 'CoursesController@update'
+]);
 
 

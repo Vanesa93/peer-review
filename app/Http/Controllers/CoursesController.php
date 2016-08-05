@@ -6,7 +6,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Courses;
 use Auth;
-
+use Input;
+use Redirect;
+use Illuminate\Validation\Validator;
 class CoursesController extends Controller {
 
     public function __construct() {
@@ -21,8 +23,8 @@ class CoursesController extends Controller {
      */
     public function index() {
         $userId = Auth::user()->id;
-        $courses = Courses::where('tutor_id',$userId)->get();
-        return view('courses.courses')->with('courses',$courses);
+        $courses = Courses::where('tutor_id', $userId)->get();
+        return view('courses.courses')->with('courses', $courses);
     }
 
     /**
@@ -70,8 +72,9 @@ class CoursesController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function edit() {
-        return view('courses.edit');
+    public function edit($id) {
+        $course = Courses::find($id);
+        return view('courses.edit')->with('course', $course);
     }
 
     /**
@@ -81,7 +84,31 @@ class CoursesController extends Controller {
      * @return Response
      */
     public function update($id) {
-        //
+
+        $rules = array(
+            'name' => 'required|max:100',
+            'description' => 'required|max:1000',
+            'language' => 'required|max:100',
+            'duration' => 'max:100',
+            'requirments' => 'max:100',
+        );
+        $validator = \Validator::make(Input::all(), $rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return \Redirect::to('courses/edit/' . $id)
+                            ->withErrors($validator);
+        } else {
+            $course =  Courses::find($id);;
+            $course->name = Input::get('name');
+            $course->description = Input::get('description');
+            $course->language = Input::get('language');
+            $course->duration=Input::get('duration');
+            $course->requirments=Input::get('requirments');
+            $course->save();
+
+            return \Redirect::to('courses');
+        }
     }
 
     /**
