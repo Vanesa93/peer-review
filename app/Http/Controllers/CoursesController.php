@@ -70,8 +70,8 @@ class CoursesController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function edit($id) {
-        //
+    public function edit() {
+        return view('courses.edit');
     }
 
     /**

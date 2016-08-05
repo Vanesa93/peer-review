@@ -7,14 +7,17 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <title>Peer-Review</title>
         <link href="/css/app.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"  rel='stylesheet' type='text/css'>
         <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.1/js/bootstrap-datepicker.min.js"></script> 
         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.js"></script>
         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.15.0/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+
     </head>
-    <body>
+    <body style="background: #e6eeff">
         @include('partials.header') 
         <!-- Scripts -->
 
@@ -25,6 +28,7 @@
             @yield('files')
             @yield('courses')
             @yield('create_courses')
+            @yield('edit_course')
         </div>
     </body>
 </html>

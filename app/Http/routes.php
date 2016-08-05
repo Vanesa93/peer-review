@@ -39,7 +39,8 @@ Route::get('/checkFacNumbers','RegistrationController@checkExistingFacNumber');
 
 //courses
 Route::get('courses', 'CoursesController@index');
-Route::post('/storeCourse', 'CoursesController@store');
 Route::get('courses/create', 'CoursesController@create');
+Route::post('/storeCourse', 'CoursesController@store');
+Route::get('/edit', 'CoursesController@edit');
 
 

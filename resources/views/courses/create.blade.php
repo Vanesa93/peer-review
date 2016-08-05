@@ -1,13 +1,48 @@
 @extends('app')
 @section('create_courses')
+<style>
+    .button {
+    background-color: #002b80; /* Green */
+    border: solid;
+    border-width: 1px;
+    color: white;
+    padding: 12px 29px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 2%;
+    border-radius: 5px;
+}
+
+.buttonBack{
+    background-color: #999999!important;
+     border: solid;
+    border-width: 1px;
+    color: white;
+    padding: 12px 29px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 2%;
+    border-radius: 5px;
+}
+</style>
 <div class="container-fluid">
     <form method="post" action='{{url('/storeCourse')}}' id="createCourses">
         <div class="row">
             <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
                 <div class="panel panel-default" style="border-radius: 0px;">
                     <div class="panel-body">
-                        <center>
-                            <h2 style="margin-bottom: 2%;">Create Course</h2>
+                        @if(\Session::has('error'))
+                        <div class="flash-message">
+                            <div class="alert alert-danger">
+                                {{\Session::get('error')}}
+                            </div>
+                        </div>
+                        @endif
+                        <h2 style="margin-bottom: 2%;">Create Course</h2>
                         </center>
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> Course name</label>
@@ -41,9 +76,11 @@
                         </div>
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                         <div class="form-group">
-                            <label class="col-md-offset-3 col-md-2 control-label"></label>
-                            <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
-                                <input type="submit" name="submit" id='submit' class="btn  action-button floatRight" style="float: right;" value="Submit" />
+                            <div class="col-md-6 " style="margin-bottom: 1%;">
+                                <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Back to courses" />
+                            </div>
+                            <div class="col-md-6  " style="margin-bottom: 1%;">
+                                <input type="submit" name="submit" id='submit' class="btn button action-button floatRight" style="float: right;" value="Submit" />
                             </div>
                         </div>
                     </div>
@@ -56,6 +93,10 @@
 
 <script>
     $(document).ready(function () {
+        
+        $("#back").on("click",function(){
+            location.href="{{url("courses")}}";
+        });
 
         $('#createCourses').validate({
             ignore: ":hidden",
