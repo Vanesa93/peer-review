@@ -107,7 +107,7 @@
     //hide datatable info tag
     $('.dataTables_info').hide();
     $("#create").on("click", function () {
-    location.href = "{{url("courses / create")}}";
+    location.href = "{{url("courses/create")}}";
     });
 <?php foreach ($courses as $course) { ?>
         $("#edit{{$course->id}}").on("click", function () {

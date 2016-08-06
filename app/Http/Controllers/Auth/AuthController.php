@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use DB;
-use Request;
+use Illuminate\Http\Request;
 use Response;
 
 class AuthController extends Controller {
@@ -38,6 +38,25 @@ use AuthenticatesAndRegistersUsers;
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
+    //override login with email or username
+    public function postLogin(Request $request) {
+        $this->validate($request, [
+            'login' => 'required', 'password' => 'required',
+        ]);
+
+        //check if the login is with username or email
+        $field = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $credentials = $request->input('login');
+
+        if ($this->auth->attempt(array($field => $credentials, 'password' => $request->input('password')), $request->has('remember'))) {
+            return redirect()->intended($this->redirectPath());
+        }
+        return redirect($this->loginPath())
+                        ->withInput($request->only('email', 'remember'))
+                        ->withErrors([
+                            'email' => $this->getFailedLoginMessage(),
+        ]);
 //    
+    }
 
 }
