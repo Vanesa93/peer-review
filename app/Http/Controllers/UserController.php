@@ -111,13 +111,20 @@ class UserController extends Controller {
      */
     public function edit($id) {
 //        $user = User::find($id);
-//
+//        $lecturers = DB::table('users')
+//                ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
+//                ->where('users.account_type', 1)
+//                ->get();
+//        $students = DB::table('users')
+//                ->join('students', 'users.id', '=', 'students.user_id_students')
+//                ->where('users.account_type', 2)
+//                ->get();
 //        if ($user->account_type = 1) {
-//            $user = DB::table('users')
-//                    ->where('id',$id)
-//                    ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
-//                    ->get();
-//            dd($user);
+//            collect($lecturers);
+//            dd($lecturers);
+//            dd($filtered);
+//            $filtered->all();
+//             dd($filtered);
 //        } elseif ($user->account_type = 2) {
 //            $user = DB::table('students')
 //                    ->join('users', 'students.user_id_students', '=', 'users.id')
