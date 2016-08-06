@@ -123,7 +123,6 @@ class CoursesController extends Controller {
         $course = Courses::find($id);
         $course->delete();
         Session::flash('message', 'Successfully deleted the nerd!');
-        return Redirect::to('courses');
     }
 
 }
