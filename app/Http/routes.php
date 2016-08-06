@@ -49,6 +49,9 @@ Route::delete('courses/remove/{id}', 'CoursesController@destroy');
 
 Route::get('register', 'AdminController@register');
 Route::post('register/user', 'AdminController@create');
+//Route::post('register/userContinue', 'AdminController@addUser');
+
 Route::get('users', 'AdminController@getUsers');
+
 
 

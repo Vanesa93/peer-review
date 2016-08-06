@@ -10,7 +10,7 @@ use App\User;
 use App\Lecturer;
 use App\Students;
 use Validator;
-
+use DB;
 
 class AdminController extends Controller {
 
@@ -20,7 +20,7 @@ class AdminController extends Controller {
      * @return Response
      */
     public function __construct(Registrar $registrar) {
-         $this->middleware('admin');
+        $this->middleware('admin');
         $this->registrar = $registrar;
     }
 
@@ -33,7 +33,7 @@ class AdminController extends Controller {
     }
 
     public function validator(array $data) {
-        return \Illuminate\Validation\Validator::make($data, [
+        return Validator::make($data, [
                     'forename' => 'required|max:255',
                     'email' => 'required|email|max:255|unique:users',
                     'password' => 'required|confirmed|min:6',
@@ -83,10 +83,56 @@ class AdminController extends Controller {
         }
         return redirect('users');
     }
-    
+
+    public function addUser(Request $data) {
+        dd($user);
+        $user = new User([
+            'account_type' => $data['account_type'],
+            'username' => $data['username'],
+            'forename' => $data['forename'],
+            'familyName' => $data['familyName'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+                //account_type 1 - lecturer, 2- student
+        ]);
+        $user->save();
+        if ($data['account_type'] == 1) {
+            $lecturer = new Lecturer([
+                'cabinet' => $data['cabinet'],
+                'department' => $data['department'],
+                'degree' => $data['degree'],
+                'mobile' => $data['mobile'],
+            ]);
+            $lecturer->user_id_lecturer = $user->id;
+            $lecturer->save();
+        } else {
+            $student = new Students([
+                'year' => $data['year'],
+                'semester' => $data['semester'],
+                'group' => $data['group'],
+                'department' => $data['department'],
+                'degree' => $data['degree'],
+                'mobile' => $data['mobile'],
+                'faculty' => $data['faculty']
+            ]);
+            $student->user_id_students = $user->id;
+            $student->save();
+        }
+        return redirect('register');
+    }
+
     public function getUsers() {
-        return view('admin.users');
-        
+
+   
+        $lecturers=DB::table('users')
+            ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
+            ->where('users.account_type',1)
+             ->get();
+         $students=DB::table('users')
+            ->join('students', 'users.id', '=', 'students.user_id_students')
+            ->where('users.account_type',2)
+             ->get();
+        return view('admin.users')->with('lecturers', $lecturers)->with('students',$students);
     }
 
     /**
@@ -94,7 +140,6 @@ class AdminController extends Controller {
      *
      * @return Response
      */
-   
 
     /**
      * Store a newly created resource in storage.

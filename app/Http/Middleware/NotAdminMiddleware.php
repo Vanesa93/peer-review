@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Auth;
 
-class AdminMiddleware {
+class NotAdminMiddleware {
 
     /**
      * Handle an incoming request.
@@ -15,8 +15,8 @@ class AdminMiddleware {
      * @return mixed
      */
     public function handle($request, Closure $next) {
-        
-        if (Auth::check() && Auth::user()->account_type==0) {
+
+        if (Auth::check() && Auth::user()->account_type !== 0) {
             return $next($request);
         }
 

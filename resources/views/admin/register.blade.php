@@ -28,7 +28,7 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         @include('partials.firstRegistrationForm')
-                        @include('partials.secondRegistrationForm')
+                        @include('admin.secondRegistrationFormAdmin')
 
                     </form>
                 </div>
