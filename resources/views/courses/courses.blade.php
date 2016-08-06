@@ -90,8 +90,8 @@
                                 </tr>
                             <div id="dialog{{$course->id}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>Are you sure you want to delete course <b>{{$course->name}}<b></h5>
-                                <button type="button" class="buttonEdit"  id="onDelete{{$course->id}}">
-                                    <span class="glyphicon glyphicon-remove"></span>
+                                            <button type="button" class="button" style="float:right" id="onDelete{{$course->id}}">
+                                    Delete
                                 </button>
                             </div>
 
