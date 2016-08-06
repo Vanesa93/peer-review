@@ -1,26 +1,39 @@
 <?php
 
-namespace App\Services;
+namespace App\Http\Controllers;
 
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+use App\Services\Registrar;
+use Illuminate\Http\Request;
 use App\User;
-use Validator;
-use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
-use DB;
 use App\Lecturer;
 use App\Students;
+use Validator;
 
-class Registrar implements RegistrarContract {
 
-
+class AdminController extends Controller {
 
     /**
-     * Get a validator for an incoming registration request.
+     * Display a listing of the resource.
      *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @return Response
      */
+    public function __construct(Registrar $registrar) {
+         $this->middleware('admin');
+        $this->registrar = $registrar;
+    }
+
+    public function register() {
+        return view('admin.register');
+    }
+
+    public function index() {
+        //
+    }
+
     public function validator(array $data) {
-        return Validator::make($data, [
+        return \Illuminate\Validation\Validator::make($data, [
                     'forename' => 'required|max:255',
                     'email' => 'required|email|max:255|unique:users',
                     'password' => 'required|confirmed|min:6',
@@ -35,7 +48,7 @@ class Registrar implements RegistrarContract {
      * @param  array  $data
      * @return User
      */
-    public function create(array $data) {
+    public function create(Request $data) {
         $user = new User([
             'account_type' => $data['account_type'],
             'username' => $data['username'],
@@ -68,7 +81,68 @@ class Registrar implements RegistrarContract {
             $student->user_id_students = $user->id;
             $student->save();
         }
-        return $user;
+        return redirect('users');
+    }
+    
+    public function getUsers() {
+        return view('admin.users');
+        
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return Response
+     */
+   
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return Response
+     */
+    public function store() {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($id) {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function edit($id) {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update($id) {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function destroy($id) {
+        //
     }
 
 }

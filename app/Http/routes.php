@@ -47,4 +47,8 @@ Route::put('courses/edit/{id}/update', [
 ]);
 Route::delete('courses/remove/{id}', 'CoursesController@destroy');
 
+Route::get('register', 'AdminController@register');
+Route::post('register/user', 'AdminController@create');
+Route::get('users', 'AdminController@getUsers');
+
 

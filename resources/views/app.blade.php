@@ -30,6 +30,7 @@
             @yield('courses')
             @yield('create_courses')
             @yield('edit_course')
+            @yield('users')
         </div>
     </body>
 </html>

@@ -61,15 +61,18 @@
                     <li><a href="/"> {{trans('messages.courses')}}</a></li>
                     <li><a href="/"> {{trans('messages.upload')}}</a></li>
                     <li><a href="/"> {{trans('messages.messages')}}</a></li>
+                    @elseif(Auth::user()->account_type==0)
+                    <li><a href="/"> {{trans('messages.groups')}}</a></li>
+                    <li><a href="/register"> Register User</a></li>
+                    <li><a href="/"> Users</a></li>
                     @endif
                     @endif
 
                 </ul>
-
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
                     <li><a href="/auth/login">{{trans('messages.login')}}</a></li>
-                    <li><a href="/auth/register">{{trans('messages.register')}}</a></li>
+<!--                    <li><a href="/auth/register">{{trans('messages.register')}}</a></li>-->
 
                     @else
                     <li class="dropdown">
