@@ -182,7 +182,7 @@
     $("#datepicker").datepicker("option", "dateFormat", 'd MM, y');
     //datatable create
     $('#lecturersTable').DataTable();
-       $('#studentsTable').DataTable();
+    $('#studentsTable').DataTable();
     //hide datatable info tag
     $('.dataTables_info').hide();
     $("#create").on("click", function () {
@@ -190,22 +190,22 @@
     });
 <?php foreach ($lecturers as $lecturer) { ?>
         $("#editLecturer{{$lecturer->id}}").on("click", function () {
-        location.href = "{{url("courses/edit/")}}" + "/" + {{$lecturer -> id}};
+        location.href = "{{url("users/edit/")}}" + "/" + {{$lecturer -> id}};
         });
-        $("#deleteLecturer{{$lecturer->id}}").on("click", function () {
-        $("#dialoglecturer{{$lecturer->id}}").dialog();                  
-        });
-        $("#onDeleteLecturer{{$lecturer->id}}").on("click", function () {
-            $.ajax({
-    url: "{{url("courses/remove/")}}" + "/" + "{{$lecturer -> id}}",
-    type: 'delete',
-    data: {_token: '{{csrf_token()}}' ,_method: 'delete'},
-    success: function(){
-                     location.href = "{{url("courses")}}";
-
-    }
-        });
-        });
+//        $("#deleteLecturer{{$lecturer->id}}").on("click", function () {
+//        $("#dialoglecturer{{$lecturer->id}}").dialog();                  
+//        });
+//        $("#onDeleteLecturer{{$lecturer->id}}").on("click", function () {
+//            $.ajax({
+//    url: "{{url("courses/remove/")}}" + "/" + "{{$lecturer -> id}}",
+//    type: 'delete',
+//    data: {_token: '{{csrf_token()}}' ,_method: 'delete'},
+//    success: function(){
+//                     location.href = "{{url("courses")}}";
+//
+//    }
+//        });
+//        });
 <?php } ?>
 
 

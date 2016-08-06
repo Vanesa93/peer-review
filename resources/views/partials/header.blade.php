@@ -64,7 +64,7 @@
                     @elseif(Auth::user()->account_type==0)
                     <li><a href="/"> {{trans('messages.groups')}}</a></li>
                     <li><a href="/register"> Register User</a></li>
-                    <li><a href="/"> Users</a></li>
+                    <li><a href="/users"> Users</a></li>
                     @endif
                     @endif
 

@@ -47,11 +47,12 @@ Route::put('courses/edit/{id}/update', [
 ]);
 Route::delete('courses/remove/{id}', 'CoursesController@destroy');
 
-Route::get('register', 'AdminController@register');
-Route::post('register/user', 'AdminController@create');
+//users
+Route::get('register', 'UserController@register');
+Route::post('register/user', 'UserController@create');
 //Route::post('register/userContinue', 'AdminController@addUser');
-
 Route::get('users', 'AdminController@getUsers');
+Route::get('users/edit/{id}', 'UserController@edit');
 
 
 

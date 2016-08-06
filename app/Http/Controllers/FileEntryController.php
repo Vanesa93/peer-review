@@ -13,25 +13,26 @@ use Response;
 
 class FileEntryController extends Controller {
 
-    public function __construct()
-	{
-		$this->middleware('auth');
-                
-	}
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('notAdmin');
+        $this->middleware('language');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
     public function index() {
-        $entries= DB::table('fileentries')->get();       
-        return view('fileentries.index',  compact('entries'));
+        $entries = DB::table('fileentries')->get();
+        return view('fileentries.index', compact('entries'));
     }
 
     public function add(Request $request) {
         $file = $request->all();
         $extension = $file['filefield']->getClientOriginalExtension();
-        $r=Storage::disk('local')->put($file['filefield']->getFilename() . '.' . $extension, File::get($file['filefield']));
+        $r = Storage::disk('local')->put($file['filefield']->getFilename() . '.' . $extension, File::get($file['filefield']));
         $entry = new Fileentry();
         $entry->mime = $file['filefield']->getClientMimeType();
         $entry->original_filename = $file['filefield']->getClientOriginalName();
@@ -42,7 +43,7 @@ class FileEntryController extends Controller {
 
     public function get($filename) {
 
-        $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();      
+        $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();
         $file = Storage::disk('local')->get($entry->filename);
         return $file;
     }

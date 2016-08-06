@@ -10,6 +10,8 @@ class GroupsController extends Controller {
 
     public function __construct() {
         $this->middleware('auth');
+        $this->middleware('notAdmin');
+        $this->middleware('language');
     }
 
 }
