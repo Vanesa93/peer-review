@@ -11,18 +11,9 @@
                     <li class="active" id='firstActive'></li>
                     <li id='secondActive'></li>                
                 </ul>
-                <div class="panel-heading">{{trans('messages.register')}}</div>
+                <div class="panel-heading">Register user</div>
                 <div class="panel-body">
-                    @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
+                    
 
                     <form class="form-horizontal" id="registerForm"  method="POST" action="/register/user" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
