@@ -53,6 +53,7 @@ Route::post('register/user', 'UserController@create');
 //Route::post('register/userContinue', 'AdminController@addUser');
 Route::get('users', 'AdminController@getUsers');
 Route::get('users/edit/{id}', 'UserController@edit');
-
+Route::put('courses/edit/{id}/updateUser', [
+    'as' => 'updateUser', 'uses' => 'UserController@update']);
 
 

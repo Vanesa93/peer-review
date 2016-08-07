@@ -78,12 +78,13 @@ class AdminController extends Controller {
     public function getUsers() {
         $lecturers = DB::table('users')
                 ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
-                ->where('users.account_type', 1)
+                ->where('users.account_type',1)
                 ->get();
         $students = DB::table('users')
                 ->join('students', 'users.id', '=', 'students.user_id_students')
-                ->where('users.account_type', 2)
+                ->where('users.account_type',2)
                 ->get();
+        
         return view('admin.users')->with('lecturers', $lecturers)->with('students', $students);
     }
 

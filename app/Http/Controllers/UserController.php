@@ -10,6 +10,7 @@ use App\Lecturer;
 use App\Students;
 use Validator;
 use DB;
+use Session;
 
 class UserController extends Controller {
 
@@ -111,30 +112,35 @@ class UserController extends Controller {
      */
     public function edit($id) {
         $user = User::find($id);
-        if ($user->account_type = 1) {
+        $sessionLanguage = Session::get('locale') . '_name';
+        if (empty(Session::get('locale'))) {
+            $sessionLanguage = 'en_name';
+        }
+        $userAccountType = DB::table('account_types')->where('account_type', $user->account_type)->pluck($sessionLanguage);
+        if ($user->account_type == 1) {
             $lecturers = DB::table('users')
                     ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
                     ->where('users.account_type', 1)
                     ->get();
             foreach ($lecturers as $lecturer) {
-                if ($lecturer->id == $user->id) {
+                if ($lecturer->user_id_lecturer == $user->id) {
                     $user = $lecturer;
                 }
             }
-        } elseif ($user->account_type = 2) {
+        } elseif ($user->account_type == 2) {
             $students = DB::table('users')
                     ->join('students', 'users.id', '=', 'students.user_id_students')
                     ->where('users.account_type', 2)
                     ->get();
             foreach ($students as $student) {
-                if ($student->id == $user->id) {
+                if ($student->user_id_students == $user->id) {
                     $user = $student;
                 }
             }
         } else {
             return redirect()->back();
         }
-        return view('users.editUser')->with('user', $user);
+        return view('users.editUser')->with('user', $user)->with('userAccountType', $userAccountType);
     }
 
     /**

@@ -81,22 +81,22 @@
                                     <td style="max-width:40px;">{{$lecturer->mobile}}</td>
                                     <td style="max-width:40px;">{{$lecturer->cabinet}}</td>
                                     <td>
-                                        <button type="button" class="buttonEdit"  id="editLecturer{{$lecturer->id}}">
+                                        <button type="button" class="buttonEdit"  id="editLecturer{{$lecturer->user_id_lecturer}}">
                                             <span class="glyphicon glyphicon-edit"></span>
                                         </button>
                                     </td>
                                     <td>
-                                        {!! Form::open(array('url' => 'courses/remove/' . $lecturer->id)) !!}
+                                        {!! Form::open(array('url' => 'courses/remove/' . $lecturer->user_id_lecturer)) !!}
                                         {!! Form::hidden('_method', 'DELETE') !!}
-                                        <button type="button" class="buttonEdit"  id="deleteLecturer{{$lecturer->id}}">
+                                        <button type="button" class="buttonEdit"  id="deleteLecturer{{$lecturer->user_id_lecturer}}">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                            <div id="dialogLecturer{{$lecturer->id}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
+                            <div id="dialogLecturer{{$lecturer->user_id_lecturer}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>Are you sure you want to delete lecturer <b>{{$lecturer->username}}<b></h5>
-                                            <button type="button" class="button" style="float:right" id="onDeleteLecturer{{$lecturer->id}}">
+                                            <button type="button" class="button" style="float:right" id="onDeleteLecturer{{$lecturer->user_id_lecturer}}">
                                     Delete
                                 </button>
                             </div>
@@ -144,22 +144,22 @@
                                     <td style="max-width:40px;">{{$student->semester}}</td>
                                     <td style="max-width:40px;">{{$student->group}}</td>
                                     <td>
-                                        <button type="button" class="buttonEdit"  id="editStudent{{$student->id}}">
+                                        <button type="button" class="buttonEdit"  id="editStudent{{$student->user_id_students}}">
                                             <span class="glyphicon glyphicon-edit"></span>
                                         </button>
                                     </td>
                                     <td>
-                                        {!! Form::open(array('url' => 'courses/remove/' . $student->id)) !!}
+                                        {!! Form::open(array('url' => 'courses/remove/' . $student->user_id_students)) !!}
                                         {!! Form::hidden('_method', 'DELETE') !!}
-                                        <button type="button" class="buttonEdit"  id="deleteStudent{{$student->id}}">
+                                        <button type="button" class="buttonEdit"  id="deleteStudent{{$student->user_id_students}}">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                            <div id="dialogStudent{{$student->id}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
+                            <div id="dialogStudent{{$student->user_id_students}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>Are you sure you want to delete student <b>{{$student->username}}<b></h5>
-                                            <button type="button" class="button" style="float:right" id="onDeleteStudent{{$student->id}}">
+                                            <button type="button" class="button" style="float:right" id="onDeleteStudent{{$student->user_id_students}}">
                                     Delete
                                 </button>
                             </div>
@@ -189,8 +189,11 @@
     location.href = "{{url("register")}}";
     });
 <?php foreach ($lecturers as $lecturer) { ?>
-        $("#editLecturer{{$lecturer->id}}").on("click", function () {
-        location.href = "{{url("users/edit/")}}" + "/" + {{$lecturer -> id}};
+        $("#editLecturer{{$lecturer->user_id_lecturer}}").on("click", function () {
+        location.href = "{{url("users/edit/")}}" + "/" + {{$lecturer -> user_id_lecturer}};
+        });
+        $("#editStudent{{$student->user_id_students}}").on("click", function () {
+        location.href = "{{url("users/edit/")}}" + "/" + {{$student -> user_id_students}};
         });
 //        $("#deleteLecturer{{$lecturer->id}}").on("click", function () {
 //        $("#dialoglecturer{{$lecturer->id}}").dialog();                  
