@@ -63,7 +63,7 @@ Route::get('groups','GroupsController@index');
 
 //faculties and majors- admin
 Route::get('faculties','AdminController@getFaculties');
-Route::get('majors','AdminController@getMajors');
+Route::get('majors/{id}','AdminController@getMajors');
 Route::get('add/faculty','AdminController@addFaculty');
 Route::get('add/major','AdminController@addMajor');
 Route::post('storeFaculty','AdminController@storeFaculty');

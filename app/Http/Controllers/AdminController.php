@@ -13,6 +13,8 @@ use Validator;
 use DB;
 use App\Faculty;
 use Input;
+use App\Major;
+use Session;
 
 class AdminController extends Controller {
 
@@ -31,8 +33,15 @@ class AdminController extends Controller {
         return view('admin.faculties')->with('faculties', $faculties);
     }
 
-    public function getMajors() {
-        return view('admin.majors');
+    public function getMajors($facultyId) {
+        $majors = Major::all();
+        $faculty = Faculty::find($facultyId);
+        $facultyColumnName = Session::get('locale') . '_name';
+        if (empty(Session::get('locale'))) {
+            $facultyColumnName = 'en_name';
+        }
+        $facultyName=DB::table('faculties')->where('id',$facultyId)->pluck($facultyColumnName);
+        return view('admin.majors')->with('majors', $majors)->with('faculty', $faculty)->with('facultyName',$facultyName);
     }
 
     public function addFaculty() {

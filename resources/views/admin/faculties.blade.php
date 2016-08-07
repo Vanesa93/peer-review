@@ -32,9 +32,6 @@
         text-decoration: none;
     }
 </style>
-<div id="dialog" title="Basic dialog" style="display:none;">
-    <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
@@ -54,6 +51,7 @@
                                     <th>Bulgarian name</th>
                                     <th>English name</th>
                                     <th>German name</th>
+                                    <th>Add Majors</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -66,7 +64,11 @@
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->bg_name}}</td>
                                      <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->en_name}}</td>
                                       <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->de_name}}</td>
-
+                                      <td>
+                                        <button type="button" class="buttonEdit"  id="add{{$faculty->id}}">
+                                            <span class="glyphicon glyphicon-plus-sign"></span>
+                                        </button>
+                                    </td>
                                       <td>
                                         <button type="button" class="buttonEdit"  id="edit{{$faculty->id}}">
                                             <span class="glyphicon glyphicon-edit"></span>
@@ -114,6 +116,9 @@
 <?php foreach ($faculties as $faculty) { ?>
                                                     $("#edit{{$faculty->id}}").on("click", function () {
                                                     location.href = "{{url("faculty/edit/")}}" + "/" + {{$faculty->id}};
+                                                    });
+                                                     $("#add{{$faculty->id}}").on("click", function () {
+                                                    location.href = "{{url("majors")}}" + "/" + {{$faculty->id}};
                                                     });
                                                     $("#delete{{$faculty->id}}").on("click", function () {
                                                     $("#dialog{{$faculty->id}}").dialog();
