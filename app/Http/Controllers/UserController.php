@@ -110,32 +110,31 @@ class UserController extends Controller {
      * @return Response
      */
     public function edit($id) {
-//        $user = User::find($id);
-//        $lecturers = DB::table('users')
-//                ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
-//                ->where('users.account_type', 1)
-//                ->get();
-//        $students = DB::table('users')
-//                ->join('students', 'users.id', '=', 'students.user_id_students')
-//                ->where('users.account_type', 2)
-//                ->get();
-//        if ($user->account_type = 1) {
-//            collect($lecturers);
-//            dd($lecturers);
-//            dd($filtered);
-//            $filtered->all();
-//             dd($filtered);
-//        } elseif ($user->account_type = 2) {
-//            $user = DB::table('students')
-//                    ->join('users', 'students.user_id_students', '=', 'users.id')
-//                    ->get();
-//        } else {
-//            return redirect()->back();
-//        }
-//        dd($user);
-//
-//
-//        return ('users.editUsers');
+        $user = User::find($id);
+        if ($user->account_type = 1) {
+            $lecturers = DB::table('users')
+                    ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
+                    ->where('users.account_type', 1)
+                    ->get();
+            foreach ($lecturers as $lecturer) {
+                if ($lecturer->id == $user->id) {
+                    $user = $lecturer;
+                }
+            }
+        } elseif ($user->account_type = 2) {
+            $students = DB::table('users')
+                    ->join('students', 'users.id', '=', 'students.user_id_students')
+                    ->where('users.account_type', 2)
+                    ->get();
+            foreach ($students as $student) {
+                if ($student->id == $user->id) {
+                    $user = $student;
+                }
+            }
+        } else {
+            return redirect()->back();
+        }
+        return view('users.editUser')->with('user', $user);
     }
 
     /**
