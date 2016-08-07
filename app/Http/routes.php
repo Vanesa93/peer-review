@@ -61,10 +61,12 @@ Route::delete('users/remove/{id}', 'UserController@destroy');
 Route::get('groups/create','GroupsController@create');
 Route::get('groups','GroupsController@index');
 
-//faculties- admin
+//faculties and majors- admin
 Route::get('faculties','AdminController@getFaculties');
 Route::get('majors','AdminController@getMajors');
 Route::get('add/faculty','AdminController@addFaculty');
 Route::get('add/major','AdminController@addMajor');
 Route::post('storeFaculty','AdminController@storeFaculty');
-
+Route::get('faculty/edit/{id}', 'AdminController@editFaculty');
+Route::put('faculty/edit/{id}/updateFaculty', [
+    'as' => 'updateFaculty', 'uses' => 'AdminController@updateFaculty']);

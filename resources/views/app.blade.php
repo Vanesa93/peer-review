@@ -40,6 +40,7 @@
             @yield('majors')
             @yield('add_faculty')
             @yield('add_major')
+            @yield('edit_faculty')
         </div>
     </body>
 </html>

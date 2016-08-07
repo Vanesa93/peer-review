@@ -12,6 +12,7 @@ use App\Students;
 use Validator;
 use DB;
 use App\Faculty;
+use Input;
 
 class AdminController extends Controller {
 
@@ -26,7 +27,8 @@ class AdminController extends Controller {
     }
 
     public function getFaculties() {
-        return view('admin.faculties');
+        $faculties = Faculty::all();
+        return view('admin.faculties')->with('faculties', $faculties);
     }
 
     public function getMajors() {
@@ -37,12 +39,40 @@ class AdminController extends Controller {
         return view('admin.addFaculty');
     }
 
+    public function editFaculty($id) {
+        $faculty = Faculty::find($id);
+        return view('admin.editFaculty')->with('faculty', $faculty);
+    }
+
+    public function updateFaculty($id) {
+
+        $rules = array(
+            'bg_name' => 'required|max:100',
+            'en_name' => 'required|max:100',
+            'de_name' => 'required|max:100',
+        );
+        $validator = \Validator::make(Input::all(), $rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return \Redirect::to('faculties/edit/' . $id)
+                            ->withErrors($validator);
+        } else {
+            $faculty = Faculty::find($id);
+            $faculty->bg_name = Input::get('bg_name');
+            $faculty->en_name = Input::get('en_name');
+            $faculty->de_name = Input::get('de_name');
+            $faculty->save();
+
+            return \Redirect::to('faculties');
+        }
+    }
+
     public function storeFaculty(Request $request) {
         $faculty = new Faculty([
             'bg_name' => $request->get('bg_name'),
             'en_name' => $request->get('en_name'),
             'de_name' => $request->get('en_name'),
-         
         ]);
         $faculty->save();
 
