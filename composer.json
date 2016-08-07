@@ -1,6 +1,6 @@
 {
-	"name": "laravel/laravel",
-	"description": "The Laravel Framework.",
+	"name": "peer-review",
+	"description": "Web-application for peer-review",
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
 	"type": "project",

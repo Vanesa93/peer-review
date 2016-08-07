@@ -14,4 +14,12 @@ class GroupsController extends Controller {
         $this->middleware('language');
     }
 
+    public function create() {
+        return view('groups.createGroups');
+    }
+
+    public function index() {
+        return view('groups.getGroups');
+    }
+
 }

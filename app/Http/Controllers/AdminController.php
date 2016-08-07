@@ -11,6 +11,7 @@ use App\Lecturer;
 use App\Students;
 use Validator;
 use DB;
+use App\Faculty;
 
 class AdminController extends Controller {
 
@@ -22,6 +23,34 @@ class AdminController extends Controller {
     public function __construct(Registrar $registrar) {
         $this->middleware('admin');
         $this->registrar = $registrar;
+    }
+
+    public function getFaculties() {
+        return view('admin.faculties');
+    }
+
+    public function getMajors() {
+        return view('admin.majors');
+    }
+
+    public function addFaculty() {
+        return view('admin.addFaculty');
+    }
+
+    public function storeFaculty(Request $request) {
+        $faculty = new Faculty([
+            'bg_name' => $request->get('bg_name'),
+            'en_name' => $request->get('en_name'),
+            'de_name' => $request->get('en_name'),
+         
+        ]);
+        $faculty->save();
+
+        return redirect('faculties');
+    }
+
+    public function addMajor() {
+        return view('admin.addMajor');
     }
 
     public function index() {
@@ -38,51 +67,14 @@ class AdminController extends Controller {
         
     }
 
-//    public function addUser(Request $data) {
-//        dd($user);
-//        $user = new User([
-//            'account_type' => $data['account_type'],
-//            'username' => $data['username'],
-//            'forename' => $data['forename'],
-//            'familyName' => $data['familyName'],
-//            'email' => $data['email'],
-//            'password' => bcrypt($data['password']),
-//                //account_type 1 - lecturer, 2- student
-//        ]);
-//        $user->save();
-//        if ($data['account_type'] == 1) {
-//            $lecturer = new Lecturer([
-//                'cabinet' => $data['cabinet'],
-//                'department' => $data['department'],
-//                'degree' => $data['degree'],
-//                'mobile' => $data['mobile'],
-//            ]);
-//            $lecturer->user_id_lecturer = $user->id;
-//            $lecturer->save();
-//        } else {
-//            $student = new Students([
-//                'year' => $data['year'],
-//                'semester' => $data['semester'],
-//                'group' => $data['group'],
-//                'department' => $data['department'],
-//                'degree' => $data['degree'],
-//                'mobile' => $data['mobile'],
-//                'faculty' => $data['faculty']
-//            ]);
-//            $student->user_id_students = $user->id;
-//            $student->save();
-//        }
-//        return redirect('register');
-//    }
-
     public function getUsers() {
         $lecturers = DB::table('users')
                 ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
-                ->where('users.account_type',1)
+                ->where('users.account_type', 1)
                 ->get();
         $students = DB::table('users')
                 ->join('students', 'users.id', '=', 'students.user_id_students')
-                ->where('users.account_type',2)
+                ->where('users.account_type', 2)
                 ->get();
         return view('admin.users')->with('lecturers', $lecturers)->with('students', $students);
     }

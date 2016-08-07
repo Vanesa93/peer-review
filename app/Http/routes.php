@@ -57,4 +57,14 @@ Route::put('users/edit/{id}/updateUser', [
     'as' => 'updateUser', 'uses' => 'UserController@update']);
 Route::delete('users/remove/{id}', 'UserController@destroy');
 
+//groups create- admin
+Route::get('groups/create','GroupsController@create');
+Route::get('groups','GroupsController@index');
+
+//faculties- admin
+Route::get('faculties','AdminController@getFaculties');
+Route::get('majors','AdminController@getMajors');
+Route::get('add/faculty','AdminController@addFaculty');
+Route::get('add/major','AdminController@addMajor');
+Route::post('storeFaculty','AdminController@storeFaculty');
 

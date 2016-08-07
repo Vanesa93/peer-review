@@ -34,6 +34,12 @@
             @yield('edit_course')
             @yield('users')
             @yield('edit_user')
+            @yield('create_groups')
+            @yield('get_groups')
+            @yield('faculties')
+            @yield('majors')
+            @yield('add_faculty')
+            @yield('add_major')
         </div>
     </body>
 </html>
