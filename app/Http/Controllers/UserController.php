@@ -34,17 +34,6 @@ class UserController extends Controller {
         //
     }
 
-    public function validator(array $data) {
-        return Validator::make($data, [
-                    'username' => 'required',
-                    'forename' => 'required|max:255',
-                    'email' => 'required|email|max:255|unique:users',
-                    'password' => 'required|confirmed|min:6',
-                    'account_type' => 'required',
-                    'mobile' => 'required'
-        ]);
-    }
-
     /**
      * Create a new user instance after a valid registration.
      *
@@ -52,39 +41,54 @@ class UserController extends Controller {
      * @return User
      */
     public function create(Request $data) {
-        $user = new User([
-            'account_type' => $data['account_type'],
-            'username' => $data['username'],
-            'forename' => $data['forename'],
-            'familyName' => $data['familyName'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-                //account_type 1 - lecturer, 2- student
-        ]);
-        $user->save();
-        if ($data['account_type'] == 1) {
-            $lecturer = new Lecturer([
-                'cabinet' => $data['cabinet'],
-                'department' => $data['department'],
-                'degree' => $data['degree'],
-                'mobile' => $data['mobile'],
-            ]);
-            $lecturer->user_id_lecturer = $user->id;
-            $lecturer->save();
+        $rules = array(
+            'username' => 'required||unique:users',
+            'forename' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|confirmed|min:6',
+            'account_type' => 'required',
+            'mobile' => 'required'
+        );
+
+        $validator = \Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return \Redirect::to('register')
+                            ->withErrors($validator);
         } else {
-            $student = new Students([
-                'year' => $data['year'],
-                'semester' => $data['semester'],
-                'group' => $data['group'],
-                'department' => $data['department'],
-                'degree' => $data['degree'],
-                'mobile' => $data['mobile'],
-                'faculty' => $data['faculty']
+            $user = new User([
+                'account_type' => $data['account_type'],
+                'username' => $data['username'],
+                'forename' => $data['forename'],
+                'familyName' => $data['familyName'],
+                'email' => $data['email'],
+                'password' => bcrypt($data['password']),
+                    //account_type 1 - lecturer, 2- student
             ]);
-            $student->user_id_students = $user->id;
-            $student->save();
+            $user->save();
+            if ($data['account_type'] == 1) {
+                $lecturer = new Lecturer([
+                    'cabinet' => $data['cabinet'],
+                    'department' => $data['department'],
+                    'degree' => $data['degree'],
+                    'mobile' => $data['mobile'],
+                ]);
+                $lecturer->user_id_lecturer = $user->id;
+                $lecturer->save();
+            } else {
+                $student = new Students([
+                    'year' => $data['year'],
+                    'semester' => $data['semester'],
+                    'group' => $data['group'],
+                    'department' => $data['department'],
+                    'degree' => $data['degree'],
+                    'mobile' => $data['mobile'],
+                    'faculty' => $data['faculty']
+                ]);
+                $student->user_id_students = $user->id;
+                $student->save();
+            }
+            return redirect('users');
         }
-        return redirect('users');
     }
 
     /**
@@ -122,7 +126,7 @@ class UserController extends Controller {
         $user = $this->lecturerOrUser($user);
         if ($user->account_type == 1) {
             $userId = $user->user_id_lecturer;
-        } elseif ($user -> account_type == 2) {
+        } elseif ($user->account_type == 2) {
             $userId = $user->user_id_students;
         }
         if (!empty($user)) {
@@ -145,7 +149,7 @@ class UserController extends Controller {
             'email' => 'required|max:255',
             'mobile' => 'required'
         );
-        
+
         $validator = \Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
             return \Redirect::to('users/edit/' . $id)

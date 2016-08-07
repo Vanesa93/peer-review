@@ -182,6 +182,7 @@ $(document).ready(function () {
                         }
                     }
                 },
+                email:true,
                 required: true
             },
             password: {
@@ -213,6 +214,7 @@ $(document).ready(function () {
             },
             email: {
                 required: "Please enter your email",
+                email:"Enter valid email",
                 remote: "Not unique",
             },
             password: {
