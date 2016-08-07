@@ -101,7 +101,7 @@ class CoursesController extends Controller {
             return \Redirect::to('courses/edit/' . $id)
                             ->withErrors($validator);
         } else {
-            $course =  Courses::find($id);;
+            $course =  Courses::find($id);
             $course->name = Input::get('name');
             $course->description = Input::get('description');
             $course->language = Input::get('language');

@@ -11,6 +11,7 @@ use App\Students;
 use Validator;
 use DB;
 use Session;
+use Redirect;
 
 class UserController extends Controller {
 
@@ -35,6 +36,7 @@ class UserController extends Controller {
 
     public function validator(array $data) {
         return Validator::make($data, [
+                    'username' => 'required',
                     'forename' => 'required|max:255',
                     'email' => 'required|email|max:255|unique:users',
                     'password' => 'required|confirmed|min:6',
@@ -117,6 +119,56 @@ class UserController extends Controller {
             $sessionLanguage = 'en_name';
         }
         $userAccountType = DB::table('account_types')->where('account_type', $user->account_type)->pluck($sessionLanguage);
+        $user = $this->lecturerOrUser($user);
+        if ($user->account_type == 1) {
+            $userId = $user->user_id_lecturer;
+        } elseif ($user -> account_type == 2) {
+            $userId = $user->user_id_students;
+        }
+        if (!empty($user)) {
+            return view('users.editUser')->with('user', $user)->with('userAccountType', $userAccountType)->with('userId', $userId);
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  int  $id
+     * @return Response
+     */
+    public function update($id) {
+        $rules = array(
+            'username' => 'required',
+            'forename' => 'required|max:255',
+            'email' => 'required|max:255',
+            'mobile' => 'required'
+        );
+        
+        $validator = \Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return \Redirect::to('users/edit/' . $id)
+                            ->withErrors($validator);
+        } else {
+            $user = User::find($id);
+            if (!empty($user)) {
+                $user->username = Input::get('username');
+                $user->forename = Input::get('forename');
+                $user->familyName = Input::get('familyName');
+                $user->email = Input::get('email');
+                $user->save();
+                $accounTypeAdditionlData = $this->lecturerOrUserData($user, Input::all());
+            } else {
+                return redirect()->back();
+            }
+
+
+            return \Redirect::to('users');
+        }
+    }
+
+    private function lecturerOrUser($user) {
         if ($user->account_type == 1) {
             $lecturers = DB::table('users')
                     ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
@@ -137,20 +189,30 @@ class UserController extends Controller {
                     $user = $student;
                 }
             }
-        } else {
-            return redirect()->back();
         }
-        return view('users.editUser')->with('user', $user)->with('userAccountType', $userAccountType);
+        return $user;
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id) {
-        //
+    private function lecturerOrUserData($user, $input) {
+        if ($user->account_type == 1) {
+            $additionalData = Lecturer::where('user_id_lecturer', $user->id)->first();
+            $additionalData->mobile = Input::get('mobile');
+            $additionalData->cabinet = Input::get('cabinet');
+            $additionalData->department = Input::get('department');
+            $additionalData->degree = Input::get('degree');
+            $additionalData->save();
+        } elseif ($user->account_type == 2) {
+            $additionalData = Students::where('user_id_students', $user->id)->first();
+            $additionalData->year = Input::get('year');
+            $additionalData->semester = Input::get('semester');
+            $additionalData->group = Input::get('group');
+            $additionalData->department = Input::get('department');
+            $additionalData->degree = Input::get('degree');
+            $additionalData->mobile = Input::get('mobile');
+            $additionalData->faculty = Input::get('faculty');
+            $additionalData->save();
+        }
+        return $additionalData;
     }
 
     /**

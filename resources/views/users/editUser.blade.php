@@ -43,7 +43,7 @@
                         <div class="form-group">
                             <h2 style="margin-left: -55%;">Edit {{$userAccountType}} {{$user->username}}</h2> 
                         </div>
-                        {!! Form::model($user, array('route' => array('updateUser', $user->id), 'method' => 'PUT')) !!}
+                        {!! Form::model($user, array('route' => array('updateUser', $userId), 'method' => 'PUT')) !!}
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> Username</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
@@ -95,6 +95,12 @@
                             </div>
                         </div>
                         @elseif($user->account_type==2)
+                        <div class="form-group" >
+                            <label class="col-md-offset-3 col-md-2 control-label">Mobile</label>
+                            <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
+                                {!! Form::text('mobile', null, array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label">Year</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
