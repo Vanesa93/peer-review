@@ -43,8 +43,8 @@ class UserController extends Controller {
     public function create(Request $data) {
         $rules = array(
             'username' => 'required||unique:users',
-            'forename' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
+            'forename' => 'required|max:100',
+            'email' => 'required|email|max:100|unique:users',
             'password' => 'required|confirmed|min:6',
             'account_type' => 'required',
             'mobile' => 'required'
@@ -144,9 +144,9 @@ class UserController extends Controller {
      */
     public function update($id) {
         $rules = array(
-            'username' => 'required',
-            'forename' => 'required|max:255',
-            'email' => 'required|max:255',
+            'username' => 'required|unique:users,username,'.$id,
+            'forename' => 'required|max:100',
+            'email'=>'required|email|unique:users,email,'.$id ,
             'mobile' => 'required'
         );
 
@@ -225,8 +225,11 @@ class UserController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id) {
-        //
+      public function destroy($id) {
+        
+        $user = User::find($id);
+        $user ->delete();
+        Session::flash('message', 'Successfully deleted the nerd!');
     }
 
 }

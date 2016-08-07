@@ -43,7 +43,19 @@
                         <div class="form-group">
                             <h2 style="margin-left: -55%;">Edit {{$userAccountType}} {{$user->username}}</h2> 
                         </div>
-                        {!! Form::model($user, array('route' => array('updateUser', $userId), 'method' => 'PUT')) !!}
+                        {!! Form::model($user, array('route' => array('updateUser', $userId), 'method' => 'PUT','id'=>'editForm')) !!}
+                        @if(\Session::has('error'))
+                        <div class="flash-message">
+                            <div class="alert alert-danger">
+                                {{\Session::get('error')}}
+                            </div>
+                        </div>
+                        @endif
+                        @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            Username and email must be unique
+                        </div>
+                        @endif
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> Username</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
@@ -162,6 +174,115 @@
         $("#back").on("click", function () {
             location.href = "{{url("users")}}";
         });
+    });
+
+    jQuery.validator.addMethod("phone", function (phone_number, element) {
+        phone_number = phone_number.replace(/\s+/g, "");
+        return this.optional(element) || phone_number.length > 9 &&
+                phone_number.match(/[0-9 -()+]+$/);
+    }, "Please specify a valid phone number");
+
+    $('#editForm').validate({
+        ignore: ":hidden",
+        rules: {
+            username: {
+                required: true
+            },
+            forename: {
+                required: true,
+            },
+            familyName: {
+                required: true,
+            },
+            account_type: {
+                required: true
+            },
+            faculty: {
+                required: true
+            },
+            group: {
+                required: true,
+                number: true
+            },
+            degree: {
+                required: true
+            },
+            semester: {
+                number: true,
+                required: true
+            },
+            email: {
+                email: true,
+                required: true
+            },
+            password: {
+                required: true
+            },
+            password_confirmation: {
+                equalTo: "#password"
+            },
+            year: {
+                required: true,
+                number: true
+            },
+            department: {
+                required: true
+            },
+            mobile: {
+                required: true,
+                phone: true
+            },
+        },
+        // Specify the validation error messages
+        messages: {
+            username: {
+                required: "Please enter your username/faculty number(for students)",
+            },
+            forename: {
+                required: "Please enter your first name"
+            },
+            email: {
+                required: "Please enter your email",
+                email: "Enter valid email",
+            },
+            password: {
+                required: "Please enter your password",
+            },
+            password_confirmation: {
+                equalTo: "Password doesn't match"
+            },
+            account_type: {
+                required: "Please enter your position"
+            },
+            faculty: {
+                required: "Please enter your faculty"
+            },
+            year: {
+                required: "Please enter first year",
+                number: "Please enter valid first year"
+            },
+            familyName: {
+                required: "Please enter your family name"
+            },
+            group: {
+                required: "Please enter your group",
+                number: "Please enter valid group"
+            },
+            degree: {
+                required: "Please enter your degree"
+            },
+            semester: {
+                required: "Please enter your semester",
+                number: "Please enter valid semester"
+            },
+            department: {
+                required: "Please enter your department name"
+            },
+            mobile: {
+                required: "Please enter your mobile number",
+                phone: 'Please enter valid mobile'
+            },
+        }
     });
 </script>
 @stop

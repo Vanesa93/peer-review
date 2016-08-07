@@ -94,7 +94,7 @@
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                            <div id="dialogLecturer{{$lecturer->user_id_lecturer}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
+                                    <div id="dialogLecturer{{$lecturer->user_id_lecturer}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>Are you sure you want to delete lecturer <b>{{$lecturer->username}}<b></h5>
                                             <button type="button" class="button" style="float:right" id="onDeleteLecturer{{$lecturer->user_id_lecturer}}">
                                     Delete
@@ -122,6 +122,7 @@
                                     <th>First year</th>
                                     <th>Semester</th>
                                     <th>Group</th>
+                                    <th>Mobile</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -143,6 +144,7 @@
                                     <td style="max-width:40px;">{{$student->year}}</td>
                                     <td style="max-width:40px;">{{$student->semester}}</td>
                                     <td style="max-width:40px;">{{$student->group}}</td>
+                                    <td style="max-width:40px;">{{$student->mobile}}</td>
                                     <td>
                                         <button type="button" class="buttonEdit"  id="editStudent{{$student->user_id_students}}">
                                             <span class="glyphicon glyphicon-edit"></span>
@@ -190,29 +192,41 @@
     });
 <?php foreach ($lecturers as $lecturer) { ?>
         $("#editLecturer{{$lecturer->user_id_lecturer}}").on("click", function () {
-        location.href = "{{url("users/edit/")}}" + "/" + {{$lecturer -> user_id_lecturer}};
+            location.href = "{{url("users/edit/")}}" + "/" + {{$lecturer -> user_id_lecturer}};
+            });
+        $("#deleteLecturer{{$lecturer->user_id_lecturer}}").on("click", function () {
+            $("#dialogLecturer{{$lecturer->user_id_lecturer}}").dialog();                  
+            });
+        $("#onDeleteLecturer{{$lecturer->user_id_lecturer}}").on("click", function () {
+            $.ajax({
+                    url: "{{url("users/remove/")}}" + "/" + "{{$lecturer -> user_id_lecturer}}",
+                    type: 'delete',
+                    data: {_token: '{{csrf_token()}}' ,_method: 'delete'},
+                    success: function(){
+                                     location.href = "{{url("users")}}";
+                    }
+            });
         });
+        <?php } ?>
+        <?php foreach ($students as $student) { ?>
         $("#editStudent{{$student->user_id_students}}").on("click", function () {
         location.href = "{{url("users/edit/")}}" + "/" + {{$student -> user_id_students}};
         });
-//        $("#deleteLecturer{{$lecturer->id}}").on("click", function () {
-//        $("#dialoglecturer{{$lecturer->id}}").dialog();                  
-//        });
-//        $("#onDeleteLecturer{{$lecturer->id}}").on("click", function () {
-//            $.ajax({
-//    url: "{{url("courses/remove/")}}" + "/" + "{{$lecturer -> id}}",
-//    type: 'delete',
-//    data: {_token: '{{csrf_token()}}' ,_method: 'delete'},
-//    success: function(){
-//                     location.href = "{{url("courses")}}";
-//
-//    }
-//        });
-//        });
+         $("#deleteStudent{{$student->user_id_students}}").on("click", function () {
+            $("#dialogStudent{{$student->user_id_students}}").dialog();                  
+            });
+                $("#onDeleteStudent{{$student->user_id_students}}").on("click", function () {
+            $.ajax({
+                    url: "{{url("users/remove/")}}" + "/" + "{{$student -> user_id_students}}",
+                    type: 'delete',
+                    data: {_token: '{{csrf_token()}}' ,_method: 'delete'},
+                    success: function(){
+                                     location.href = "{{url("users")}}";
+                    }
+            });
+        });
+
 <?php } ?>
-
-
-
     });
 </script>
 @stop

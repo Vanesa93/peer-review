@@ -84,7 +84,6 @@ class AdminController extends Controller {
                 ->join('students', 'users.id', '=', 'students.user_id_students')
                 ->where('users.account_type',2)
                 ->get();
-        
         return view('admin.users')->with('lecturers', $lecturers)->with('students', $students);
     }
 

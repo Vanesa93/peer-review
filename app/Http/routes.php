@@ -55,5 +55,6 @@ Route::get('users', 'AdminController@getUsers');
 Route::get('users/edit/{id}', 'UserController@edit');
 Route::put('users/edit/{id}/updateUser', [
     'as' => 'updateUser', 'uses' => 'UserController@update']);
+Route::delete('users/remove/{id}', 'UserController@destroy');
 
 

@@ -39,6 +39,15 @@ class UsersTableSeeder extends Seeder {
                         'degree' => 'Bachelor',
                         'profilePhoto' => NUll,
                         'user_id_lecturer' => 1
+                    ],
+                    [
+                        'id' => 2,
+                        'mobile' => '0897945003',
+                        'cabinet' => 'te',
+                        'department' => 'st',
+                        'degree' => 'Bachelor',
+                        'profilePhoto' => NUll,
+                        'user_id_lecturer' => 2
                     ]
         ));
     }

@@ -30,7 +30,7 @@ class CreateUsersTable extends Migration {
             $table->integer('year')->nullable();
             $table->integer('semester')->nullable();
             $table->integer('group')->nullable();
-            $table->integer('mobile');
+            $table->string('mobile');
             $table->string('faculty')->nullable();
             $table->string('department'); // for students major
             $table->string('degree'); //for students(ex.bachelor)for teahers(ex.prof.)       
@@ -42,7 +42,7 @@ class CreateUsersTable extends Migration {
 
         Schema::create('lecturer', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('mobile');
+            $table->string('mobile');
             $table->string('cabinet')->nullable();
             $table->string('department'); // for students major
             $table->string('degree'); //for students(ex.bachelor)for teahers(ex.prof.)       
