@@ -38,8 +38,14 @@
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
                     <div class="row">
+                        <div class='col-md-6'>
                         <button type="button" class="btn button" id="create" >Add Faculty</button>
+                        </div>
+                        <div class='col-md-6'>
+                            <button type="button" class="btn button" id="createMajor" style="float:right;">Add Major To Faculty </button>
+                        </div>
                     </div>
+              
                     <center>
                         <h2>Faculties</h2>
                     </center>
@@ -48,12 +54,13 @@
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
+                                    <th>Number</th>
                                     <th>Bulgarian name</th>
                                     <th>English name</th>
                                     <th>German name</th>
-                                    <th>Add Majors</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th>Majors</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,12 +68,13 @@
                                 @if(!empty($faculties))
                                 @foreach($faculties as $faculty)
                                 <tr>
+                                   <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->id}}</dtd>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->bg_name}}</td>
                                      <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->en_name}}</td>
                                       <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->de_name}}</td>
                                       <td>
-                                        <button type="button" class="buttonEdit"  id="add{{$faculty->id}}">
-                                            <span class="glyphicon glyphicon-plus-sign"></span>
+                                        <button type="button" class="buttonEdit"  id="seeMajor{{$faculty->id}}">
+                                            <span class="glyphicon glyphicon-eye-open"></span>
                                         </button>
                                     </td>
                                       <td>
@@ -83,7 +91,7 @@
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                            <div id="dialog{{$faculty->id}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
+                            <div id="dialog{{$faculty->id}}" title="Delete faculty?" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>Are you sure you want to delete these faculty</h5>
                                             <button type="button" class="button" style="float:right" id="onDelete{{$faculty->id}}">
                                                 Delete
@@ -113,11 +121,14 @@
                                                 $("#create").on("click", function () {
                                                 location.href = "{{url("add/faculty")}}";
                                                 });
+                                                $("#createMajor").on("click", function () {
+    location.href = "{{url("add/major ")}}";
+    });
 <?php foreach ($faculties as $faculty) { ?>
                                                     $("#edit{{$faculty->id}}").on("click", function () {
                                                     location.href = "{{url("faculty/edit/")}}" + "/" + {{$faculty->id}};
                                                     });
-                                                     $("#add{{$faculty->id}}").on("click", function () {
+                                                     $("#seeMajor{{$faculty->id}}").on("click", function () {
                                                     location.href = "{{url("majors")}}" + "/" + {{$faculty->id}};
                                                     });
                                                     $("#delete{{$faculty->id}}").on("click", function () {

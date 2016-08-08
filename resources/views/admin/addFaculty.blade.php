@@ -44,7 +44,7 @@
                 <div class="panel panel-default" style="border-radius: 0px;">
                     <div class="panel-body">
 
-                        <h2 style="margin-bottom: 2%;">Add course</h2>
+                        <h2 style="margin-bottom: 2%;">Add faculty</h2>
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> Bulgarian name</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">

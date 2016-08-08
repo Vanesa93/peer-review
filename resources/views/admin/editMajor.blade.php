@@ -1,5 +1,5 @@
 @extends('app')
-@section('edit_faculty')
+@section('edit_major')
 <style>
     .buttonBack{
         background-color: #999999!important;
@@ -41,10 +41,19 @@
 
                     <center>
                         <div class="form-group">
-                            <h2 style="margin-left: -55%;">Edit faculty</h2> 
+                            <h2 style="margin-left: -55%;">Edit major</h2> 
 
                         </div>
-                        {!! Form::model($faculty, array('route' => array('updateFaculty', $faculty->id), 'method' => 'PUT','id'=>'editFaculty')) !!}
+                        {!! Form::model($major, array('route' => array('updateMajor', $major->id), 'method' => 'PUT','id'=>'editMajor')) !!}
+
+                        <div class="form-group" >
+                            <label class="col-md-offset-3 col-md-2 control-label"> Choose faculty</label>
+                            <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
+                                
+                         {!! Form::select('faculty_id', $faculties, $choosenFaculty,['class'=>'form-control'])!!}           
+
+                            </div>
+                        </div>
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> Bulgarian name</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
@@ -87,34 +96,39 @@
         $("#back").on("click", function () {
             location.href = "{{url("faculties")}}";
         });
-        
-            $('#editFaculty').validate({
-        ignore: ":hidden",
-        rules: {
-            bg_name: {
-                required: true
+
+        $('#editFaculty').validate({
+            ignore: ":hidden",
+            rules: {
+                faculty_id:{
+                    required:true,
+                },
+                bg_name: {
+                    required: true
+                },
+                en_name: {
+                    required: true
+                },
+                de_name: {
+                    required: true
+                }
             },
-             en_name: {
-                required: true
-            },
-             de_name: {
-                required: true
+            // Specify the validation error messages
+            messages: {
+                faculty_id:{
+                     required: "Please select faculty ",
+                },
+                bg_name: {
+                    required: "Please enter faculty bulgarian name",
+                },
+                en_name: {
+                    required: "Please enter faculty englis name",
+                },
+                de_name: {
+                    required: "Please enter faculty german name",
+                },
             }
-        },
-        // Specify the validation error messages
-        messages: {
-            bg_name: {
-                required: "Please enter faculty bulgarian name",
-            },
-             en_name: {
-                required: "Please enter faculty englis name",
-            },
-             de_name: {
-                required: "Please enter faculty german name",
-            },
-           
-        }
-    });
+        });
     });
 </script>
 @stop

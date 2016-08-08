@@ -13,6 +13,7 @@ class CreateMajorsTable extends Migration {
     public function up() {
         Schema::create('majors', function(Blueprint $table) {
             $table->increments('id');
+            $table->string('faculty_id');
             $table->string('bg_name');
             $table->string('en_name');
             $table->string('de_name');

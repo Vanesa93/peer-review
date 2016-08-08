@@ -63,7 +63,7 @@
                     <li><a href="/"> {{trans('messages.messages')}}</a></li>
                     @elseif(Auth::user()->account_type==0)
                     <li><a href="/faculties"> Faculties</a></li>
-                    <li><a href="/majors"> Student majors</a></li>
+<!--                    <li><a href="/majors"> Student majors</a></li>-->
                     <li><a href="/register"> Register User</a></li>
                     <li><a href="/users"> Users</a></li>
                     @endif

@@ -42,6 +42,7 @@
                     <div class="row">
                         <button type="button" class="btn button" id="create" >Add Major To Faculty </button>
                     </div>
+                    @if(!empty($majors) AND !(empty($faculty)))
                     <center>
                         <h2>Majors for faculty {{$facultyName}}</h2>
                     </center>
@@ -59,7 +60,7 @@
                             </thead>
                             <tbody>
 
-                                @if(!empty($majors))
+                                
                                 @foreach($majors as $major)
                                 <tr>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$major->bg_name}}</td>
@@ -88,11 +89,11 @@
                             </div>
 
                             @endforeach
-                            @endif
+                            
                             </tbody>
                         </table>
                     </div>
-
+@endif
                 </div>
             </div>
         </div>
@@ -107,19 +108,19 @@
     $('#coursesTable').DataTable();
     //hide datatable info tag
     $('.dataTables_info').hide();
-//    $("#create").on("click", function () {
-//    location.href = "{{url("add / faculty")}}";
-//    });
+    $("#create").on("click", function () {
+    location.href = "{{url("add/major")}}";
+    });
 <?php foreach ($majors as $major) { ?>
         $("#edit{{$major->id}}").on("click", function () {
-        location.href = "{{url("major/edit/ ")}}" + "/" + {{$major -> id}};
+        location.href = "{{url("major/edit")}}" +"/"+ {{$major -> id}};
         });
         $("#delete{{$major->id}}").on("click", function () {
         $("#dialog{{$major->id}}").dialog();
         });
         $("#onDelete{{$major->id}}").on("click", function () {
         $.ajax({
-        url: "{{url("$major/remove/ ")}}" + "/" + "{{$major->id}}",
+        url: "{{url("$major/remove/")}}" + "/" + "{{$major->id}}",
                 type: 'delete',
                 data: {_token: '{{csrf_token()}}', _method: 'delete'},
                 success: function(){

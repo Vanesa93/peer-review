@@ -34,14 +34,15 @@ class AdminController extends Controller {
     }
 
     public function getMajors($facultyId) {
-        $majors = Major::all();
+        $majors = Major::where('faculty_id', $facultyId)->get();
         $faculty = Faculty::find($facultyId);
         $facultyColumnName = Session::get('locale') . '_name';
         if (empty(Session::get('locale'))) {
             $facultyColumnName = 'en_name';
         }
-        $facultyName=DB::table('faculties')->where('id',$facultyId)->pluck($facultyColumnName);
-        return view('admin.majors')->with('majors', $majors)->with('faculty', $faculty)->with('facultyName',$facultyName);
+        $facultyName = DB::table('faculties')->where('id', $facultyId)->pluck($facultyColumnName);
+        return view('admin.majors')->with('majors', $majors)->with('faculty', $faculty)
+                        ->with('facultyName', $facultyName);
     }
 
     public function addFaculty() {
@@ -51,6 +52,22 @@ class AdminController extends Controller {
     public function editFaculty($id) {
         $faculty = Faculty::find($id);
         return view('admin.editFaculty')->with('faculty', $faculty);
+    }
+
+    public function editMajor($id) {
+        $major = Major::find($id);
+
+
+        $facultyColumnName = Session::get('locale') . '_name';
+        if (empty(Session::get('locale'))) {
+            $facultyColumnName = 'en_name';
+        }
+        $faculties = Faculty::lists($facultyColumnName, 'id');
+
+        $choosenFaculty = Faculty::where('id', $major->faculty_id)->lists('id', $facultyColumnName);
+
+        return view('admin.editMajor')->with('major', $major)->with('faculties', $faculties)
+                        ->with('choosenFaculty', $choosenFaculty);
     }
 
     public function updateFaculty($id) {
@@ -77,6 +94,32 @@ class AdminController extends Controller {
         }
     }
 
+    public function updateMajor($id) {
+
+        $rules = array(
+            'faculty_id'=>'required',
+            'bg_name' => 'required|max:100',
+            'en_name' => 'required|max:100',
+            'de_name' => 'required|max:100',
+        );
+        $validator = \Validator::make(Input::all(), $rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return \Redirect::to('major/edit/' . $id)
+                            ->withErrors($validator);
+        } else {
+            $major = Major::find($id);
+            $major->faculty_id = Input::get('faculty_id');
+            $major->bg_name = Input::get('bg_name');
+            $major->en_name = Input::get('en_name');
+            $major->de_name = Input::get('de_name');
+            $major->save();
+
+            return \Redirect::to('faculties');
+        }
+    }
+
     public function storeFaculty(Request $request) {
         $faculty = new Faculty([
             'bg_name' => $request->get('bg_name'),
@@ -88,8 +131,27 @@ class AdminController extends Controller {
         return redirect('faculties');
     }
 
+    public function storeMajor(Request $request) {
+        $facultyId = $request->get('faculty_id');
+        $faculty = new Major([
+            'faculty_id' => $request->get('faculty_id'),
+            'bg_name' => $request->get('bg_name'),
+            'en_name' => $request->get('en_name'),
+            'de_name' => $request->get('en_name'),
+        ]);
+        $faculty->save();
+
+        return redirect('majors/' . $facultyId);
+    }
+
     public function addMajor() {
-        return view('admin.addMajor');
+        $faculties = Faculty::all();
+        if (!empty(Session::get('locale'))) {
+            $locale = Session::get('locale') . '_name';
+        } else {
+            $locale = 'en_name';
+        }
+        return view('admin.addMajor')->with('faculties', $faculties)->with('locale', $locale);
     }
 
     public function index() {

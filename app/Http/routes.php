@@ -66,7 +66,12 @@ Route::get('faculties','AdminController@getFaculties');
 Route::get('majors/{id}','AdminController@getMajors');
 Route::get('add/faculty','AdminController@addFaculty');
 Route::get('add/major','AdminController@addMajor');
+Route::post('storeMajor','AdminController@storeMajor');
+
 Route::post('storeFaculty','AdminController@storeFaculty');
 Route::get('faculty/edit/{id}', 'AdminController@editFaculty');
 Route::put('faculty/edit/{id}/updateFaculty', [
     'as' => 'updateFaculty', 'uses' => 'AdminController@updateFaculty']);
+Route::get('major/edit/{id}','AdminController@editMajor');
+Route::put('major/edit/{id}/updateMajor', [
+    'as' => 'updateMajor', 'uses' => 'AdminController@updateMajor']);
