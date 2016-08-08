@@ -75,3 +75,5 @@ Route::put('faculty/edit/{id}/updateFaculty', [
 Route::get('major/edit/{id}','AdminController@editMajor');
 Route::put('major/edit/{id}/updateMajor', [
     'as' => 'updateMajor', 'uses' => 'AdminController@updateMajor']);
+Route::delete('faculty/remove/{id}', 'AdminController@removeFaculty');
+Route::delete('major/remove/{id}', 'AdminController@removeMajor');

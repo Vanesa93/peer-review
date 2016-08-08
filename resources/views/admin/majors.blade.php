@@ -120,7 +120,7 @@
         });
         $("#onDelete{{$major->id}}").on("click", function () {
         $.ajax({
-        url: "{{url("$major/remove/")}}" + "/" + "{{$major->id}}",
+        url: "{{url("major/remove/")}}" + "/" + "{{$major->id}}",
                 type: 'delete',
                 data: {_token: '{{csrf_token()}}', _method: 'delete'},
                 success: function(){

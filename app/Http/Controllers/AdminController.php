@@ -97,7 +97,7 @@ class AdminController extends Controller {
     public function updateMajor($id) {
 
         $rules = array(
-            'faculty_id'=>'required',
+            'faculty_id' => 'required',
             'bg_name' => 'required|max:100',
             'en_name' => 'required|max:100',
             'de_name' => 'required|max:100',
@@ -152,6 +152,25 @@ class AdminController extends Controller {
             $locale = 'en_name';
         }
         return view('admin.addMajor')->with('faculties', $faculties)->with('locale', $locale);
+    }
+
+    public function removeFaculty($id) {
+
+        $faculty = Faculty::find($id);
+        $faculty->delete();
+        $majors=  Major::where('faculty_id',$id)->get();
+        foreach ($majors as $major){
+            $major->delete();
+        }
+        Session::flash('message', 'Successfully deleted !');
+    }
+    
+    
+    public function removeMajor($id) {
+
+        $major = Major::find($id);
+        $major->delete();
+        Session::flash('message', 'Successfully deleted !');
     }
 
     public function index() {
