@@ -48,9 +48,7 @@
                             <label class="col-md-offset-3 col-md-2 control-label"> Choose faculty</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <select class="form-control" id='selectFaculty' name="faculty_id">
-                                    @foreach($faculties as $faculty)
-                                         <option value="{{$faculty->id}}">{{$faculty->$locale}}</option>
-                                    @endforeach
+                                         <option value="{{$faculty->id}}">{{$facultyName}}</option>
                                 </select>
                             </div>
                         </div>

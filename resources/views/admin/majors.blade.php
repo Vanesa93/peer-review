@@ -15,7 +15,6 @@
         margin-left: 2%;
         border-radius: 5px;
     }
-
     .buttonEdit{
         /*          background-color: #002b80;  Green */
         border: solid;
@@ -109,7 +108,7 @@
     //hide datatable info tag
     $('.dataTables_info').hide();
     $("#create").on("click", function () {
-    location.href = "{{url("add/major")}}";
+    location.href = "{{url("add/major/$faculty->id")}}";
     });
 <?php foreach ($majors as $major) { ?>
         $("#edit{{$major->id}}").on("click", function () {
@@ -129,9 +128,6 @@
         });
         });
 <?php } ?>
-
-
-
     });
 </script>
 

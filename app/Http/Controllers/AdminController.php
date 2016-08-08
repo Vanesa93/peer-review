@@ -36,6 +36,7 @@ class AdminController extends Controller {
     public function getMajors($facultyId) {
         $majors = Major::where('faculty_id', $facultyId)->get();
         $faculty = Faculty::find($facultyId);
+        
         $facultyColumnName = Session::get('locale') . '_name';
         if (empty(Session::get('locale'))) {
             $facultyColumnName = 'en_name';
@@ -46,6 +47,7 @@ class AdminController extends Controller {
     }
 
     public function addFaculty() {
+        
         return view('admin.addFaculty');
     }
 
@@ -144,14 +146,16 @@ class AdminController extends Controller {
         return redirect('majors/' . $facultyId);
     }
 
-    public function addMajor() {
-        $faculties = Faculty::all();
+    public function addMajor($id) {
         if (!empty(Session::get('locale'))) {
             $locale = Session::get('locale') . '_name';
         } else {
             $locale = 'en_name';
         }
-        return view('admin.addMajor')->with('faculties', $faculties)->with('locale', $locale);
+        $faculty = Faculty::find($id);
+        $facultyName=$faculty->$locale;
+        return view('admin.addMajor')->with('faculty', $faculty)->with('locale', $locale)
+                ->with('facultyName', $facultyName);
     }
 
     public function removeFaculty($id) {
