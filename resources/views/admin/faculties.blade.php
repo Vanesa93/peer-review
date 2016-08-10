@@ -39,13 +39,13 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class='col-md-6'>
-                        <button type="button" class="btn button" id="create" >Add Faculty</button>
+                            <button type="button" class="btn button" id="create" >Add Faculty</button>
                         </div>
                         <div class='col-md-6'>
                             <button type="button" class="btn button" id="createMajor" style="float:right;">Add Major To Faculty </button>
                         </div>
                     </div>
-              
+
                     <center>
                         <h2>Faculties</h2>
                     </center>
@@ -68,16 +68,16 @@
                                 @if(!empty($faculties))
                                 @foreach($faculties as $faculty)
                                 <tr>
-                                   <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->id}}</dtd>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->id}}</dtd>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->bg_name}}</td>
-                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->en_name}}</td>
-                                      <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->de_name}}</td>
-                                      <td>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->en_name}}</td>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$faculty->de_name}}</td>
+                                    <td>
                                         <button type="button" class="buttonEdit"  id="seeMajor{{$faculty->id}}">
                                             <span class="glyphicon glyphicon-eye-open"></span>
                                         </button>
                                     </td>
-                                      <td>
+                                    <td>
                                         <button type="button" class="buttonEdit"  id="edit{{$faculty->id}}">
                                             <span class="glyphicon glyphicon-edit"></span>
                                         </button>
@@ -93,61 +93,61 @@
                                 </tr>
                             <div id="dialog{{$faculty->id}}" title="Delete faculty?" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>Are you sure you want to delete these faculty</h5>
-                                            <button type="button" class="button" style="float:right" id="onDelete{{$faculty->id}}">
-                                                Delete
-                                            </button>
-                                            </div>
+                                <button type="button" class="button" style="float:right" id="onDelete{{$faculty->id}}">
+                                    Delete
+                                </button>
+                            </div>
 
-                                            @endforeach
-                                            @endif
-                                            </tbody>
-                                            </table>
-                                            </div>
+                            @endforeach
+                            @endif
+                            </tbody>
+                        </table>
+                    </div>
 
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
-                                            </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                            <script>
-                                                $(document).ready(function () {
-                                                //datepicker
-                                                $("#datepicker").datepicker("option", "dateFormat", 'd MM, y');
-                                                //datatable create
-                                                $('#coursesTable').DataTable();
-                                                //hide datatable info tag
-                                                $('.dataTables_info').hide();
-                                                $("#create").on("click", function () {
-                                                location.href = "{{url("add/faculty")}}";
-                                                });
-                                                $("#createMajor").on("click", function () {
-    location.href = "{{url("add/major ")}}";
+<script>
+    $(document).ready(function () {
+    //datepicker
+    $("#datepicker").datepicker("option", "dateFormat", 'd MM, y');
+    //datatable create
+    $('#coursesTable').DataTable();
+    //hide datatable info tag
+    $('.dataTables_info').hide();
+    $("#create").on("click", function () {
+    location.href = "{{url("add / faculty")}}";
+    });
+    $("#createMajor").on("click", function () {
+    location.href = "{{url("add / major ")}}";
     });
 <?php foreach ($faculties as $faculty) { ?>
-                                                    $("#edit{{$faculty->id}}").on("click", function () {
-                                                    location.href = "{{url("faculty/edit/")}}" + "/" + {{$faculty->id}};
-                                                    });
-                                                     $("#seeMajor{{$faculty->id}}").on("click", function () {
-                                                    location.href = "{{url("majors")}}" + "/" + {{$faculty->id}};
-                                                    });
-                                                    $("#delete{{$faculty->id}}").on("click", function () {
-                                                    $("#dialog{{$faculty->id}}").dialog();
-                                                    });
-                                                    $("#onDelete{{$faculty->id}}").on("click", function () {
-                                                    $.ajax({
-                                                    url: "{{url("faculty/remove/")}}" + "/" + "{{$faculty -> id}}",
-                                                            type: 'delete',
-                                                            data: {_token: '{{csrf_token()}}', _method: 'delete'},
-                                                            success: function(){
-                                                            location.href = "{{url("faculties")}}";
-                                                            }
-                                                    });
-                                                    });
+        $("#edit{{$faculty->id}}").on("click", function () {
+        location.href = "{{url("faculty / edit / ")}}" + "/" + {{$faculty - > id}};
+        });
+        $("#seeMajor{{$faculty->id}}").on("click", function () {
+        location.href = "{{url("majors")}}" + "/" + {{$faculty - > id}};
+        });
+        $("#delete{{$faculty->id}}").on("click", function () {
+        $("#dialog{{$faculty->id}}").dialog();
+        });
+        $("#onDelete{{$faculty->id}}").on("click", function () {
+        $.ajax({
+        url: "{{url("faculty / remove / ")}}" + "/" + "{{$faculty -> id}}",
+                type: 'delete',
+                data: {_token: '{{csrf_token()}}', _method: 'delete'},
+                success: function(){
+                location.href = "{{url("faculties")}}";
+                }
+        });
+        });
 <?php } ?>
 
 
 
-                                                });
-                                            </script>
-                                            @stop
+    });
+</script>
+@stop

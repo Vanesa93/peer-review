@@ -24,7 +24,7 @@
         @include('partials.header') 
         <!-- Scripts -->
 
-        <div  style=" position: relative;padding-top: 55px;">
+        <div  style=" position: relative;padding-top: 80px;">
             @yield('content')
             @yield('welcome')
             @yield('upload')
