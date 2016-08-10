@@ -125,9 +125,10 @@
                 url: "{{url("getGroupMajors")}}",
                 type: 'get',
                 data: {facId: facId},
-                success: function (response) {                   
+                success: function (response) {     
+                    $('#selectMajor').append('<option value="">Select major</option>');
                    $.each(response.majors, function (key, value) {
-                            $('#selectMajor').append('<option value="">Select major</option>');
+                            
                             $('#selectMajor').append('<option value="' + value.id + '">' + value.name + '</option>');
                         });     
                 }
