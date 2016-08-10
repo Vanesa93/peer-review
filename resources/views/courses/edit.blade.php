@@ -77,7 +77,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::button('Back to courses', array('class' => 'btn buttonBack','id'=>'back')) !!}
+                                {!! Form::button('Go to courses', array('class' => 'btn buttonBack','id'=>'back')) !!}
                             </div>
                             <div class="col-md-6 " style="margin-bottom: 1%;">
                                 {!! Form::submit('Update', array('class' => 'btn button')) !!}

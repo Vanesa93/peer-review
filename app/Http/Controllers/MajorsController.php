@@ -127,11 +127,9 @@ class MajorsController extends Controller {
         foreach ($majors as $major) {
             $major->name = $major->$facultyColumnName;
         }
-//        $facultyName = DB::table('faculties')->where('id', $request->get('facId'))->pluck($facultyColumnName);
         return Response::json(array(
                     'success' => true,
                     'majors' => $majors,
-//                    'facultyName'=>$facultyName
         ));
     }
     

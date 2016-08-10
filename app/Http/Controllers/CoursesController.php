@@ -44,6 +44,7 @@ class CoursesController extends Controller {
      * @return Response
      */
     public function store(Requests\CreateCoursesFormRequest $request) {
+       
         $userId = Auth::user()->id;
         $course = new Courses([
             'name' => $request->get('name'),

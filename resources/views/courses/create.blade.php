@@ -77,7 +77,7 @@
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                         <div class="form-group">
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Back to courses" />
+                                <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Go to courses" />
                             </div>
                             <div class="col-md-6  " style="margin-bottom: 1%;">
                                 <input type="submit" name="submit" id='submit' class="btn button action-button floatRight" style="float: right;" value="Submit" />

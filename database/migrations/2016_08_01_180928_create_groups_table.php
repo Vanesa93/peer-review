@@ -14,9 +14,17 @@ class CreateGroupsTable extends Migration {
         Schema::create('groups', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('tutor_id');
-            $table->string('name');
-            $table->string('description'); 
-            $table->string('course_id'); 
+            $table->string('course_id');
+            $table->string('faculty_id');
+            $table->string('major_id');
+            $table->string('student_first_year');            
+            $table->timestamps();
+        });
+
+        Schema::create('groups_to_students', function(Blueprint $table) {
+            $table->increments('id');
+            $table->string('student_id');
+            $table->string('group_id');
             $table->timestamps();
         });
     }
@@ -28,6 +36,7 @@ class CreateGroupsTable extends Migration {
      */
     public function down() {
         Schema::drop('groups');
+        Schema::drop('groups_to_students');
     }
 
 }
