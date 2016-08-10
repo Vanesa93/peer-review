@@ -119,24 +119,24 @@
     //hide datatable info tag
     $('.dataTables_info').hide();
     $("#create").on("click", function () {
-    location.href = "{{url("add / faculty")}}";
+    location.href = "{{url("add/faculty")}}";
     });
     $("#createMajor").on("click", function () {
-    location.href = "{{url("add / major ")}}";
+    location.href = "{{url("add/major ")}}";
     });
 <?php foreach ($faculties as $faculty) { ?>
         $("#edit{{$faculty->id}}").on("click", function () {
-        location.href = "{{url("faculty / edit / ")}}" + "/" + {{$faculty - > id}};
+        location.href = "{{url("faculty/edit/")}}" + "/" + {{$faculty -> id}};
         });
         $("#seeMajor{{$faculty->id}}").on("click", function () {
-        location.href = "{{url("majors")}}" + "/" + {{$faculty - > id}};
+        location.href = "{{url("majors")}}" + "/" + {{$faculty -> id}};
         });
         $("#delete{{$faculty->id}}").on("click", function () {
         $("#dialog{{$faculty->id}}").dialog();
         });
         $("#onDelete{{$faculty->id}}").on("click", function () {
         $.ajax({
-        url: "{{url("faculty / remove / ")}}" + "/" + "{{$faculty -> id}}",
+        url: "{{url("faculty/remove/")}}" + "/" + "{{$faculty -> id}}",
                 type: 'delete',
                 data: {_token: '{{csrf_token()}}', _method: 'delete'},
                 success: function(){
