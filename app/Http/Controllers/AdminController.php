@@ -225,6 +225,7 @@ class AdminController extends Controller {
                 ->get();
         foreach ($students as $student) {
             $student->faculty = Faculty::where('id', $student->faculty)->pluck($facultyColumnName);
+            $student->major=  Major::where('id',$student->major)->pluck($facultyColumnName);
         }
         return view('admin.users')->with('lecturers', $lecturers)->with('students', $students);
     }

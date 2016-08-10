@@ -140,7 +140,7 @@
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label">Major/Специалност</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
-                                {!! Form::text('department', null, array('class' => 'form-control')) !!}
+                                 {!! Form::select('major', $majors, $user->major,['class'=>'form-control'])!!}
                             </div>
                         </div>
                         <div class="form-group" >

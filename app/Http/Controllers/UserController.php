@@ -129,19 +129,22 @@ class UserController extends Controller {
             $sessionLanguage = 'en_name';
         }
         $faculties = Faculty::lists($sessionLanguage, 'id');
+        $majors=Major::lists($sessionLanguage, 'id');
         $userAccountType = DB::table('account_types')->where('account_type', $user->account_type)->pluck($sessionLanguage);
         $user = $this->lecturerOrUser($user);
         if ($user->account_type == 1) {
             $userId = $user->user_id_lecturer;
         } elseif ($user->account_type == 2) {
             $userId = $user->user_id_students;
-            $user->faculty=Faculty::where('id', $user->faculty)->lists('id', $sessionLanguage);             
+            $user->faculty=Faculty::where('id', $user->faculty)->lists('id', $sessionLanguage);  
+            $user->major=Faculty::where('id', $user->major)->lists('id', $sessionLanguage); 
         }
         if (!empty($user)) {
             return view('users.editUser')->with('user', $user)
                     ->with('userAccountType', $userAccountType)
                     ->with('userId', $userId)
-                    ->with('faculties',$faculties);
+                    ->with('faculties',$faculties)
+                    ->with('majors',$majors);
         } else {
             return redirect()->back();
         }
@@ -221,7 +224,7 @@ class UserController extends Controller {
             $additionalData->year = Input::get('year');
             $additionalData->semester = Input::get('semester');
             $additionalData->group = Input::get('group');
-            $additionalData->department = Input::get('department');
+            $additionalData->major = Input::get('major');
             $additionalData->degree = Input::get('degree');
             $additionalData->mobile = Input::get('mobile');
             $additionalData->faculty = Input::get('faculty');
