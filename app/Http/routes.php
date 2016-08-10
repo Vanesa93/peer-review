@@ -77,3 +77,4 @@ Route::put('major/edit/{id}/updateMajor', [
 Route::delete('faculty/remove/{id}', 'AdminController@removeFaculty');
 Route::delete('major/remove/{id}', 'AdminController@removeMajor');
 Route::get('getMajors','AdminController@getMajorsForRegister');
+Route::get('add/major','AdminController@createMajorWithAllFaculties');

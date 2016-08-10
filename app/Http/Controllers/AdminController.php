@@ -48,16 +48,16 @@ class AdminController extends Controller {
         if ($majors->isEmpty()) {
             $message = "No majors for these faculty. Please choose another";
             return Response::json(array(
-                    'success'=>false,
-                    'message' => $message,                    
-        ));
+                        'success' => false,
+                        'message' => $message,
+            ));
         }
         $facultyColumnName = Session::get('locale') . '_name';
         if (empty(Session::get('locale'))) {
             $facultyColumnName = 'en_name';
         }
-        foreach ($majors as $major){
-            $major->name=$major->$facultyColumnName;
+        foreach ($majors as $major) {
+            $major->name = $major->$facultyColumnName;
         }
 //        $facultyName = DB::table('faculties')->where('id', $request->get('facId'))->pluck($facultyColumnName);
         return Response::json(array(
@@ -196,6 +196,20 @@ class AdminController extends Controller {
         Session::flash('message', 'Successfully deleted !');
     }
 
+    public function createMajorWithAllFaculties() {
+        if (!empty(Session::get('locale'))) {
+            $locale = Session::get('locale') . '_name';
+        } else {
+            $locale = 'en_name';
+        }
+        $faculties= Faculty::all();
+        foreach($faculties as $faculty){
+            $faculty->name=$faculty->$locale;
+            
+        }
+        return view('admin.majorsForAllFaculties')->with('faculties', $faculties)->with('locale', $locale);
+    }
+
     public function index() {
         //
     }
@@ -225,7 +239,7 @@ class AdminController extends Controller {
                 ->get();
         foreach ($students as $student) {
             $student->faculty = Faculty::where('id', $student->faculty)->pluck($facultyColumnName);
-            $student->major=  Major::where('id',$student->major)->pluck($facultyColumnName);
+            $student->major = Major::where('id', $student->major)->pluck($facultyColumnName);
         }
         return view('admin.users')->with('lecturers', $lecturers)->with('students', $students);
     }

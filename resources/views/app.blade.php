@@ -42,6 +42,7 @@
             @yield('add_major')
             @yield('edit_faculty')
             @yield('edit_major')
+            @yield('add_major_all_faculties');
         </div>
     </body>
 </html>
