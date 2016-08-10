@@ -38,10 +38,10 @@
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
-                    <div class="row">
-                        <button type="button" class="btn button" id="create" >Add Major To Faculty </button>
-                    </div>
                     @if(!empty($majors) AND !(empty($faculty)))
+                    <div class="row">
+                        <button type="button" class="btn button" id="create" >Add Major To These Faculty</button>
+                    </div>                    
                     <center>
                         <h2>Majors for faculty {{$facultyName}}</h2>
                     </center>

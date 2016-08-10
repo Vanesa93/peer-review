@@ -26,7 +26,7 @@ class Students extends Model implements AuthenticatableContract, CanResetPasswor
      * @var array
      */
     protected $fillable = ['mobile', 'year',
-        'semester', 'group', 'department', 'faculty', 'degree','user_id_students'];
+        'semester', 'group', 'major', 'faculty', 'degree','user_id_students'];
                   
 
     /**

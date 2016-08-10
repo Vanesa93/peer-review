@@ -1,4 +1,6 @@
 <link href='{{ URL::asset('styles/header.css')}}' rel='stylesheet' type='text/css'>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+
 <div class='header'>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -17,10 +19,11 @@
                     @if(Auth::guest())
                     <li><a href="/">{{trans('messages.home')}}</a></li>
                     <li class="dropdown" style="float:right">                        
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="float:right">
-                            <span class="glyphicons glyphicons-globe"></span>
+<!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="float:right">
+                            <span class="glyphicon glyphicons-globe"></span>
                             <span class="caret"></span>
-                        </a>
+                        </a>-->
+                        <span class=" dropdown-toggle glyphicon glyphicon-globe" data-toggle="dropdown" role="button" aria-expanded="false" style="cursor:pointer;font-size: 18px"></span>
 
                         <ul class="dropdown-menu" role="menu" name="language" style="float:right;">
                             <li><a href="/language/en" value='en' name='locale'>EN</a></li>
@@ -33,11 +36,11 @@
 
                     @else
                     <li><a href="/">{{trans('messages.home')}}</a></li>
-                    <li class="dropdown" style="float:right">                        
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="float:right">
-                            <span class="glyphicons glyphicons-globe"></span>
-                            <span class="caret"></span>
-                        </a>
+                    <li class="dropdown" style="float:right">   
+                        <span class=" dropdown-toggle glyphicon glyphicon-globe" data-toggle="dropdown" role="button" aria-expanded="false" style="cursor:pointer;font-size: 18px"></span>
+<!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="float:right">
+                            <span class=" glyphicon glyphicons-globe caret"></span>
+                        </a>-->
 
                         <ul class="dropdown-menu" role="menu" name="language" style="float:right;">
                             <li><a href="/language/en" value='en' name='locale'>EN</a></li>
@@ -77,7 +80,7 @@
 
                     @else
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="glyphicon glyphicons-globe caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="/auth/logout">{{trans('messages.logout')}}</a></li>
                         </ul>

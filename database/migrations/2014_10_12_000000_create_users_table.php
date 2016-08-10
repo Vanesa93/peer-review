@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration {
             $table->integer('group')->nullable();
             $table->string('mobile');
             $table->string('faculty')->nullable();
-            $table->string('department'); // for students major
+            $table->string('major'); // for students major
             $table->string('degree'); //for students(ex.bachelor)for teahers(ex.prof.)       
             $table->string('profilePhoto')->nullable();
             $table->integer('user_id_students')->unsigned();

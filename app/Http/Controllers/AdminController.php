@@ -2,19 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Services\Registrar;
 use Illuminate\Http\Request;
 use App\User;
-use App\Lecturer;
-use App\Students;
-use Validator;
 use DB;
 use App\Faculty;
 use Input;
 use App\Major;
 use Session;
+use Response;
 
 class AdminController extends Controller {
 
@@ -36,7 +33,7 @@ class AdminController extends Controller {
     public function getMajors($facultyId) {
         $majors = Major::where('faculty_id', $facultyId)->get();
         $faculty = Faculty::find($facultyId);
-        
+
         $facultyColumnName = Session::get('locale') . '_name';
         if (empty(Session::get('locale'))) {
             $facultyColumnName = 'en_name';
@@ -46,8 +43,32 @@ class AdminController extends Controller {
                         ->with('facultyName', $facultyName);
     }
 
+    public function getMajorsForRegister(Request $request) {
+        $majors = Major::where('faculty_id', $request->get('facId'))->get();
+        if ($majors->isEmpty()) {
+            $message = "No majors for these faculty. Please choose another";
+            return Response::json(array(
+                    'success'=>false,
+                    'message' => $message,                    
+        ));
+        }
+        $facultyColumnName = Session::get('locale') . '_name';
+        if (empty(Session::get('locale'))) {
+            $facultyColumnName = 'en_name';
+        }
+        foreach ($majors as $major){
+            $major->name=$major->$facultyColumnName;
+        }
+//        $facultyName = DB::table('faculties')->where('id', $request->get('facId'))->pluck($facultyColumnName);
+        return Response::json(array(
+                    'success' => true,
+                    'majors' => $majors,
+//                    'facultyName'=>$facultyName
+        ));
+    }
+
     public function addFaculty() {
-        
+
         return view('admin.addFaculty');
     }
 
@@ -58,7 +79,6 @@ class AdminController extends Controller {
 
     public function editMajor($id) {
         $major = Major::find($id);
-
 
         $facultyColumnName = Session::get('locale') . '_name';
         if (empty(Session::get('locale'))) {
@@ -153,23 +173,22 @@ class AdminController extends Controller {
             $locale = 'en_name';
         }
         $faculty = Faculty::find($id);
-        $facultyName=$faculty->$locale;
+        $facultyName = $faculty->$locale;
         return view('admin.addMajor')->with('faculty', $faculty)->with('locale', $locale)
-                ->with('facultyName', $facultyName);
+                        ->with('facultyName', $facultyName);
     }
 
     public function removeFaculty($id) {
 
         $faculty = Faculty::find($id);
         $faculty->delete();
-        $majors=  Major::where('faculty_id',$id)->get();
-        foreach ($majors as $major){
+        $majors = Major::where('faculty_id', $id)->get();
+        foreach ($majors as $major) {
             $major->delete();
         }
         Session::flash('message', 'Successfully deleted !');
     }
-    
-    
+
     public function removeMajor($id) {
 
         $major = Major::find($id);
@@ -192,6 +211,10 @@ class AdminController extends Controller {
     }
 
     public function getUsers() {
+        $facultyColumnName = Session::get('locale') . '_name';
+        if (empty(Session::get('locale'))) {
+            $facultyColumnName = 'en_name';
+        }
         $lecturers = DB::table('users')
                 ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
                 ->where('users.account_type', 1)
@@ -200,6 +223,9 @@ class AdminController extends Controller {
                 ->join('students', 'users.id', '=', 'students.user_id_students')
                 ->where('users.account_type', 2)
                 ->get();
+        foreach ($students as $student) {
+            $student->faculty = Faculty::where('id', $student->faculty)->pluck($facultyColumnName);
+        }
         return view('admin.users')->with('lecturers', $lecturers)->with('students', $students);
     }
 

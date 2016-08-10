@@ -119,6 +119,7 @@
                                     <th>Family Name</th>
                                     <th>Email</th>
                                     <th>Faculty</th>
+                                    <th>Major</th>
                                     <th>First year</th>
                                     <th>Semester</th>
                                     <th>Group</th>
@@ -141,6 +142,7 @@
                                     <td style="max-width:60px;">{{$student->email}}</td>
 
                                     <td style="max-width:40px;">{{$student->faculty}}</td>
+                                     <td style="max-width:40px;">{{$student->major}}</td>
                                     <td style="max-width:40px;">{{$student->year}}</td>
                                     <td style="max-width:40px;">{{$student->semester}}</td>
                                     <td style="max-width:40px;">{{$student->group}}</td>

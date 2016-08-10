@@ -8,11 +8,10 @@ use Input;
 use App\User;
 use App\Lecturer;
 use App\Students;
-use Validator;
 use DB;
 use Session;
-use Redirect;
-
+use App\Faculty;
+use App\Major;
 class UserController extends Controller {
 
     public function __construct() {
@@ -27,7 +26,14 @@ class UserController extends Controller {
      * @return Response
      */
     public function register() {
-        return view('admin.register');
+        $facultyColumnName = Session::get('locale') . '_name';
+        if (empty(Session::get('locale'))) {
+            $facultyColumnName = 'en_name';
+        }
+        $faculties = Faculty::all();
+        $majors=  Major::all();
+               return view('admin.register')->with('faculties', $faculties)->with('facultyColumnName', $facultyColumnName)
+                ->with('majors',$majors);
     }
 
     public function index() {
@@ -41,13 +47,13 @@ class UserController extends Controller {
      * @return User
      */
     public function create(Request $data) {
+       
         $rules = array(
             'username' => 'required||unique:users',
             'forename' => 'required|max:100',
             'email' => 'required|email|max:100|unique:users',
             'password' => 'required|confirmed|min:6',
             'account_type' => 'required',
-            'mobile' => 'required'
         );
 
         $validator = \Validator::make(Input::all(), $rules);
@@ -79,7 +85,7 @@ class UserController extends Controller {
                     'year' => $data['year'],
                     'semester' => $data['semester'],
                     'group' => $data['group'],
-                    'department' => $data['department'],
+                    'major' => $data['major'],
                     'degree' => $data['degree'],
                     'mobile' => $data['mobile'],
                     'faculty' => $data['faculty']
@@ -122,15 +128,20 @@ class UserController extends Controller {
         if (empty(Session::get('locale'))) {
             $sessionLanguage = 'en_name';
         }
+        $faculties = Faculty::lists($sessionLanguage, 'id');
         $userAccountType = DB::table('account_types')->where('account_type', $user->account_type)->pluck($sessionLanguage);
         $user = $this->lecturerOrUser($user);
         if ($user->account_type == 1) {
             $userId = $user->user_id_lecturer;
         } elseif ($user->account_type == 2) {
             $userId = $user->user_id_students;
+            $user->faculty=Faculty::where('id', $user->faculty)->lists('id', $sessionLanguage);             
         }
         if (!empty($user)) {
-            return view('users.editUser')->with('user', $user)->with('userAccountType', $userAccountType)->with('userId', $userId);
+            return view('users.editUser')->with('user', $user)
+                    ->with('userAccountType', $userAccountType)
+                    ->with('userId', $userId)
+                    ->with('faculties',$faculties);
         } else {
             return redirect()->back();
         }
@@ -144,9 +155,9 @@ class UserController extends Controller {
      */
     public function update($id) {
         $rules = array(
-            'username' => 'required|unique:users,username,'.$id,
+            'username' => 'required|unique:users,username,' . $id,
             'forename' => 'required|max:100',
-            'email'=>'required|email|unique:users,email,'.$id ,
+            'email' => 'required|email|unique:users,email,' . $id,
             'mobile' => 'required'
         );
 
@@ -225,10 +236,10 @@ class UserController extends Controller {
      * @param  int  $id
      * @return Response
      */
-      public function destroy($id) {
-        
+    public function destroy($id) {
+
         $user = User::find($id);
-        $user ->delete();
+        $user->delete();
         Session::flash('message', 'Successfully deleted the nerd!');
     }
 
