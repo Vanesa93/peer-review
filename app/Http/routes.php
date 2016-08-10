@@ -51,7 +51,7 @@ Route::delete('courses/remove/{id}', 'CoursesController@destroy');
 Route::get('register', 'UserController@register');
 Route::post('register/user', 'UserController@create');
 //Route::post('register/userContinue', 'AdminController@addUser');
-Route::get('users', 'AdminController@getUsers');
+Route::get('users', 'UserController@getUsers');
 Route::get('users/edit/{id}', 'UserController@edit');
 Route::put('users/edit/{id}/updateUser', [
     'as' => 'updateUser', 'uses' => 'UserController@update']);
@@ -61,20 +61,22 @@ Route::delete('users/remove/{id}', 'UserController@destroy');
 Route::get('groups/create','GroupsController@create');
 Route::get('groups','GroupsController@index');
 
-//faculties and majors- admin
-Route::get('faculties','AdminController@getFaculties');
-Route::get('majors/{id}','AdminController@getMajors');
-Route::get('add/faculty','AdminController@addFaculty');
-Route::get('add/major/{id}','AdminController@addMajor');
-Route::post('storeMajor','AdminController@storeMajor');
-Route::post('storeFaculty','AdminController@storeFaculty');
-Route::get('faculty/edit/{id}', 'AdminController@editFaculty');
+//faculties 
+Route::get('faculties','FacultiesController@getFaculties');
+Route::get('add/faculty','FacultiesController@addFaculty');
+Route::post('storeFaculty','FacultiesController@storeFaculty');
+Route::delete('faculty/remove/{id}', 'FacultiesController@removeFaculty');
+Route::get('faculty/edit/{id}', 'FacultiesController@editFaculty');
 Route::put('faculty/edit/{id}/updateFaculty', [
-    'as' => 'updateFaculty', 'uses' => 'AdminController@updateFaculty']);
-Route::get('major/edit/{id}','AdminController@editMajor');
+    'as' => 'updateFaculty', 'uses' => 'FacultiesController@updateFaculty']);
+
+//majors
+Route::get('majors/{id}','MajorsController@getMajors');
+Route::get('add/major/{id}','MajorsController@addMajor');
+Route::post('storeMajor','MajorsController@storeMajor');
+Route::get('major/edit/{id}','MajorsController@editMajor');
 Route::put('major/edit/{id}/updateMajor', [
-    'as' => 'updateMajor', 'uses' => 'AdminController@updateMajor']);
-Route::delete('faculty/remove/{id}', 'AdminController@removeFaculty');
-Route::delete('major/remove/{id}', 'AdminController@removeMajor');
-Route::get('getMajors','AdminController@getMajorsForRegister');
-Route::get('add/major','AdminController@createMajorWithAllFaculties');
+    'as' => 'updateMajor', 'uses' => 'MajorsController@updateMajor']);
+Route::delete('major/remove/{id}', 'MajorsController@removeMajor');
+Route::get('getMajors','MajorsController@getMajorsForRegister');
+Route::get('add/major','MajorsController@createMajorWithAllFaculties');

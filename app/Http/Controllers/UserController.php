@@ -12,6 +12,7 @@ use DB;
 use Session;
 use App\Faculty;
 use App\Major;
+
 class UserController extends Controller {
 
     public function __construct() {
@@ -31,13 +32,29 @@ class UserController extends Controller {
             $facultyColumnName = 'en_name';
         }
         $faculties = Faculty::all();
-        $majors=  Major::all();
-               return view('admin.register')->with('faculties', $faculties)->with('facultyColumnName', $facultyColumnName)
-                ->with('majors',$majors);
+        $majors = Major::all();
+        return view('admin.register')->with('faculties', $faculties)->with('facultyColumnName', $facultyColumnName)
+                        ->with('majors', $majors);
     }
 
-    public function index() {
-        //
+    public function getUsers() {
+        $facultyColumnName = Session::get('locale') . '_name';
+        if (empty(Session::get('locale'))) {
+            $facultyColumnName = 'en_name';
+        }
+        $lecturers = DB::table('users')
+                ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
+                ->where('users.account_type', 1)
+                ->get();
+        $students = DB::table('users')
+                ->join('students', 'users.id', '=', 'students.user_id_students')
+                ->where('users.account_type', 2)
+                ->get();
+        foreach ($students as $student) {
+            $student->faculty = Faculty::where('id', $student->faculty)->pluck($facultyColumnName);
+            $student->major = Major::where('id', $student->major)->pluck($facultyColumnName);
+        }
+        return view('admin.users')->with('lecturers', $lecturers)->with('students', $students);
     }
 
     /**
@@ -47,7 +64,7 @@ class UserController extends Controller {
      * @return User
      */
     public function create(Request $data) {
-       
+
         $rules = array(
             'username' => 'required||unique:users',
             'forename' => 'required|max:100',
@@ -98,25 +115,6 @@ class UserController extends Controller {
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store() {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id) {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -129,22 +127,22 @@ class UserController extends Controller {
             $sessionLanguage = 'en_name';
         }
         $faculties = Faculty::lists($sessionLanguage, 'id');
-        $majors=Major::lists($sessionLanguage, 'id');
+        $majors = Major::lists($sessionLanguage, 'id');
         $userAccountType = DB::table('account_types')->where('account_type', $user->account_type)->pluck($sessionLanguage);
         $user = $this->lecturerOrUser($user);
         if ($user->account_type == 1) {
             $userId = $user->user_id_lecturer;
         } elseif ($user->account_type == 2) {
             $userId = $user->user_id_students;
-            $user->faculty=Faculty::where('id', $user->faculty)->lists('id', $sessionLanguage);  
-            $user->major=Faculty::where('id', $user->major)->lists('id', $sessionLanguage); 
+            $user->faculty = Faculty::where('id', $user->faculty)->lists('id', $sessionLanguage);
+            $user->major = Faculty::where('id', $user->major)->lists('id', $sessionLanguage);
         }
         if (!empty($user)) {
             return view('users.editUser')->with('user', $user)
-                    ->with('userAccountType', $userAccountType)
-                    ->with('userId', $userId)
-                    ->with('faculties',$faculties)
-                    ->with('majors',$majors);
+                            ->with('userAccountType', $userAccountType)
+                            ->with('userId', $userId)
+                            ->with('faculties', $faculties)
+                            ->with('majors', $majors);
         } else {
             return redirect()->back();
         }
