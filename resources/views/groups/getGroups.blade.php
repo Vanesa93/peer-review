@@ -38,21 +38,23 @@
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
-                    @if(!empty($majors) AND !(empty($faculty)))
+                    @if(!($majors->isEmpty() AND $faculty->isEmpty() AND $courses AND $users->isEmpty()))
                     <div class="row">
-                        <button type="button" class="btn button" id="create" >Add Major To These Faculty</button>
+                        <button type="button" class="btn button" id="create" >Add Group</button>
                     </div>                    
                     <center>
-                        <h2>Majors for faculty {{$facultyName}}</h2>
+                        <h2>Groups</h2>
                     </center>
                     <div class="table-responsive">
-                        <table id="coursesTable" class="display" style="border: solid;
+                        <table id="groupsTable" class="display" style="border: solid;
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Bulgarian name</th>
-                                    <th>English name</th>
-                                    <th>German name</th>
+                                    <th>Group name</th>
+                                    <th>Course name</th>
+                                    <th>Faculty name</th>
+                                    <th>Student year</th>
+                                    <th>Users</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -60,29 +62,34 @@
                             <tbody>
 
                                 
-                                @foreach($majors as $major)
+                                @foreach($groups as $group)
                                 <tr>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$major->bg_name}}</td>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$major->en_name}}</td>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$major->de_name}}</td>
-
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$group->name}}</td>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$group->name}}</td>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$group->name}}</td>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$group->name}}</td>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">
+                                          <button type="button" class="buttonEdit"  id="seeUsers{{$group->id}}">
+                                            <span class="glyphicon glyphicon-eye-open"></span>
+                                        </button>
+                                    </td>
                                     <td>
-                                        <button type="button" class="buttonEdit"  id="edit{{$major->id}}">
+                                        <button type="button" class="buttonEdit"  id="edit{{$group->id}}">
                                             <span class="glyphicon glyphicon-edit"></span>
                                         </button>
                                     </td>
                                     <td>
-                                        {!! Form::open(array('url' => 'major/remove/' . $major->id)) !!}
+                                        {!! Form::open(array('url' => 'group/remove/' . $group->id)) !!}
                                         {!! Form::hidden('_method', 'DELETE') !!}
-                                        <button type="button" class="buttonEdit"  id="delete{{$major->id}}">
+                                        <button type="button" class="buttonEdit"  id="delete{{$group->id}}">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                            <div id="dialog{{$major->id}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>Are you sure you want to delete these major</h5>
-                                <button type="button" class="button" style="float:right" id="onDelete{{$major->id}}">
+                            <div id="dialog{{$group->id}}" title="Delete group?" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>Are you sure you want to delete these group?</h5>
+                                <button type="button" class="button" style="float:right" id="onDelete{{$group->id}}">
                                     Delete
                                 </button>
                             </div>
@@ -92,12 +99,48 @@
                             </tbody>
                         </table>
                     </div>
+                    @else
+                    <div>
+                        To create group you must create first faculties, majors for faculties,course and students
+                    </div>
 @endif
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+    //datatable create
+    $('#groupsTable').DataTable();
+    //hide datatable info tag
+    $('.dataTables_info').hide();
+    $("#create").on("click", function () {
+    location.href = "{{url("groups/create")}}";
+    });
+<?php foreach ($groups as $group) { ?>
+        $("#edit{{$group->id}}").on("click", function () {
+        location.href = "{{url("groups/edit/")}}" + "/" + {{$group -> id}};
+        });
+        $("#delete{{$group->id}}").on("click", function () {
+        $("#dialog{{$group->id}}").dialog();                  
+        });
+        $("#onDelete{{$group->id}}").on("click", function () {
+            $.ajax({
+    url: "{{url("groups/remove/")}}" + "/" + "{{$group -> id}}",
+    type: 'delete',
+    data: {_token: '{{csrf_token()}}' ,_method: 'delete'},
+    success: function(){
+                     location.href = "{{url("groups")}}";
 
+    }
+        });
+        });
+<?php } ?>
+
+
+
+    });
+</script>
 
 @stop

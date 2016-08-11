@@ -64,6 +64,9 @@ Route::get('getGroupMajors','GroupsController@getGroupMajors');
 Route::get('getUsersGroup','GroupsController@getUsersGroup');
 Route::get('getUsersGroupWithYear','GroupsController@getUsersGroupWithYear');
 Route::post('storeGroup','GroupsController@store');
+Route::get('groups/edit/{id}', 'GroupsController@edit');
+Route::put('groups/edit/{id}/updateGroup', [
+    'as' => 'updateGroup', 'uses' => 'GroupsController@updateGroup']);
 
 //faculties 
 Route::get('faculties','FacultiesController@getFaculties');

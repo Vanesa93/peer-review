@@ -35,11 +35,13 @@
             <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
                 <div class="panel panel-default" style="border-radius: 0px;">
                     <div class="panel-body">
-                        @if(\Session::has('error'))
-                        <div class="flash-message">
-                            <div class="alert alert-danger">
-                                {{\Session::get('error')}}
-                            </div>
+                           @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
                         </div>
                         @endif
                         <h2 style="margin-bottom: 2%;">Create Course</h2>

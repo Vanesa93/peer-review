@@ -128,6 +128,27 @@ class GroupsController extends Controller {
     }
 
     public function store(Request $request) {
+        $rules = array(
+            'name' => 'required|max:100',
+            'faculty_id' => 'required|max:1000',
+            'major_id' => 'required|max:100',
+            'student_first_year' => 'max:100',
+            'course_id' => 'max:100',
+            'student_ids' => 'required|max:100',
+        );
+        $validator = \Validator::make(Input::all(), $rules);
+        
+        // process the login
+        if ($validator->fails()) {
+            return \Redirect::to('groups/create')
+                            ->withErrors($validator);
+        } else {
+            return $this->saveGroup($request);
+        }
+    }
+
+    private function saveGroup($request) {
+        
         $tutor_id = Auth::user()->id;
         $usersToGroup = $request->get('student_ids');
         $group = new Group([
@@ -147,15 +168,55 @@ class GroupsController extends Controller {
 
             $groupToStudent->save();
         }
-
         return redirect('groups');
     }
 
     public function index() {
         $tutor = Auth::user();
         $groups = Group::where('tutor_id', $tutor->id)->get();
-        dd($groups);
-        return view('groups.getGroups')->with('groups', $groups);
+        $faculties = Faculty::all();
+        $majors = Major::all();
+        $users = User::where('account_type', 2)->get();
+        $courses = Courses::all();
+        return view('groups.getGroups')
+                        ->with('faculties', $faculties)
+                        ->with('majors', $majors)
+                        ->with('users', $users)
+                        ->with('courses', $courses)
+                        ->with('groups', $groups);
+    }
+
+    public function edit($id) {
+        $group = Group::find($id);
+        return view('groups.edit')->with('group', $group);
+    }
+
+    public function update($id) {
+        $rules = array(
+            'name' => 'required|max:100',
+            'faculty_id' => 'required|max:1000',
+            'major_id' => 'required|max:100',
+            'student_first_year' => 'max:100',
+            'course_id' => 'max:100',
+            'users' => 'required|max:100',
+        );
+        $validator = \Validator::make(Input::all(), $rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return \Redirect::to('groups/edit/' . $id)
+                            ->withErrors($validator);
+        } else {
+            $course = Courses::find($id);
+            $course->name = Input::get('name');
+            $course->description = Input::get('description');
+            $course->language = Input::get('language');
+            $course->duration = Input::get('duration');
+            $course->requirments = Input::get('requirments');
+            $course->save();
+
+            return \Redirect::to('courses');
+        }
     }
 
 }
