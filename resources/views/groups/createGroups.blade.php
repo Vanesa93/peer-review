@@ -28,6 +28,28 @@
         margin-left: 2%;
         border-radius: 5px;
     }
+    .ui-datepicker-calendar {
+       display: none;
+    }
+    .ui-datepicker-month {
+       display: none;
+    }
+    .ui-datepicker-prev{
+       display: none;
+    }
+    .ui-datepicker-next{
+       display: none;
+    }
+    .ui-widget-header {
+     border: none;
+     background: none; 
+    color: #333333;
+    font-weight: bold;
+}
+.ui-datepicker-year{
+    border:none;
+}
+    
 </style>
 <div class="container-fluid">
     <form method="post" action='{{url('/storeGroup')}}' id="createGroup">
@@ -45,12 +67,23 @@
                 <div class="panel panel-default" style="border-radius: 0px;">
                     <div class="panel-body">
                         <h2 style="margin-bottom: 2%;">Create group</h2>
-                         <div class="form-group" id="year" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Year</label>
+                        <div class="form-group" >
+                            <label class="col-md-offset-3 col-md-2 control-label">Group name</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
-                                <input type="text" class="form-control" id="enterYear" name="student_first_year"/>
+                                <input type="text" class="form-control" id="enterYear" name="name"/>
                             </div>
-                            <label for="student_first_year" generated="true" id="labelForYear" class="error"></label>
+                            <label for="name" generated="true"  class="error"></label>
+                        </div>    
+                         <div class="form-group" >
+                            <label class="col-md-offset-3 col-md-2 control-label"> Choose course</label>
+                            <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
+                                <select class="form-control" name="course_id">
+                                    <option value="">Select course</option>
+                                    @foreach($courses as $course)
+                                    <option value="{{$course->id}}">{{$course->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> Choose faculty</label>
@@ -73,7 +106,16 @@
                                     @endforeach
                                 </select>
                             </div>
-                        </div>                    
+                        </div>  
+                         <div class="form-group" id="year" >
+                            <label class="col-md-offset-3 col-md-2 control-label">Year</label>
+                            <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
+                                <div class="input-group date" name="student_first_year" id="studentFirstYear" data-provide="datepicker">
+                                    <input type="text" style="display:none;" class="form-control" id="getDate" name="student_first_year"/>
+                                </div>
+                            </div>
+                            <label for="student_first_year" generated="true" id="labelForYear" class="error"></label>
+                        </div>
                         
                         <div class="form-group" id="users">
                             <label class="col-md-offset-3 col-md-2 control-label"> Choose users</label>
@@ -111,12 +153,35 @@
         $("#back").on("click", function () {
             location.href = "{{url("groups")}}";
         });
-
+        $('.ui-datepicker select.ui-datepicker-year ').attr('name', 'student_first_year');
+        $("#studentFirstYear").datepicker({dateFormat: 'yy',  changeYear: true,  changeMonth: false,
+         }).on("input change", function (e) {             
+            $('#selectUsers').empty();
+                  var facId = $("#selectFaculty option:selected").val();
+                  var majorId = $("#selectMajor option:selected").val();
+                  var year=$(".ui-datepicker-year").val();
+                   $('#getDate').attr('value', year);
+                  $.ajax({
+                      url: "{{url("getUsersGroupWithYear")}}",
+                      type: 'get',
+                      data: {facId: facId,majorId:majorId,year:year},
+                      success: function (response) {
+                          $('#selectUsers').empty();                    
+                         $.each(response.users, function (key, value) {
+                                  $('#selectUsers').append('<option value="' + value.id + '">' + value.forename + ' '
+                                  +value.familyName+' '+value.username+'</option>');
+                              });   
+                      }
+                  });
+                  $('#users').show(1000);
+      });
+    
+            
         $(".usersSelect").select2();
 
         $("#majors").hide();
         $("#users").hide();
-        
+        $("#year").hide();
         $('#selectFaculty').on('change', function (e) {
             var facId = $("#selectFaculty option:selected").val();
              $('#selectMajor').empty();
@@ -153,14 +218,16 @@
                         });   
                 }
             });
-            $('#users').show(1000);
-//        }
-            
-
+            $('#year').show(1000);  
         });
+ 
         
         $('#createGroup').validate({
             rules: {
+                name:{
+                     required: true,
+                    maxlength: 100
+                },
                 faculty_id: {
                     required: true,
                     maxlength: 100
@@ -181,6 +248,10 @@
             },
             // Specify the validation error messages
             messages: {
+                name: {
+                    required: "Please enter name of the group",
+                    maxlength: 100
+                },
                 faculty_id: {
                     required: "Please select faculty",
                     maxlength: 100

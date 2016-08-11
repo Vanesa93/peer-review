@@ -109,8 +109,6 @@
 
 <script>
     $(document).ready(function () {
-    //datepicker
-    $("#datepicker").datepicker("option", "dateFormat", 'd MM, y');
     //datatable create
     $('#coursesTable').DataTable();
     //hide datatable info tag

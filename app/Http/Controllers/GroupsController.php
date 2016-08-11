@@ -15,6 +15,7 @@ use App\Group;
 use App\GroupToStudent;
 use Illuminate\Http\Response;
 use Auth;
+use App\Courses;
 
 class GroupsController extends Controller {
 
@@ -24,20 +25,25 @@ class GroupsController extends Controller {
         $this->middleware('language');
     }
 
-    public function create() {
+    public function create() {   
+        $tutorId=Auth::user()->id;
         if (!empty(Session::get('locale'))) {
             $locale = Session::get('locale') . '_name';
         } else {
             $locale = 'en_name';
         }
         $faculties = $this->getFaculties($locale);
+        $courses=  Courses::where('tutor_id',$tutorId)->get();
         $majors = [];
         $users = [];
         return view('groups.createGroups')
                         ->with('faculties', $faculties)
                         ->with('majors', $majors)
+                        ->with('courses', $courses)
                         ->with('users', $users);
     }
+    
+    
 
     private function getFaculties($locale) {
         $faculties = Faculty::all();
@@ -94,11 +100,38 @@ class GroupsController extends Controller {
         ));
     }
     
+     public function getUsersGroupWithYear(Request $request) {
+        $faculty = $request->get('facId');
+        $major = $request->get('majorId');
+        $year=$request->get('year');
+        $users = DB::table('users')
+                ->join('students', 'users.id', '=', 'students.user_id_students')
+                ->where('users.account_type', 2)
+                ->where('faculty', $faculty)
+                ->where('major', $major)
+                ->where('year', $year)
+                ->get();       
+        $users= (object)$users;
+        if (empty($users)) {
+            $message = "No users found.";
+            return \Response::json(array(
+                        'success' => false,
+                        'message' => $message,
+            ));
+        }
+        
+        return \Response::json(array(
+                    'success' => true,
+                    'users' => $users,
+        ));
+    }
+    
      public function store(Request $request) {          
         $tutor_id = Auth::user()->id;
         $usersToGroup=$request->get('student_ids');
         $group = new Group([
             'tutor_id' =>$tutor_id,
+            'name'=>$request->get('name'),
             'faculty_id' => $request->get('faculty_id'),
             'major_id' => $request->get('major_id'),
             'student_first_year' => $request->get('student_first_year'),
@@ -118,7 +151,10 @@ class GroupsController extends Controller {
     }
 
     public function index() {
-        return view('groups.getGroups');
+        $tutor=Auth::user();
+        $groups=  Group::where('tutor_id',$tutor->id)->get();
+        dd($groups);
+        return view('groups.getGroups')->with('groups',$groups);
     }
 
 }

@@ -13,10 +13,11 @@ class CreateGroupsTable extends Migration {
     public function up() {
         Schema::create('groups', function(Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->integer('tutor_id');
-            $table->string('course_id');
-            $table->string('faculty_id');
-            $table->string('major_id');
+            $table->integer('course_id');
+            $table->integer('faculty_id');
+            $table->integer('major_id');
             $table->string('student_first_year');            
             $table->timestamps();
         });

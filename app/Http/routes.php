@@ -62,6 +62,7 @@ Route::get('groups/create','GroupsController@create');
 Route::get('groups','GroupsController@index');
 Route::get('getGroupMajors','GroupsController@getGroupMajors');
 Route::get('getUsersGroup','GroupsController@getUsersGroup');
+Route::get('getUsersGroupWithYear','GroupsController@getUsersGroupWithYear');
 Route::post('storeGroup','GroupsController@store');
 
 //faculties 
