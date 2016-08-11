@@ -120,6 +120,9 @@
     location.href = "{{url("groups/create")}}";
     });
 <?php foreach ($groups as $group) { ?>
+        $("#seeUsers{{$group->id}}").on("click", function () {
+            location.href = "{{url("groups")}}" + "/"+{{$group -> id}}+ "/users";
+        });
         $("#edit{{$group->id}}").on("click", function () {
         location.href = "{{url("groups/edit/")}}" + "/" + {{$group -> id}};
         });

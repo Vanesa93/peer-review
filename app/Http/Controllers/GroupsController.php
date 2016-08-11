@@ -27,7 +27,7 @@ class GroupsController extends Controller {
 
     public function create() {
         $tutorId = Auth::user()->id;
-        $locale=$this->getLocale();
+        $locale = $this->getLocale();
         $faculties = $this->getFaculties($locale);
         $courses = Courses::where('tutor_id', $tutorId)->get();
         $majors = [];
@@ -166,28 +166,42 @@ class GroupsController extends Controller {
         }
         return redirect('groups');
     }
-    
+
     private function getLocale() {
         if (!empty(Session::get('locale'))) {
             $locale = Session::get('locale') . '_name';
         } else {
             $locale = 'en_name';
         }
-        
-        return $locale;        
+
+        return $locale;
     }
-    
+
     public function index() {
         $tutor = Auth::user();
-        $locale=$this->getLocale();        
+        $locale = $this->getLocale();
         $groups = Group::where('tutor_id', $tutor->id)->get();
-        foreach($groups as $group){
-            $group->faculty_id =  Faculty::where('id',$group->faculty_id)->pluck($locale);
-            $group->major_id=  Major::where('id',$group->major_id)->pluck($locale);
-            $group->course_id=  Courses::where('id',$group->course_id)->pluck('name');
+        foreach ($groups as $group) {
+            $group->faculty_id = Faculty::where('id', $group->faculty_id)->pluck($locale);
+            $group->major_id = Major::where('id', $group->major_id)->pluck($locale);
+            $group->course_id = Courses::where('id', $group->course_id)->pluck('name');
         }
 
         return view('groups.getGroups')->with('groups', $groups);
+    }
+
+    public function seeUsers($id) {
+        $usersFromGroup = GroupToStudent::where('group_id', $id)->get();
+        $students = DB::table('students')
+                ->join('groups_to_students', 'students.id', '=', 'groups_to_students.student_id')
+                ->join('users', 'students.user_id_students', '=', 'users.id')
+                ->where('groups_to_students.group_id', $id)
+                ->where('users.account_type', 2)
+                ->get();
+        $groupName=  Group::where('id',$id)->pluck('name');
+        return view('groups.seeUsers')
+                ->with('students',$students)
+                ->with('groupName',$groupName);
     }
 
     public function edit($id) {

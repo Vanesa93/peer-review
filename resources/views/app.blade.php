@@ -44,6 +44,7 @@
             @yield('edit_faculty')
             @yield('edit_major')
             @yield('add_major_all_faculties');
+            @yield('see_users_from_group');
         </div>
     </body>
 </html>
