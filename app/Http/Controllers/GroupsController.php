@@ -27,11 +27,7 @@ class GroupsController extends Controller {
 
     public function create() {
         $tutorId = Auth::user()->id;
-        if (!empty(Session::get('locale'))) {
-            $locale = Session::get('locale') . '_name';
-        } else {
-            $locale = 'en_name';
-        }
+        $locale=$this->getLocale();
         $faculties = $this->getFaculties($locale);
         $courses = Courses::where('tutor_id', $tutorId)->get();
         $majors = [];
@@ -137,7 +133,7 @@ class GroupsController extends Controller {
             'student_ids' => 'required|max:100',
         );
         $validator = \Validator::make(Input::all(), $rules);
-        
+
         // process the login
         if ($validator->fails()) {
             return \Redirect::to('groups/create')
@@ -148,7 +144,7 @@ class GroupsController extends Controller {
     }
 
     private function saveGroup($request) {
-        
+
         $tutor_id = Auth::user()->id;
         $usersToGroup = $request->get('student_ids');
         $group = new Group([
@@ -170,20 +166,28 @@ class GroupsController extends Controller {
         }
         return redirect('groups');
     }
-
+    
+    private function getLocale() {
+        if (!empty(Session::get('locale'))) {
+            $locale = Session::get('locale') . '_name';
+        } else {
+            $locale = 'en_name';
+        }
+        
+        return $locale;        
+    }
+    
     public function index() {
         $tutor = Auth::user();
+        $locale=$this->getLocale();        
         $groups = Group::where('tutor_id', $tutor->id)->get();
-        $faculties = Faculty::all();
-        $majors = Major::all();
-        $users = User::where('account_type', 2)->get();
-        $courses = Courses::all();
-        return view('groups.getGroups')
-                        ->with('faculties', $faculties)
-                        ->with('majors', $majors)
-                        ->with('users', $users)
-                        ->with('courses', $courses)
-                        ->with('groups', $groups);
+        foreach($groups as $group){
+            $group->faculty_id =  Faculty::where('id',$group->faculty_id)->pluck($locale);
+            $group->major_id=  Major::where('id',$group->major_id)->pluck($locale);
+            $group->course_id=  Courses::where('id',$group->course_id)->pluck('name');
+        }
+
+        return view('groups.getGroups')->with('groups', $groups);
     }
 
     public function edit($id) {

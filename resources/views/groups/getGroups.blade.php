@@ -38,10 +38,11 @@
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
-                    @if(!($majors->isEmpty() AND $faculty->isEmpty() AND $courses AND $users->isEmpty()))
+                    
                     <div class="row">
                         <button type="button" class="btn button" id="create" >Add Group</button>
-                    </div>                    
+                    </div>     
+                    @if(!($groups->isEmpty()))
                     <center>
                         <h2>Groups</h2>
                     </center>
@@ -54,7 +55,7 @@
                                     <th>Course name</th>
                                     <th>Faculty name</th>
                                     <th>Student year</th>
-                                    <th>Users</th>
+                                    <th>Students</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -65,9 +66,9 @@
                                 @foreach($groups as $group)
                                 <tr>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$group->name}}</td>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$group->name}}</td>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$group->name}}</td>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$group->name}}</td>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$group->course_id}}</td>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$group->faculty_id}}</td>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$group->student_first_year}}</td>
                                     <td style="max-width:60px!important;word-wrap: break-word;">
                                           <button type="button" class="buttonEdit"  id="seeUsers{{$group->id}}">
                                             <span class="glyphicon glyphicon-eye-open"></span>
@@ -101,9 +102,9 @@
                     </div>
                     @else
                     <div>
-                        To create group you must create first faculties, majors for faculties,course and students
+                        No groups found.
                     </div>
-@endif
+                    @endif                    
                 </div>
             </div>
         </div>
