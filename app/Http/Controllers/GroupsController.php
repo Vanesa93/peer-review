@@ -198,15 +198,40 @@ class GroupsController extends Controller {
                 ->where('groups_to_students.group_id', $id)
                 ->where('users.account_type', 2)
                 ->get();
-        $groupName=  Group::where('id',$id)->pluck('name');
+        $groupName = Group::where('id', $id)->pluck('name');
         return view('groups.seeUsers')
-                ->with('students',$students)
-                ->with('groupName',$groupName);
+                        ->with('students', $students)
+                        ->with('groupName', $groupName);
     }
 
     public function edit($id) {
+        $userId = Auth::user()->id;
+        $locale = $this->getLocale();
         $group = Group::find($id);
-        return view('groups.edit')->with('group', $group);
+        $courses = Courses::where('tutor_id', $userId)->lists('name', 'id');
+        $faculties = Faculty::all()->lists($locale, 'id');
+        $majors = Major::where('faculty_id', $group->faculty_id)->lists($locale, 'id');
+        $usersFromGroup = GroupToStudent::where('group_id', $id)->get();
+        $students = DB::table('students')
+                ->join('groups_to_students', 'students.id', '=', 'groups_to_students.student_id')
+                ->join('users', 'students.user_id_students', '=', 'users.id')
+                ->where('groups_to_students.group_id', $id)
+                ->where('users.account_type', 2)
+                ->get();
+        $studentsAll = DB::table('students')
+                ->join('users', 'students.user_id_students', '=', 'users.id')
+                ->where('students.faculty', $group->faculty_id)
+                ->where('users.account_type', 2)
+                ->get();        
+        $group->faculty_id = Faculty::where('id', $group->faculty_id)->pluck($locale);
+        $group->course_id = Courses::where('id', $group->course_id)->where('tutor_id', $userId)->pluck('name');
+        $group->major = Major::where('id', $group->major_id)->pluck($locale);
+        return view('groups.editGroups')->with('group', $group)
+                        ->with('courses', $courses)
+                        ->with('faculties', $faculties)
+                        ->with('majors', $majors)
+                        ->with('students',$students)
+                        ->with('studentsAll',$studentsAll);
     }
 
     public function update($id) {
@@ -219,8 +244,6 @@ class GroupsController extends Controller {
             'users' => 'required|max:100',
         );
         $validator = \Validator::make(Input::all(), $rules);
-
-        // process the login
         if ($validator->fails()) {
             return \Redirect::to('groups/edit/' . $id)
                             ->withErrors($validator);
@@ -232,21 +255,19 @@ class GroupsController extends Controller {
             $course->duration = Input::get('duration');
             $course->requirments = Input::get('requirments');
             $course->save();
-
             return \Redirect::to('courses');
         }
     }
-    
+
     public function destroy($id) {
-        $groupToStudents=  GroupToStudent::where('group_id',$id)->get();
-        foreach($groupToStudents as $groupToStudent){
-            $groupToStudent->delete();            
+        $groupToStudents = GroupToStudent::where('group_id', $id)->get();
+        foreach ($groupToStudents as $groupToStudent) {
+            $groupToStudent->delete();
         }
         $group = Group::find($id);
         $group->delete();
-        
+
         Session::flash('message', 'Successfully deleted the nerd!');
-        
     }
 
 }
