@@ -236,5 +236,17 @@ class GroupsController extends Controller {
             return \Redirect::to('courses');
         }
     }
+    
+    public function destroy($id) {
+        $groupToStudents=  GroupToStudent::where('group_id',$id)->get();
+        foreach($groupToStudents as $groupToStudent){
+            $groupToStudent->delete();            
+        }
+        $group = Group::find($id);
+        $group->delete();
+        
+        Session::flash('message', 'Successfully deleted the nerd!');
+        
+    }
 
 }

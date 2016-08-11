@@ -37,6 +37,8 @@
             @yield('edit_user')
             @yield('create_groups')
             @yield('get_groups')
+            @yield('see_users_from_group');
+            @yield('edit_group');
             @yield('faculties')
             @yield('majors')
             @yield('add_faculty')
@@ -44,7 +46,7 @@
             @yield('edit_faculty')
             @yield('edit_major')
             @yield('add_major_all_faculties');
-            @yield('see_users_from_group');
+            
         </div>
     </body>
 </html>

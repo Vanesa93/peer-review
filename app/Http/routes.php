@@ -68,6 +68,7 @@ Route::get('groups/edit/{id}', 'GroupsController@edit');
 Route::put('groups/edit/{id}/updateGroup', [
     'as' => 'updateGroup', 'uses' => 'GroupsController@updateGroup']);
 Route::get('groups/{id}/users', 'GroupsController@seeUsers');
+Route::delete('groups/remove/{id}', 'GroupsController@destroy');
 
 //faculties 
 Route::get('faculties','FacultiesController@getFaculties');
