@@ -65,7 +65,7 @@
         <div class="row">
             <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
                 <div class="panel panel-default" style="border-radius: 0px;">
-                    <div class="panel-body">
+                    <div class="panel-body">                      
                         <h2 style="margin-bottom: 2%;">Create group</h2>
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label">Group name</label>
@@ -247,7 +247,7 @@
                     required: true,
                     maxlength: 100
                 },
-                student_id: {
+                student_ids: {
                     required: true,
                     maxlength: 100
                 },
@@ -275,7 +275,7 @@
                     required: "Please select major",
                     maxlength: 100
                 },
-                student_id: {
+                student_ids: {
                     required: "Please select users",
                     maxlength: 100
                 },

@@ -37,15 +37,15 @@
     <div class="row">
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
-                <div class="panel-body">
-                    
-                    <div class="row">
-                        <button type="button" class="btn button" id="create" >Add Group</button>
-                    </div>     
-                    @if(!($groups->isEmpty()))
+                <div class="panel-body">                 
+                  
                     <center>
                         <h2>Groups</h2>
                     </center>
+                    <div class="row">
+                        <button type="button" class="btn button" id="create" >Create group</button>
+                    </div>
+                    @if(!($groups->isEmpty()))
                     <div class="table-responsive">
                         <table id="groupsTable" class="display" style="border: solid;
                                border-width: 0.8px;border-color:#979797;">
@@ -62,7 +62,7 @@
                             </thead>
                             <tbody>
 
-                                
+
                                 @foreach($groups as $group)
                                 <tr>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$group->name}}</td>
@@ -70,7 +70,7 @@
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$group->faculty_id}}</td>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$group->student_first_year}}</td>
                                     <td style="max-width:60px!important;word-wrap: break-word;">
-                                          <button type="button" class="buttonEdit"  id="seeUsers{{$group->id}}">
+                                        <button type="button" class="buttonEdit"  id="seeUsers{{$group->id}}">
                                             <span class="glyphicon glyphicon-eye-open"></span>
                                         </button>
                                     </td>
@@ -96,15 +96,21 @@
                             </div>
 
                             @endforeach
-                            
+
                             </tbody>
                         </table>
                     </div>
                     @else
                     <div>
+                        <center>
+                        <h5>
                         No groups found.
+                        You must have created faculties,majors and courses to  create groups.
+                        </h5>
+                            </center>
                     </div>
-                    @endif                    
+
+                    @endif
                 </div>
             </div>
         </div>
@@ -121,23 +127,22 @@
     });
 <?php foreach ($groups as $group) { ?>
         $("#seeUsers{{$group->id}}").on("click", function () {
-            location.href = "{{url("groups")}}" + "/"+{{$group -> id}}+ "/users";
+        location.href = "{{url("groups")}}" + "/" + {{$group -> id}} + "/users";
         });
         $("#edit{{$group->id}}").on("click", function () {
         location.href = "{{url("groups/edit/")}}" + "/" + {{$group -> id}};
         });
         $("#delete{{$group->id}}").on("click", function () {
-        $("#dialog{{$group->id}}").dialog();                  
+        $("#dialog{{$group->id}}").dialog();
         });
         $("#onDelete{{$group->id}}").on("click", function () {
-            $.ajax({
-    url: "{{url("groups/remove/")}}" + "/" + "{{$group -> id}}",
-    type: 'delete',
-    data: {_token: '{{csrf_token()}}' ,_method: 'delete'},
-    success: function(){
-                     location.href = "{{url("groups")}}";
-
-    }
+        $.ajax({
+        url: "{{url("groups/remove/")}}" + "/" + "{{$group -> id}}",
+                type: 'delete',
+                data: {_token: '{{csrf_token()}}', _method: 'delete'},
+                success: function(){
+                location.href = "{{url("groups")}}";
+                }
         });
         });
 <?php } ?>

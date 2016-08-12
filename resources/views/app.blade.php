@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <title>Peer-Review</title>
-        <link href="/css/app.css" rel="stylesheet">
+        <link href="/css/app.css" rel="stylesheet">       
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css">
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
         <link href="https://cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"  rel='stylesheet' type='text/css'>

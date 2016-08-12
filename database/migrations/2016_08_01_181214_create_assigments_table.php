@@ -11,15 +11,27 @@ class CreateAssigmentsTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('assignments', function(Blueprint $table) {
+        Schema::create('tasks', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('author_id');
-            $table->integer('group_id');
+            $table->integer('tutor_id');    
+            $table->integer('course_id');    
+            $table->string('name');
             $table->string('description');
-            $table->date('start_date');
+            $table->date('sent_at');
             $table->date('end_date');
             $table->timestamps();
         });
+        
+        Schema::create('task_to_users', function(Blueprint $table) {
+            $table->increments('id');
+            $table->integer('task_id');            
+            $table->integer('group_id');   
+            $table->integer('user_id');  
+            $table->integer('ready'); 
+            $table->timestamps();
+        });
+           
+
     }
 
     /**
@@ -28,7 +40,8 @@ class CreateAssigmentsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::drop('assignments');
+        Schema::drop('tasks');
+        Schema::drop('task_to_users');
     }
 
 }

@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Group;
+use App\GroupToStudent;
+use Auth;
+use App\Courses;
+use Illuminate\Support\Facades\Response;
 
 class AssignmentController extends Controller {
 
@@ -12,6 +17,16 @@ class AssignmentController extends Controller {
         $this->middleware('auth');
         $this->middleware('notAdmin');
         $this->middleware('language');
+    }
+
+    private function getLocale() {
+        if (!empty(Session::get('locale'))) {
+            $locale = Session::get('locale') . '_name';
+        } else {
+            $locale = 'en_name';
+        }
+
+        return $locale;
     }
 
     /**
@@ -29,7 +44,25 @@ class AssignmentController extends Controller {
      * @return Response
      */
     public function create() {
-        return view('tasks.create');
+        $tutorId = Auth::user()->id;
+        $groups = [];
+        $courses = Courses::all();
+        return view('tasks.create')->with('groups', $groups)->with('courses', $courses);
+    }
+
+    public function getGroupsForCourse(Request $request) {
+        $groups = Group::where('course_id', $request->get('courseId'))->get();
+        if ($groups->isEmpty()) {
+            $message = "No groups for these course. Please choose another";
+            return Response::json(array(
+                        'success' => false,
+                        'message' => $message,
+            ));
+        }
+        return Response::json(array(
+                    'success' => true,
+                    'groups' => $groups,
+        ));
     }
 
     /**

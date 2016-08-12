@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Faculty;
 use App\Major;
-use App\User;
 use DB;
 use Input;
 use Session;
