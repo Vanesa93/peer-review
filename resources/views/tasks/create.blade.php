@@ -75,7 +75,7 @@
                             <label for="end_date" generated="true" id="labelForYear" class="error"></label>
                         </div>  
                         <div class="form-group" id="users">
-                            <label class="col-md-offset-3 col-md-2 control-label"> Choose groups</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> Choose course</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <select class="form-control " id="selectCourse" name="course_id"   style="width:250px;">
                                     <option value="">Select course</option>
