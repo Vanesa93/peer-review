@@ -120,5 +120,23 @@
     $("#create").on("click", function () {
         location.href = "{{url("tasks/create")}}";
     });
+    
+    <?php foreach ($tasks as $task) { ?>
+        $("#seeUsers{{$task->id}}").on("click", function () {
+        });
+        $("#delete{{$task->id}}").on("click", function () {
+        $("#dialog{{$task->id}}").dialog();
+        });
+        $("#onDelete{{$task->id}}").on("click", function () {
+        $.ajax({
+        url: "{{url("tasks/remove/")}}" + "/" + "{{$task -> id}}",
+                type: 'delete',
+                data: {_token: '{{csrf_token()}}', _method: 'delete'},
+                success: function(){
+                location.href = "{{url("tasks")}}";
+                }
+        });
+        });
+<?php } ?>
 </script>
 @stop

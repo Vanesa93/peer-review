@@ -41,14 +41,14 @@ class AssignmentController extends Controller {
      * @return Response
      */
     public function index() {
-        $tutorId=  Auth::user()->id;
-        $tasks=  Tasks::where('tutor_id',$tutorId)->get();
-        foreach ($tasks as $task){
-            $task->course_id=  Courses::where('id',$task->course_id)->pluck('name');
+        $tutorId = Auth::user()->id;
+        $tasks = Tasks::where('tutor_id', $tutorId)->get();
+        foreach ($tasks as $task) {
+            $task->course_id = Courses::where('id', $task->course_id)->pluck('name');
             $task->sent_at = Carbon::parse($task->sent_at)->format('d.m.Y');
             $task->end_date = Carbon::parse($task->end_date)->format('d.m.Y');
         }
-        return view('tasks.tasks')->with('tasks',$tasks);
+        return view('tasks.tasks')->with('tasks', $tasks);
     }
 
     /**
@@ -167,7 +167,15 @@ class AssignmentController extends Controller {
      * @return Response
      */
     public function destroy($id) {
-        //
+        
+        $taskToStudents = TasksToStudents::where('task_id', $id)->get();
+        foreach ($taskToStudents as $taskToStudent) {
+            $taskToStudent->delete();
+        }
+        $task = Tasks::find($id);
+        $task->delete();
+
+        Session::flash('message', 'Successfully deleted the nerd!');
     }
 
 }

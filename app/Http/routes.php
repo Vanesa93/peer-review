@@ -97,3 +97,4 @@ Route::get('tasks','AssignmentController@index');
 Route::get('tasks/create','AssignmentController@create');
 Route::post('storeTask','AssignmentController@store');
 Route::get('getGroupsForCourse','AssignmentController@getGroupsForCourse');
+Route::delete('tasks/remove/{id}', 'AssignmentController@destroy');
