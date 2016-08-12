@@ -11,14 +11,7 @@ class CreateMajorsTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::create('majors', function(Blueprint $table) {
-            $table->increments('id');
-            $table->string('faculty_id');
-            $table->string('bg_name');
-            $table->string('en_name');
-            $table->string('de_name');
-            $table->timestamps();
-        });
+//       
     }
 
     /**
@@ -27,7 +20,6 @@ class CreateMajorsTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::drop('majors');
     }
 
 }

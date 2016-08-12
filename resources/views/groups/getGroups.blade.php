@@ -71,7 +71,7 @@
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$group->faculty_id}}</td>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$group->major_id}}</td>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$group->student_first_year}}</td>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">
+                                    <td style="max-width:20px!important;word-wrap: break-word;">
                                         <button type="button" class="buttonEdit"  id="seeUsers{{$group->id}}">
                                             <span class="glyphicon glyphicon-eye-open"></span>
                                         </button>

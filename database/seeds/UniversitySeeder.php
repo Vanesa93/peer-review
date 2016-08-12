@@ -1,13 +1,71 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
-class UsersTableSeeder extends Seeder {
+class UniversitySeeder extends Seeder {
 
     public function run() {
+        DB::table('faculties')->delete();
+        DB::table('majors')->delete();
         DB::table('users')->delete();
         DB::table('lecturer')->delete();
         DB::table('students')->delete();
+        DB::table('faculties')->insert(
+                array(
+                    //tutor
+                    [
+                        'id' => 1,
+                        'bg_name' => 'ФаГИОПМ',
+                        'en_name' => 'FDIBA',
+                        'de_name' => 'FDIBA'
+                    ],
+                    //student
+                    [
+                        'id' => 2,
+                        'bg_name' => 'ФКСУ',
+                        'en_name' => 'FKSU',
+                        'de_name' => 'FKSU'
+                    ],
+        ));
+
+
+
+        DB::table('majors')->insert(
+                array(
+                    //
+                    [
+                        'id' => 1,
+                        'faculty_id' => '1',
+                        'bg_name' => 'Информатика',
+                        'en_name' => 'Informatics',
+                        'de_name' => 'Informatik'
+                    ],
+                    [
+                        'id' => 2,
+                        'faculty_id' => '1',
+                        'bg_name' => 'Машиностроене',
+                        'en_name' => 'Machine engineiring',
+                        'de_name' => 'Maschinenbau'
+                    ],
+                    [
+                        'id' => 3,
+                        'faculty_id' => '2',
+                        'bg_name' => 'BGИнформатика',
+                        'en_name' => 'BGInformatics',
+                        'de_name' => 'BGInformatik'
+                    ],
+                    [
+                        'id' => 4,
+                        'faculty_id' => '2',
+                        'bg_name' => 'BGМашиностроене',
+                        'en_name' => 'BGMachine engineiring',
+                        'de_name' => 'BGMaschinenbau'
+                    ],
+        ));
+
+
         $passwordTestUser = bcrypt('12345678');
         $adminPassword = bcrypt(env('ADMIN_PASSWORD'));
         DB::table('users')->insert(
@@ -91,7 +149,7 @@ class UsersTableSeeder extends Seeder {
                         'faculty' => '1',
                         'user_id_students' => 3
                     ],
-                   [
+                    [
                         'id' => 2,
                         'mobile' => '0897945003',
                         'year' => '2012',
@@ -115,9 +173,3 @@ class UsersTableSeeder extends Seeder {
     }
 
 }
-
-//class UsersSeeder extends Seeder {
-//    
-//
-//
-//}

@@ -56,7 +56,7 @@
                                     <th>Created at</th>
                                     <th>End date</th>
                                     <th>Course</th>
-                                    <th></th>
+                                    <th>Assigned students</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -65,20 +65,20 @@
 
                                 @foreach($tasks as $task)
                                 <tr>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$task->name}}</td>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$task->description}}</td>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$task->sent_at}}</td>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$task->end_date}}</td>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$task->course_id}}</td>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">
-                                        <button type="button" class="buttonEdit"  id="seeUsers{{$task->id}}">
+                                    <td style="max-width:100px!important;word-wrap: break-word;">{{$task->name}}</td>
+                                    <td style="max-width:150px!important;word-wrap: break-word;">{{$task->description}}</td>
+                                    <td style="word-wrap: break-word;">{{$task->sent_at}}</td>
+                                    <td style="word-wrap: break-word;">{{$task->end_date}}</td>
+                                    <td style="word-wrap: break-word;">{{$task->course_id}}</td>
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;"  id="studentsForTask{{$task->id}}">
                                             <span class="glyphicon glyphicon-eye-open"></span>
                                         </button>
                                     </td>
                                     <td>
                                         {!! Form::open(array('url' => 'task/remove/' . $task->id)) !!}
                                         {!! Form::hidden('_method', 'DELETE') !!}
-                                        <button type="button" class="buttonEdit"  id="delete{{$task->id}}">
+                                        <button type="button" class="buttonEdit" style="float:right;" id="delete{{$task->id}}">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
                                         {!! Form::close() !!}
@@ -122,7 +122,8 @@
     });
     
     <?php foreach ($tasks as $task) { ?>
-        $("#seeUsers{{$task->id}}").on("click", function () {
+        $("#studentsForTask{{$task->id}}").on("click", function () {
+            location.href = "{{url("tasks")}}"+"/"+"{{$task->id}}"+"/students";
         });
         $("#delete{{$task->id}}").on("click", function () {
         $("#dialog{{$task->id}}").dialog();

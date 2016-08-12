@@ -13,9 +13,7 @@ class DatabaseSeeder extends Seeder {
     public function run() {
         Model::unguard();
         $this->call('AccountTypesSeeder');
-        $this->call('UsersTableSeeder');
-        $this->call('MajorsSeeder');
-        $this->call('FacultiesSeeder');
+        $this->call('UniversitySeeder');
         $this->command->info('Database seeded!');
     }
 

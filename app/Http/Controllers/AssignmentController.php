@@ -115,18 +115,15 @@ class AssignmentController extends Controller {
         $task->save();
         $taskToGroups = $request->get('group_ids');
         foreach ($taskToGroups as $group) {
-            $studentsFromGroup = GroupToStudent::where('group_id', $group)->get();
-            foreach ($studentsFromGroup as $student) {
-                $taskToStudent = new TasksToStudents([
-                    'group_id' => $group,
-                    'student_id' => $student->student_id,
-                    'tutor_id' => $tutor_id,
-                    'task_id' => $task->id,
-                    'ready' => 0
-                ]);
-                $taskToStudent->save();
-            }
+            $taskToStudent = new TasksToStudents([
+                'group_id' => $group,
+                'tutor_id' => $tutor_id,
+                'task_id' => $task->id,
+                'ready' => 0
+            ]);
+            $taskToStudent->save();
         }
+
         return redirect('tasks');
     }
 
@@ -167,7 +164,7 @@ class AssignmentController extends Controller {
      * @return Response
      */
     public function destroy($id) {
-        
+
         $taskToStudents = TasksToStudents::where('task_id', $id)->get();
         foreach ($taskToStudents as $taskToStudent) {
             $taskToStudent->delete();
@@ -176,6 +173,12 @@ class AssignmentController extends Controller {
         $task->delete();
 
         Session::flash('message', 'Successfully deleted the nerd!');
+    }
+
+    public function getAssignedToTaskUsers($id) {
+
+        $assignedStudents = TasksToStudents::where('task_id', $id)->get();
+        dd($assignedStudents);
     }
 
 }

@@ -13,8 +13,10 @@ class CreateAssigmentsTable extends Migration {
     public function up() {
         Schema::create('tasks', function(Blueprint $table) {
             $table->increments('id');
-            $table->integer('tutor_id');    
-            $table->integer('course_id');    
+            $table->integer('tutor_id')->unsigned();   
+            $table->foreign('tutor_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('course_id')->unsigned();   
+            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->string('description');
             $table->date('sent_at');
@@ -26,7 +28,6 @@ class CreateAssigmentsTable extends Migration {
             $table->increments('id');
             $table->integer('task_id');            
             $table->integer('group_id');   
-            $table->integer('student_id');  
             $table->integer('ready'); 
             $table->timestamps();
         });
