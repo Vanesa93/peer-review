@@ -179,9 +179,11 @@
             
         $(".usersSelect").select2();
 
-        $("#majors").hide();
-        $("#users").hide();
-        $("#year").hide();
+        $("#selectMajor").attr('disabled',true);
+        $("#selectUsers").attr('disabled',true);
+        $('.ui-datepicker-year').css( "background",'#eee');
+         $('div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all').css( "background",'#eee');
+        
         $('#selectFaculty').on('change', function (e) {
             var facId = $("#selectFaculty option:selected").val();
              $('#selectMajor').empty();
@@ -198,28 +200,10 @@
                         });     
                 }
             });
-            $('#majors').show(1000);
+            $("#selectMajor").attr('disabled',false);
 
         });
-        
-//         $('#selectMajor').on('change', function (e) {
-//           $('#selectUsers').empty();
-//            var facId = $("#selectFaculty option:selected").val();
-//            var majorId = $("#selectMajor option:selected").val();
-//            $.ajax({
-//                url: "{{url("getUsersGroup")}}",
-//                type: 'get',
-//                data: {facId: facId,majorId:majorId},
-//                success: function (response) {
-//                    $('#selectUsers').empty();                    
-//                   $.each(response.users, function (key, value) {
-//                            $('#selectUsers').append('<option value="' + value.id + '">' + value.forename + ' '
-//                            +value.familyName+' '+value.username+'</option>');
-//                        });   
-//                }
-//            });
-//            $('#year').show(1000);  
-//        });
+
         $('#selectMajor').on('change', function (e) {
            $('#selectUsers').empty();
             var facId = $("#selectFaculty option:selected").val();
@@ -238,8 +222,10 @@
                         });   
                 }
             });
-         $('#year').show(1000); 
-         $('#users').show(1000);
+         $('.ui-datepicker-year').attr('disabled', false);
+            $('.ui-datepicker-year').css( "background",'white');
+            $('div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all').css( "background",'white');
+            $('#selectUsers').attr('disabled', false);
         });
  
         
