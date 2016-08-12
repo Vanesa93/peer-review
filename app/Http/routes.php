@@ -91,3 +91,7 @@ Route::put('major/edit/{id}/updateMajor', [
 Route::delete('major/remove/{id}', 'MajorsController@removeMajor');
 Route::get('getMajors','MajorsController@getMajorsForRegister');
 Route::get('add/major','MajorsController@createMajorWithAllFaculties');
+
+//tasks
+Route::get('tasks','AssignmentController@index');
+Route::get('tasks/create','AssignmentController@create');

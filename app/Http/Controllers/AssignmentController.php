@@ -20,7 +20,7 @@ class AssignmentController extends Controller {
      * @return Response
      */
     public function index() {
-        //
+        return view('tasks.tasks');
     }
 
     /**
@@ -29,7 +29,7 @@ class AssignmentController extends Controller {
      * @return Response
      */
     public function create() {
-        //
+        return view('tasks.create');
     }
 
     /**

@@ -13,16 +13,11 @@
                 </button>
                 <a class="navbar-brand" href="#">Peer-Review</a>
             </div>
-
             <div class="collapse navbar-collapse" id="languages">
                 <ul class="nav navbar-nav">
                     @if(Auth::guest())
                     <li><a href="/">{{trans('messages.home')}}</a></li>
-                    <li class="dropdown" style="float:right">                        
-<!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="float:right">
-                            <span class="glyphicon glyphicons-globe"></span>
-                            <span class="caret"></span>
-                        </a>-->
+                    <li class="dropdown" style="float:right">   
                         <span class=" dropdown-toggle glyphicon glyphicon-globe" data-toggle="dropdown" role="button" aria-expanded="false" style="cursor:pointer;font-size: 18px"></span>
 
                         <ul class="dropdown-menu" role="menu" name="language" style="float:right;">
@@ -38,10 +33,6 @@
                     <li><a href="/">{{trans('messages.home')}}</a></li>
                     <li class="dropdown" style="float:right">   
                         <span class=" dropdown-toggle glyphicon glyphicon-globe" data-toggle="dropdown" role="button" aria-expanded="false" style="cursor:pointer;font-size: 18px"></span>
-<!--                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="float:right">
-                            <span class=" glyphicon glyphicons-globe caret"></span>
-                        </a>-->
-
                         <ul class="dropdown-menu" role="menu" name="language" style="float:right;">
                             <li><a href="/language/en" value='en' name='locale'>EN</a></li>
                             <li><a href="/language/bg" value='bg' name='locale'>BG</a></li>
@@ -53,7 +44,7 @@
                     @if (Auth::user()->account_type==1)
                     <li><a href="{{ url('/courses') }}"> {{trans('messages.courses')}}</a></li>
                     <li><a href="/groups"> {{trans('messages.groups')}}</a></li>
-                    <li><a href="/"> {{trans('messages.tasks')}}</a></li>                    
+                    <li><a href="/tasks"> {{trans('messages.tasks')}}</a></li>                    
                     <li><a href="/"> {{trans('messages.questionnaires')}}</a></li>
                     <li><a href="/"> {{trans('messages.upload')}}</a></li>
                     <li><a href="/"> {{trans('messages.messages')}}</a></li>
@@ -65,7 +56,6 @@
                     <li><a href="/"> {{trans('messages.messages')}}</a></li>
                     @elseif(Auth::user()->account_type==0)
                     <li><a href="/faculties"> Faculties</a></li>
-<!--                    <li><a href="/majors"> Student majors</a></li>-->
                     <li><a href="/register"> Register User</a></li>
                     <li><a href="/users"> Users</a></li>
                     @endif
@@ -75,8 +65,6 @@
                 <ul class="nav navbar-nav navbar-right">
                     @if (Auth::guest())
                     <li><a href="/auth/login">{{trans('messages.login')}}</a></li>
-                    <!--                    <li><a href="/auth/register">{{trans('messages.register')}}</a></li>-->
-
                     @else
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="glyphicon glyphicons-globe caret"></span></a>
