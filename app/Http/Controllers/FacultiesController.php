@@ -17,9 +17,10 @@ class FacultiesController extends Controller {
     
      public function __construct(Registrar $registrar) {
         $this->middleware('admin');
-        $this->registrar = $registrar;
+        $this->middleware('auth');
+        $this->middleware('language');
+        
     }
-
     public function getFaculties() {
         $faculties = Faculty::all();
         return view('admin.faculties')->with('faculties', $faculties);
@@ -43,7 +44,7 @@ class FacultiesController extends Controller {
     
     
     public function removeFaculty($id) {
-
+        dd(\App\Students::all());
         $faculty = Faculty::find($id);
         $faculty->delete();
         $majors = Major::where('faculty_id', $id)->get();

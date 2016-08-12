@@ -28,17 +28,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     protected $fillable = ['account_type', 'username', 'forename', 'familyName', 'email','password'];
     protected $hidden = ['password', 'remember_token'];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-//    public function lecturer() {
-//        return $this->hasMany('Lecturer');
-//    }
-//
-//    public function students() {
-//        return $this->hasMany('Students');
-//    }
+
 
 }

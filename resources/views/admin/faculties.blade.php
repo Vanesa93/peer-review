@@ -85,6 +85,7 @@
                                     <td>
                                         {!! Form::open(array('url' => 'faculty/remove/' . $faculty->id)) !!}
                                         {!! Form::hidden('_method', 'DELETE') !!}
+                                        {!! Form::hidden('_token', '{{ csrf_token() }}') !!}
                                         <button type="button" class="buttonEdit"  id="delete{{$faculty->id}}">
                                             <span class="glyphicon glyphicon-remove"></span>
                                         </button>
