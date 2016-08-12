@@ -49,7 +49,6 @@
                                     <td style="max-width:100px!important;word-wrap: break-word;">{{$student->username}}</td>
 
                                     <td style="max-width:100px;">{{$student->forename}}</td>
-
                                     <td style="max-width:100px;">{{$student->familyName}}</td>
                                     <td style="max-width:100px;">{{$student->email}}</td>
                                     <td style="max-width:100px;">{{$student->mobile}}</td>
