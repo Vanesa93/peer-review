@@ -54,6 +54,7 @@
                                     <th>Group name</th>
                                     <th>Course name</th>
                                     <th>Faculty name</th>
+                                    <th>Major name</th>
                                     <th>Student year</th>
                                     <th>Students</th>
                                     <th></th>
@@ -68,6 +69,7 @@
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$group->name}}</td>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$group->course_id}}</td>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$group->faculty_id}}</td>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$group->major_id}}</td>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$group->student_first_year}}</td>
                                     <td style="max-width:60px!important;word-wrap: break-word;">
                                         <button type="button" class="buttonEdit"  id="seeUsers{{$group->id}}">

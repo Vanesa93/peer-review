@@ -38,7 +38,9 @@
                                 <tr style="background-color: #b3b3b3; ">
                                     <th>Faculty number</th>
                                     <th>Forename</th>
-                                    <th>Family name</th>                                   
+                                    <th>Family name</th>        
+                                    <th>Email</th>
+                                    <th>Mobile</th>
                                 </tr>
                             </thead>
                             <tbody>                             
@@ -49,6 +51,8 @@
                                     <td style="max-width:100px;">{{$student->forename}}</td>
 
                                     <td style="max-width:100px;">{{$student->familyName}}</td>
+                                    <td style="max-width:100px;">{{$student->email}}</td>
+                                    <td style="max-width:100px;">{{$student->mobile}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>
