@@ -165,7 +165,6 @@ class GroupsController extends Controller {
     }
 
     private function saveGroup($request) {
-
         $tutor_id = Auth::user()->id;
         $usersToGroup = $request->get('student_ids');
         $year= $request->get('student_first_year');

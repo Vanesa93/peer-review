@@ -124,6 +124,10 @@
 <script>
 $(document).ready(function () {
     
+    $('#back').on('click', function () {
+        location.href='{{url("tasks")}}';
+    });
+    
      $('#selectCourse').on('change', function (e) {
             var courseId = $("#selectCourse option:selected").val();
              $('#selectGroups').empty();
@@ -160,7 +164,6 @@ $(document).ready(function () {
             },           
             end_date: {
                 required: true,
-                date: true,
                 maxlength: 100
             },
              course_id:{

@@ -95,5 +95,5 @@ Route::get('add/major','MajorsController@createMajorWithAllFaculties');
 //tasks
 Route::get('tasks','AssignmentController@index');
 Route::get('tasks/create','AssignmentController@create');
-Route::post('storeTask','MajorsController@store');
+Route::post('storeTask','AssignmentController@store');
 Route::get('getGroupsForCourse','AssignmentController@getGroupsForCourse');

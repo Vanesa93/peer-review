@@ -26,7 +26,7 @@ class CreateAssigmentsTable extends Migration {
             $table->increments('id');
             $table->integer('task_id');            
             $table->integer('group_id');   
-            $table->integer('user_id');  
+            $table->integer('student_id');  
             $table->integer('ready'); 
             $table->timestamps();
         });

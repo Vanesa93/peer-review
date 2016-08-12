@@ -43,7 +43,7 @@
                         <h2>Groups</h2>
                     </center>
                     <div class="row">
-                        <button type="button" class="btn button" id="create" >Create group</button>
+                        <button type="button" class="btn button" id="create" >Groups</button>
                     </div>
                     @if(!($groups->isEmpty()))
                     <div class="table-responsive">

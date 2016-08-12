@@ -10,6 +10,12 @@ use App\GroupToStudent;
 use Auth;
 use App\Courses;
 use Illuminate\Support\Facades\Response;
+use Carbon\Carbon;
+use Session;
+use Illuminate\Support\Facades\Redirect;
+use Input;
+use App\Tasks;
+use App\TasksToStudents;
 
 class AssignmentController extends Controller {
 
@@ -35,7 +41,14 @@ class AssignmentController extends Controller {
      * @return Response
      */
     public function index() {
-        return view('tasks.tasks');
+        $tutorId=  Auth::user()->id;
+        $tasks=  Tasks::where('tutor_id',$tutorId)->get();
+        foreach ($tasks as $task){
+            $task->course_id=  Courses::where('id',$task->course_id)->pluck('name');
+            $task->sent_at = Carbon::parse($task->sent_at)->format('d.m.Y');
+            $task->end_date = Carbon::parse($task->end_date)->format('d.m.Y');
+        }
+        return view('tasks.tasks')->with('tasks',$tasks);
     }
 
     /**
@@ -70,8 +83,51 @@ class AssignmentController extends Controller {
      *
      * @return Response
      */
-    public function store() {
-        //
+    public function store(Request $request) {
+        $rules = array(
+            'name' => 'required|max:100',
+            'description' => 'required|max:1000',
+            'end_date' => 'required|max:100',
+            'course_id' => 'required|max:100',
+            'group_ids' => 'required|max:100',
+        );
+
+        $validator = \Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::to('tasks/create')
+                            ->withErrors($validator);
+        } else {
+            return $this->saveTask($request);
+        }
+    }
+
+    private function saveTask($request) {
+        $today = Carbon::today();
+        $tutor_id = Auth::user()->id;
+        $task = new Tasks([
+            'tutor_id' => $tutor_id,
+            'name' => $request->get('name'),
+            'description' => $request->get('description'),
+            'end_date' => Carbon::parse($request->get('end_date')),
+            'course_id' => $request->get('course_id'),
+            'sent_at' => $today,
+        ]);
+        $task->save();
+        $taskToGroups = $request->get('group_ids');
+        foreach ($taskToGroups as $group) {
+            $studentsFromGroup = GroupToStudent::where('group_id', $group)->get();
+            foreach ($studentsFromGroup as $student) {
+                $taskToStudent = new TasksToStudents([
+                    'group_id' => $group,
+                    'student_id' => $student->student_id,
+                    'tutor_id' => $tutor_id,
+                    'task_id' => $task->id,
+                    'ready' => 0
+                ]);
+                $taskToStudent->save();
+            }
+        }
+        return redirect('tasks');
     }
 
     /**

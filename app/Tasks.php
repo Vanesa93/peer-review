@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Faculty extends Model {
+class Tasks extends Model {
 
     protected $table = 'tasks';
-    protected $fillable = ['name', 'description', 'end_date','sent_at'];
+    protected $fillable = ['name', 'description', 'end_date','sent_at','tutor_id','course_id'];
 
 }
