@@ -51,10 +51,9 @@
                         </ul>
                     </li>
                     @if (Auth::user()->account_type==1)
-                    <li><a href="/groups"> {{trans('messages.groups')}}</a></li>
-                    <li><a href="/"> {{trans('messages.tasks')}}</a></li>
                     <li><a href="{{ url('/courses') }}"> {{trans('messages.courses')}}</a></li>
-                    <li><a href="/"> {{trans('messages.assignTasks')}}</a></li>
+                    <li><a href="/groups"> {{trans('messages.groups')}}</a></li>
+                    <li><a href="/"> {{trans('messages.tasks')}}</a></li>                    
                     <li><a href="/"> {{trans('messages.questionnaires')}}</a></li>
                     <li><a href="/"> {{trans('messages.upload')}}</a></li>
                     <li><a href="/"> {{trans('messages.messages')}}</a></li>
