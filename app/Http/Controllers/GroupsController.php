@@ -16,6 +16,7 @@ use App\GroupToStudent;
 use Illuminate\Http\Response;
 use Auth;
 use App\Courses;
+use Carbon\Carbon;
 
 class GroupsController extends Controller {
 
@@ -151,7 +152,7 @@ class GroupsController extends Controller {
             'faculty_id' => 'required|max:1000',
             'major_id' => 'required|max:100',
             'student_first_year' => 'max:100',
-            'course_id' => 'max:100',
+            'course_id' => 'required|max:100',
             'student_ids' => 'required|max:100',
         );
         $validator = \Validator::make(Input::all(), $rules);
@@ -169,12 +170,16 @@ class GroupsController extends Controller {
 
         $tutor_id = Auth::user()->id;
         $usersToGroup = $request->get('student_ids');
+        $year= $request->get('student_first_year');
+        if(empty($year)){
+            $year=  Carbon::today()->format('Y');
+        }
         $group = new Group([
             'tutor_id' => $tutor_id,
             'name' => $request->get('name'),
             'faculty_id' => $request->get('faculty_id'),
             'major_id' => $request->get('major_id'),
-            'student_first_year' => $request->get('student_first_year'),
+            'student_first_year' => $year,
             'course_id' => $request->get('course_id'),
         ]);
         $group->save();

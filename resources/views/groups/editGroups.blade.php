@@ -68,7 +68,7 @@ div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-cle
                             <h2 style="margin-left: -55%;">Edit group</h2> 
 
                         </div>
-                        {!! Form::model($group, array('route' => array('updateGroup', $group->id), 'method' => 'PUT')) !!}
+                        {!! Form::model($group, array('route' => array('updateGroup', $group->id), 'method' => 'PUT','id'=>'editGroup')) !!}
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> Group name</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
@@ -216,6 +216,65 @@ div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-cle
             $('div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all').css( "background",'white');
             $('#selectUsers').attr('disabled', false);
         });
+        
+         $('#editGroup').validate({
+            rules: {
+                name:{
+                     required: true,
+                    maxlength: 100
+                },
+                 course_id: {
+                    required: true,
+                    maxlength: 100
+                },
+                faculty_id: {
+                    required: true,
+                    maxlength: 100
+                },
+                major_id: {
+                    required: true,
+                    maxlength: 100
+                },
+                student_id: {
+                    required: true,
+                    maxlength: 100
+                },
+                student_first_year: {
+                    required: true,
+                    date: true,
+                    maxlength: 100
+                }
+            },
+            // Specify the validation error messages
+            messages: {
+                name: {
+                    required: "Please enter name of the group",
+                    maxlength: 100
+                },
+                faculty_id: {
+                    required: "Please select faculty",
+                    maxlength: 100
+                },
+                course_id: {
+                    required: "Please select faculty",
+                    maxlength: 100
+                },
+                major_id: {
+                    required: "Please select major",
+                    maxlength: 100
+                },
+                student_id: {
+                    required: "Please select users",
+                    maxlength: 100
+                },
+                student_first_year: {
+                    required: "Please enter year",
+                    date: "Date",
+                    maxlength: 100
+                },
+            }
+        });
+    });
          
     });
 </script>

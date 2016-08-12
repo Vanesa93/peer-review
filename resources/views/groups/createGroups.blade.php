@@ -202,15 +202,35 @@
 
         });
         
-         $('#selectMajor').on('change', function (e) {
+//         $('#selectMajor').on('change', function (e) {
+//           $('#selectUsers').empty();
+//            var facId = $("#selectFaculty option:selected").val();
+//            var majorId = $("#selectMajor option:selected").val();
+//            $.ajax({
+//                url: "{{url("getUsersGroup")}}",
+//                type: 'get',
+//                data: {facId: facId,majorId:majorId},
+//                success: function (response) {
+//                    $('#selectUsers').empty();                    
+//                   $.each(response.users, function (key, value) {
+//                            $('#selectUsers').append('<option value="' + value.id + '">' + value.forename + ' '
+//                            +value.familyName+' '+value.username+'</option>');
+//                        });   
+//                }
+//            });
+//            $('#year').show(1000);  
+//        });
+        $('#selectMajor').on('change', function (e) {
            $('#selectUsers').empty();
             var facId = $("#selectFaculty option:selected").val();
             var majorId = $("#selectMajor option:selected").val();
+            var year=$(".ui-datepicker-year").val();
             $.ajax({
-                url: "{{url("getUsersGroup")}}",
+                url: "{{url("getUsersGroupWithYear")}}",
                 type: 'get',
-                data: {facId: facId,majorId:majorId},
+                data: {facId: facId,majorId:majorId,year:year},
                 success: function (response) {
+                    console.log(response.users);
                     $('#selectUsers').empty();                    
                    $.each(response.users, function (key, value) {
                             $('#selectUsers').append('<option value="' + value.id + '">' + value.forename + ' '
@@ -218,7 +238,8 @@
                         });   
                 }
             });
-            $('#year').show(1000);  
+         $('#year').show(1000); 
+         $('#users').show(1000);
         });
  
         
@@ -229,6 +250,10 @@
                     maxlength: 100
                 },
                 faculty_id: {
+                    required: true,
+                    maxlength: 100
+                },
+                course_id: {
                     required: true,
                     maxlength: 100
                 },
@@ -254,6 +279,10 @@
                 },
                 faculty_id: {
                     required: "Please select faculty",
+                    maxlength: 100
+                },
+                 course_id: {
+                    required: "Please select course",
                     maxlength: 100
                 },
                 major_id: {
