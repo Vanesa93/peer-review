@@ -66,9 +66,11 @@ Route::get('getUsersGroupWithYear','GroupsController@getUsersGroupWithYear');
 Route::post('storeGroup','GroupsController@store');
 Route::get('groups/edit/{id}', 'GroupsController@edit');
 Route::put('groups/edit/{id}/updateGroup', [
-    'as' => 'updateGroup', 'uses' => 'GroupsController@updateGroup']);
+    'as' => 'updateGroup', 'uses' => 'GroupsController@update']);
 Route::get('groups/{id}/users', 'GroupsController@seeUsers');
 Route::delete('groups/remove/{id}', 'GroupsController@destroy');
+Route::get('getGroupMajorsForEdit','GroupsController@getGroupMajorsForEdit');
+Route::get('getUsersGroupForEdit','GroupsController@getUsersGroupForEdit');
 
 //faculties 
 Route::get('faculties','FacultiesController@getFaculties');

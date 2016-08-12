@@ -53,6 +53,9 @@
 .ui-datepicker-year{
     border:none;
 }
+div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all{
+    width:250px
+}
 </style>
 <div class="container-fluid">
     <div class="row">
@@ -62,7 +65,7 @@
 
                     <center>
                         <div class="form-group">
-                            <h2 style="margin-left: -55%;">Edit course</h2> 
+                            <h2 style="margin-left: -55%;">Edit group</h2> 
 
                         </div>
                         {!! Form::model($group, array('route' => array('updateGroup', $group->id), 'method' => 'PUT')) !!}
@@ -82,20 +85,20 @@
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> Faculty name</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
-                               {!! Form::select('faculty_id', $faculties, $group->faculty_id,['class'=>'form-control'])!!}
+                               {!! Form::select('faculty_id', $faculties, $group->faculty_id,['class'=>'form-control','id'=>'selectFaculty'])!!}
                             </div>
                         </div>
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> Major name</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
-                                {!! Form::select('major_id', $majors, $group->major_id,['class'=>'form-control'])!!}
+                                {!! Form::select('major_id', $majors, $group->major_id,['class'=>'form-control','id'=>'selectMajor'])!!}
                             </div>
                         </div>
                        <div class="form-group" id="year" >
                             <label class="col-md-offset-3 col-md-2 control-label">Year</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
-                                <div class="input-group date" name="student_first_year" id="studentFirstYear" data-provide="datepicker">
-                                    <input type="text" style="display:none;" class="form-control" id="getDate" name="student_first_year"/>
+                                <div class="input-group date" id="studentFirstYear" data-provide="datepicker">
+                                    <input type="text" style="display:none;" class="form-control" id="getDate" name="student_first_year"  style="width:250px;"/>
                                 </div>
                             </div>
                             <label for="student_first_year" generated="true" id="labelForYear" class="error"></label>
@@ -134,19 +137,86 @@
         
         var date = new Date("{{$group->student_first_year}}");
         var startYear = date.getFullYear();
-        console.log(startYear);
         $("#studentFirstYear").datepicker({
             dateFormat: 'yy',
             changeYear: true,  
             changeMonth: false,  
          }).datepicker("setDate",new Date("{{$group->student_first_year}}"));
+         
+          $("#studentFirstYear").datepicker().on("input change", function (e) {             
+            $('#selectUsers').empty();
+                  var facId = $("#selectFaculty option:selected").val();
+                  var majorId = $("#selectMajor option:selected").val();
+                  var year=$(".ui-datepicker-year").val();
+                   $('#getDate').attr('value', year);
+                  $.ajax({
+                      url: "{{url("getUsersGroupWithYear")}}",
+                      type: 'get',
+                      data: {facId: facId,majorId:majorId,year:year},
+                      success: function (response) {
+                          $('#selectUsers').empty();                    
+                         $.each(response.users, function (key, value) {
+                                  $('#selectUsers').append('<option value="' + value.id + '">' + value.forename + ' '
+                                  +value.familyName+' '+value.username+'</option>');
+                              });   
+                      }
+                  });
+                  $('#users').show(1000);
+      });
+         
         $("#back").on("click", function () {
             location.href = "{{url("groups")}}";
         });
-        var students= <?php $students ?>
-//         $("#selectUsers").select2().select2('val',);
-         $('#selectUsers').select2().select2('val', students);
-
+         $('#selectUsers').select2();
+         
+         //select faculty on change
+         $('#selectFaculty').on('change', function (e) {
+            var facId = $("#selectFaculty option:selected").val();
+             $('#selectMajor').empty();
+              $('#selectUsers').empty();
+            $.ajax({
+                url: "{{url("getGroupMajors")}}",
+                type: 'get',
+                data: {facId: facId},
+                success: function (response) {     
+                    $('#selectMajor').append('<option value="">Select major</option>');
+                   $.each(response.majors, function (key, value) {
+                            
+                            $('#selectMajor').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });     
+                }
+            });
+            $('.ui-datepicker-year').attr('disabled', true);
+            $('.ui-datepicker-year').css( "background",'#eee');
+            $('div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all').css( "background",'#eee');
+            $('#selectUsers').attr('disabled', true);
+        });
+        
+         //select major on change
+        $('#selectMajor').on('change', function (e) {
+           $('#selectUsers').empty();
+            var facId = $("#selectFaculty option:selected").val();
+            var majorId = $("#selectMajor option:selected").val();
+            var year=$(".ui-datepicker-year").val();
+            $.ajax({
+                url: "{{url("getUsersGroupWithYear")}}",
+                type: 'get',
+                data: {facId: facId,majorId:majorId,year:year},
+                success: function (response) {
+                    console.log(response.users);
+                    $('#selectUsers').empty();                    
+                   $.each(response.users, function (key, value) {
+                            $('#selectUsers').append('<option value="' + value.id + '">' + value.forename + ' '
+                            +value.familyName+' '+value.username+'</option>');
+                        });   
+                }
+            });
+             $('.ui-datepicker-year').attr('disabled', false);
+            $('.ui-datepicker-year').css( "background",'white');
+            $('div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-clearfix.ui-corner-all').css( "background",'white');
+            $('#selectUsers').attr('disabled', false);
+        });
+         
     });
 </script>
 

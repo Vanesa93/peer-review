@@ -70,6 +70,26 @@ class GroupsController extends Controller {
         ));
     }
 
+    public function getGroupMajorsForEdit(Request $request) {
+        $faculty = $request->get('facId');
+        $majors = Major::where('faculty_id', $request->get('facId'))->get();
+        if ($major->isEmpty()) {
+            $message = "No majors for these faculty. Please choose another";
+            return \Response::json(array(
+                        'success' => false,
+                        'message' => $message,
+            ));
+        }
+        $facultyColumnName = $this->getLocale();
+        foreach ($majors as $major) {
+            $major->name = $major->$facultyColumnName;
+        }
+        return \Response::json(array(
+                    'success' => true,
+                    'majors' => $majors,
+        ));
+    }
+
     public function getUsersGroup(Request $request) {
         $faculty = $request->get('facId');
         $major = $request->get('majorId');
@@ -106,6 +126,7 @@ class GroupsController extends Controller {
                         'message' => $message,
             ));
         }
+        ;
         return \Response::json(array(
                     'success' => true,
                     'users' => $users,
@@ -113,12 +134,13 @@ class GroupsController extends Controller {
     }
 
     private function getUsers($faculty, $major, $year) {
+        $year = (int) $year;
         $users = DB::table('users')
                 ->join('students', 'users.id', '=', 'students.user_id_students')
                 ->where('users.account_type', 2)
-                ->where('faculty', $faculty)
-                ->where('major', $major)
-                ->where('year', $year)
+                ->where('students.faculty', $faculty)
+                ->where('students.major', $major)
+                ->where('students.year', $year)
                 ->get();
         return (object) $users;
     }
@@ -222,7 +244,7 @@ class GroupsController extends Controller {
                 ->join('users', 'students.user_id_students', '=', 'users.id')
                 ->where('students.faculty', $group->faculty_id)
                 ->where('users.account_type', 2)
-                ->get();        
+                ->get();
         $group->faculty_id = Faculty::where('id', $group->faculty_id)->pluck($locale);
         $group->course_id = Courses::where('id', $group->course_id)->where('tutor_id', $userId)->pluck('name');
         $group->major = Major::where('id', $group->major_id)->pluck($locale);
@@ -230,32 +252,47 @@ class GroupsController extends Controller {
                         ->with('courses', $courses)
                         ->with('faculties', $faculties)
                         ->with('majors', $majors)
-                        ->with('students',$students)
-                        ->with('studentsAll',$studentsAll);
+                        ->with('students', $students)
+                        ->with('studentsAll', $studentsAll);
     }
 
-    public function update($id) {
+    public function update($id,  Request $request) {
         $rules = array(
             'name' => 'required|max:100',
             'faculty_id' => 'required|max:1000',
             'major_id' => 'required|max:100',
             'student_first_year' => 'max:100',
             'course_id' => 'max:100',
-            'users' => 'required|max:100',
+            'student_ids' => 'required|max:100',
         );
         $validator = \Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
-            return \Redirect::to('groups/edit/' . $id)
+            return \Redirect::to('groups')
                             ->withErrors($validator);
         } else {
-            $course = Courses::find($id);
-            $course->name = Input::get('name');
-            $course->description = Input::get('description');
-            $course->language = Input::get('language');
-            $course->duration = Input::get('duration');
-            $course->requirments = Input::get('requirments');
-            $course->save();
-            return \Redirect::to('courses');
+            $group = Group::find($id);
+            $group->name = Input::get('name');
+            $group->faculty_id = Input::get('faculty_id');
+            $group->major_id = Input::get('major_id');
+            if(!empty($request->get('student_first_year'))){
+               $group->student_first_year = $request->get('student_first_year');     
+            }                  
+            $group->course_id = Input::get('course_id');
+            $group->save();
+            $usersToGroup = Input::get('student_ids');
+            $groupToStudents = GroupToStudent::where('group_id', $id)->get();
+            foreach($groupToStudents as $studentInGroup){
+                $studentInGroup->delete();
+            }
+            foreach ($usersToGroup as $user) {
+                $groupToStudent = new GroupToStudent([
+                    'group_id' => $group->id,
+                    'student_id' => $user
+                ]);
+
+                $groupToStudent->save();
+            }
+            return \Redirect::to('groups');
         }
     }
 
