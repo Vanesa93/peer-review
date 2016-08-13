@@ -31,6 +31,7 @@ class FileEntryController extends Controller {
 
     public function add(Request $request) {
         $file = $request->all();
+        
         $extension = $file['filefield']->getClientOriginalExtension();
         $r = Storage::disk('local')->put($file['filefield']->getFilename() . '.' . $extension, File::get($file['filefield']));
         $entry = new Fileentry();

@@ -56,9 +56,10 @@
                                     <th>Created at</th>
                                     <th>End date</th>
                                     <th>Course</th>
-                                    <th>Assigned students</th>
-                                     <th></th>
-                                    <th></th>
+                                    <th>Files</th>
+                                    <th>Students</th>
+                                     <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,8 +73,13 @@
                                     <td style="word-wrap: break-word;">{{$task->end_date}}</td>
                                     <td style="word-wrap: break-word;">{{$task->course_id}}</td>
                                     <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;"  id="filesForTask{{$task->id}}">
+                                            <span class="glyphicon glyphicon-file"></span>
+                                        </button>
+                                    </td>
+                                    <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;"  id="studentsForTask{{$task->id}}">
-                                            <span class="glyphicon glyphicon-eye-open"></span>
+                                            <span class="glyphicon glyphicon-user"></span>
                                         </button>
                                     </td>
                                     <td style="word-wrap: break-word;">
@@ -128,6 +134,9 @@
     });
     
     <?php foreach ($tasks as $task) { ?>
+        $("#filesForTask{{$task->id}}").on("click", function () {
+            location.href="{{url("tasks")}}"+"/"+"{{$task->id}}"+"/helpmaterials";
+        });
         $("#edit{{$task->id}}").on("click", function () {
             location.href = "{{url("tasks")}}"+"/"+"{{$task->id}}"+"/edit";
         });

@@ -32,10 +32,13 @@
         border-radius: 5px;
     }
 
-
+    input[type="file"] {
+        margin-left:-3.4%;
+        
+    }
 </style>
 <div class="container-fluid">
-    <form method="post" action='{{url('/storeTask')}}' id="createTask">
+    {!!Form::open(['url' => 'storeTask','id'=>'createTask', 'files' => true])!!}
         @if (count($errors) > 0)
         <div class="alert alert-danger">
             <ul>
@@ -80,9 +83,9 @@
                                 <select class="form-control " id="selectCourse" name="course_id"   style="width:250px;">
                                     <option value="">Select course</option>
                                     @foreach($courses as $course)
-                                   <option value="{{$course->id}}">
-                                       {{$course->name}}
-                                   </option>
+                                    <option value="{{$course->id}}">
+                                        {{$course->name}}
+                                    </option>
                                     @endforeach
                                 </select>
                                 <label for="course_id" generated="true" class="error"></label>
@@ -95,15 +98,22 @@
                                 <select class="form-control " id="selectGroups" name="group_id"   style="width:250px;" disabled>
                                     <option value="">Select group</option>
                                     @foreach($groups as $group)
-                                   <option value="{{$group->id}}">
-                                       {{$group->name}}
-                                   </option>
+                                    <option value="{{$group->id}}">
+                                        {{$group->name}}
+                                    </option>
                                     @endforeach
                                 </select>
                                 <label for="course_id" generated="true" class="error"></label>
 
                             </div>
                         </div>
+                        <div class="form-group" >
+                            <label class="col-md-offset-3 col-md-2 control-label">Upload help materials</label>
+                            <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
+                                    <input type="file" class="btn  floatRight"  name="filefield"/>
+                            </div>
+                        </div> 
+
                         <input type="hidden" name="_token" id="csrf-token" value="{{ \Session::token() }}" />
                         <div class="form-group">
                             <div class="col-md-6 " style="margin-bottom: 1%;">
@@ -120,33 +130,33 @@
 
             </div>
         </div>
-    </form>
+    <!--</form>-->
 </div>
 <script>
 $(document).ready(function () {
-    
-    $('#back').on('click', function () {
-        location.href='{{url("tasks")}}';
-    });
-    
-     $('#selectCourse').on('change', function (e) {
-            var courseId = $("#selectCourse option:selected").val();
-             $('#selectGroups').empty();
-            $.ajax({
-                url: "{{url("getGroupsForCourse")}}",
-                type: 'get',
-                data: {courseId: courseId},
-                success: function (response) {     
-                   
-                   $.each(response.groups, function (key, value) {                            
-                            $('#selectGroups').append('<option value="' + value.id + '">' + value.name + '</option>');
-                        });     
-                }
-            });
-            $("#selectGroups").attr('disabled',false);
 
+    $('#back').on('click', function () {
+        location.href = '{{url("tasks")}}';
+    });
+
+    $('#selectCourse').on('change', function (e) {
+        var courseId = $("#selectCourse option:selected").val();
+        $('#selectGroups').empty();
+        $.ajax({
+            url: "{{url("getGroupsForCourse")}}",
+            type: 'get',
+            data: {courseId: courseId},
+            success: function (response) {
+
+                $.each(response.groups, function (key, value) {
+                    $('#selectGroups').append('<option value="' + value.id + '">' + value.name + '</option>');
+                });
+            }
         });
-    
+        $("#selectGroups").attr('disabled', false);
+
+    });
+
     $("#endDate").datepicker({
     });
 
@@ -160,12 +170,12 @@ $(document).ready(function () {
             description: {
                 required: true,
                 maxlength: 1000
-            },           
+            },
             end_date: {
                 required: true,
                 maxlength: 100
             },
-             course_id:{
+            course_id: {
                 required: true,
                 maxlength: 100
             },

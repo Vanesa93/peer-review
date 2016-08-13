@@ -29,8 +29,8 @@ Route::get('/language/{locale}', [
 Route::get('fileentry', 'FileEntryController@index');
 Route::get('fileentry/get/{filename}', [
     'as' => 'getentry', 'uses' => 'FileEntryController@get']);
-Route::post('/add', [
-    'as' => 'addentry', 'uses' => 'FileEntryController@add']);
+Route::post('/addFileFromLecturer', [
+    'as' => 'addFileFromLecturer', 'uses' => 'FileEntryController@addFileFromLecturer']);
 
 //registration validation
 Route::get('/checkUsername', 'RegistrationController@checkExistingUseraname');
@@ -102,3 +102,5 @@ Route::get('tasks/{id}/students', 'AssignmentController@getAssignedToTaskUsers')
 Route::get('tasks/{id}/edit','AssignmentController@edit');
 Route::put('tasks/{id}/edit/update', [
     'as' => 'updateTask', 'uses' => 'AssignmentController@update']);
+Route::get('tasks/{id}/helpmaterials', 'AssignmentController@getfilesForTask');
+Route::get('file/{filename}/open', 'AssignmentController@openFilesForTask');

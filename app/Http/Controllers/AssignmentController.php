@@ -17,6 +17,9 @@ use Input;
 use App\Tasks;
 use App\TasksToStudents;
 use DB;
+use Storage;
+use File;
+use App\Fileentry;
 
 class AssignmentController extends Controller {
 
@@ -117,6 +120,14 @@ class AssignmentController extends Controller {
             'sent_at' => $today,
         ]);
         $task->save();
+        $this->saveTaskToStudents($task);
+        if (!empty($request->file('filefield'))) {
+            $this->saveFileEntryForLecturer($request, $task);
+        }
+        return redirect('tasks');
+    }
+
+    private function saveTaskToStudents($task) {
         $groupsToStudents[] = GroupToStudent::where('group_id', $task->group_id)->get();
 
         foreach ($groupsToStudents as $groupToStudents) {
@@ -128,8 +139,20 @@ class AssignmentController extends Controller {
                 $taskToStudent->save();
             }
         }
+    }
 
-        return redirect('tasks');
+    private function saveFileEntryForLecturer($file, $task) {
+        $fileentry = $file->file('filefield');
+        $extension = $fileentry->getClientOriginalExtension();
+        $saveToStorage = Storage::disk('local')->put($fileentry->getFilename() . '.' . $extension, File::get($fileentry));
+        $entry = new Fileentry();
+        $entry->mime = $fileentry->getClientMimeType();
+        $entry->original_filename = $fileentry->getClientOriginalName();
+        $entry->filename = $fileentry->getFilename() . '.' . $extension;
+        $entry->tutor_id = $task->tutor_id;
+        $entry->task_id = $task->id;
+        $entry->extension = $extension;
+        $entry->save();
     }
 
     /**
@@ -244,6 +267,21 @@ class AssignmentController extends Controller {
                 ->where('users.account_type', 2)
                 ->get();
         return view('tasks.studentsToTasks')->with('students', $students)->with('task', $task);
+    }
+
+    public function getfilesForTask($id) {
+        $files = Fileentry::where('task_id', $id)->where('tutor_id', Auth::user()->id)->get();
+        return view('tasks.files', compact('files'));
+    }
+
+    public function openFilesForTask($filename) {
+        $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();
+        $file = Storage::disk('local')->get($entry->filename);
+       
+        return Response::make($file, 200, [
+                    'Content-Type' => 'application/'.$entry->extension,
+                    'Content-Disposition' => 'inline; filename="' . $entry->filename . '"',
+        ]);
     }
 
 }

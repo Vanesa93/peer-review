@@ -50,6 +50,7 @@
             @yield('create_task')
             @yield('edit_task')
             @yield('students_to_task')
+            @yield('lecturer_file')
         </div>
     </body>
 </html>
