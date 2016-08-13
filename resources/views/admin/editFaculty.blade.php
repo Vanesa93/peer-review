@@ -38,7 +38,15 @@
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
-
+ @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                     <center>
                         <div class="form-group">
                             <h2 style="margin-left: -55%;">Edit faculty</h2> 

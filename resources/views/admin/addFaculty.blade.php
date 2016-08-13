@@ -32,13 +32,15 @@
 </style>
 <div class="container-fluid">
     <form method="post" action='{{url('/storeFaculty')}}' id="addFaculty">
-        @if(\Session::has('error'))
-        <div class="flash-message">
-            <div class="alert alert-danger">
-                {{\Session::get('error')}}
-            </div>
-        </div>
-        @endif
+         @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
         <div class="row">
             <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
                 <div class="panel panel-default" style="border-radius: 0px;">
