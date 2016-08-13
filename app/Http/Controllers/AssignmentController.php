@@ -173,7 +173,7 @@ class AssignmentController extends Controller {
         );
         $validator = \Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
-            return \Redirect::to('tasks')
+            return \Redirect::to('tasks/'.$id.'/edit')
                             ->withErrors($validator);
         } else {
             $task = Tasks::find($id);

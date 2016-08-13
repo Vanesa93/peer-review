@@ -270,7 +270,7 @@ class GroupsController extends Controller {
         );
         $validator = \Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
-            return \Redirect::to('groups')
+            return \Redirect::to('groups/edit/'.$id)
                             ->withErrors($validator);
         } else {
             $group = Group::find($id);

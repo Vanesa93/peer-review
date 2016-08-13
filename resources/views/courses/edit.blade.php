@@ -38,13 +38,21 @@
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
-
+ @if (count($errors) > 0)
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                     <center>
                         <div class="form-group">
                             <h2 style="margin-left: -55%;">Edit course</h2> 
 
                         </div>
-                        {!! Form::model($course, array('route' => array('updateCourse', $course->id), 'method' => 'PUT')) !!}
+                        {!! Form::model($course, array('route' => array('updateCourse', $course->id), 'method' => 'PUT','id'=>'editCourse')) !!}
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> Course name</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
@@ -98,6 +106,55 @@
 
         $("#back").on("click", function () {
             location.href = "{{url("courses")}}";
+        });
+        
+        $('#editCourse').validate({
+            ignore: ":hidden",
+            rules: {
+                name: {
+                    required: true,
+                    maxlength: 100
+                },
+                description: {
+                    required: true,
+                    maxlength: 1000
+                },
+                language: {
+                    required: true,
+                    maxlength: 100
+                },
+                duration: {
+                    required: true,
+                    maxlength: 100
+                },
+                requirments: {
+                    required: true,
+                    maxlength: 255
+                },
+            },
+            // Specify the validation error messages
+            messages: {
+                name: {
+                    required: "Please enter your name",
+                    maxlength: 100
+                },
+                description: {
+                    required: "Please enter your description",
+                    maxlength: 1000
+                },
+                language: {
+                    required: "Please enter the language of your course",
+                    maxlength: 100
+                },
+                duration: {
+                    required: "Please enter the duration of your course",
+                    maxlength: 100
+                },
+                requirments: {
+                    required: "Please enter prerequistics of your course",
+                    maxlength: 100
+                }
+            }
         });
     });
 </script>
