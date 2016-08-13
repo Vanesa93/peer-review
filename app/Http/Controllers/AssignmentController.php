@@ -314,7 +314,7 @@ class AssignmentController extends Controller {
 //        Storage::delete(storage_path('app/'.$filename));
 //        File::delete(storage_path('app/'.$filename));
         unlink(storage_path('app/' . $filename));
-        return true;
+        return "true";
     }
 
 }
