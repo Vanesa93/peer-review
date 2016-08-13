@@ -112,11 +112,11 @@ div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-cle
                             <label for="student_first_year" generated="true" id="labelForYear" class="error"></label>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Users</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">Users</label>  
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <select class="form-group usersSelect" id="selectUsers" name="student_ids[]"  multiple="multiple" style="width:250px;">
-                                @foreach($studentsAll as $student)
-                                    <option value="{{$student->id}}" @foreach($students as $selected) @if($student->id == $selected->id)selected="selected"@endif @endforeach>{{$student->username}}</option>
+                                @foreach($studentsAll as $student) 
+                                    <option value="{{$student->id}}" @foreach($students as $selected) @if($student->id == $selected->student_id)selected="selected"@endif @endforeach>{{$student->username}}</option>
                                 @endforeach                                  
                                 </select>
                             </div>
@@ -282,7 +282,6 @@ div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-cle
                 },
             }
         });
-    });
          
     });
 </script>

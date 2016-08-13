@@ -242,11 +242,12 @@ class GroupsController extends Controller {
                 ->where('groups_to_students.group_id', $id)
                 ->where('users.account_type', 2)
                 ->get();
-        $studentsAll = DB::table('students')
-                ->join('users', 'students.user_id_students', '=', 'users.id')
+                
+        $studentsAll = DB::table('users')
+                ->join('students',  'users.id', '=','students.user_id_students')
                 ->where('students.faculty', $group->faculty_id)
                 ->where('users.account_type', 2)
-                ->get();
+                ->get();       
         $group->faculty_id = Faculty::where('id', $group->faculty_id)->pluck($locale);
         $group->course_id = Courses::where('id', $group->course_id)->where('tutor_id', $userId)->pluck('name');
         $group->major = Major::where('id', $group->major_id)->pluck($locale);
@@ -281,19 +282,28 @@ class GroupsController extends Controller {
             }                  
             $group->course_id = Input::get('course_id');
             $group->save();
-            $usersToGroup = Input::get('student_ids');
-            $groupToStudents = GroupToStudent::where('group_id', $id)->get();
-            foreach($groupToStudents as $studentInGroup){
-                $studentInGroup->delete();
+            
+            $updatedUsersIds = Input::get('student_ids');
+            $groupToStudentsToDelete = GroupToStudent::where('group_id', $id)->get(); 
+            $groupToStudents[] = GroupToStudent::where('group_id', $id)->pluck('student_id');
+            foreach ($groupToStudentsToDelete as $oldId) {
+                if (in_array($oldId->student_id, $updatedUsersIds)) {
+                    
+                } else {
+                    $oldId->delete();
+                }
             }
-            foreach ($usersToGroup as $user) {
-                $groupToStudent = new GroupToStudent([
-                    'group_id' => $group->id,
-                    'student_id' => $user
-                ]);
-
-                $groupToStudent->save();
-            }
+            foreach ($updatedUsersIds as $newId) {
+                if (in_array($newId, $groupToStudents)) {
+                    
+                } else {
+                    $newStudent = new GroupToStudent([
+                        'group_id' => $id,
+                        'student_id' => $newId,
+                    ]);
+                    $newStudent->save();
+                }
+            } 
             return \Redirect::to('groups');
         }
     }
