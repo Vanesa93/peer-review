@@ -70,6 +70,7 @@ class AssignmentController extends Controller {
             return Response::json(array(
                         'success' => false,
                         'message' => $message,
+                        'groups' => []
             ));
         }
         return Response::json(array(
@@ -104,11 +105,12 @@ class AssignmentController extends Controller {
     private function saveTask($request) {
         $today = Carbon::today();
         $tutor_id = Auth::user()->id;
+        $endDate = Carbon::parse($request->get('end_date'));
         $task = new Tasks([
             'tutor_id' => $tutor_id,
             'name' => $request->get('name'),
             'description' => $request->get('description'),
-            'end_date' => Carbon::parse($request->get('end_date')),
+            'end_date' => $endDate,
             'course_id' => $request->get('course_id'),
             'sent_at' => $today,
         ]);
@@ -144,7 +146,15 @@ class AssignmentController extends Controller {
      * @return Response
      */
     public function edit($id) {
-        //
+        $task = Tasks::find($id);
+        $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
+        $courses = Courses::all()->lists('name', 'id');
+        $allGroups = Group::all();
+        $groups = TasksToStudents::where('task_id', $task->id)->get();
+        foreach ($groups as $group) {
+            $group->name = Group::where('id', $group->group_id)->pluck('name');
+        }
+        return view('tasks.edit')->with('task', $task)->with('courses', $courses)->with('groups', $groups)->with('allGroups', $allGroups);
     }
 
     /**
@@ -154,7 +164,49 @@ class AssignmentController extends Controller {
      * @return Response
      */
     public function update($id) {
-        //
+        $rules = array(
+            'name' => 'required|max:100',
+            'description' => 'required|max:1000',
+            'end_date' => 'required|max:100',
+            'course_id' => 'max:100',
+            'group_ids' => 'required|max:100',
+        );
+        $validator = \Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return \Redirect::to('tasks')
+                            ->withErrors($validator);
+        } else {
+            $task = Tasks::find($id);
+            $task->name = Input::get('name');
+            $task->description = Input::get('description');
+            $endDate = Carbon::parse(Input::get('end_date'));
+            $task->end_date = $endDate;
+            $task->course_id = Input::get('course_id');
+            $task->save();
+            $updatedGroups = Input::get('group_ids');
+            $groupToTasksToDelete = TasksToStudents::where('task_id', $id)->get();
+            $groupToTasks[] = TasksToStudents::where('task_id', $id)->pluck('group_id');
+            foreach ($groupToTasksToDelete as $oldId) {
+                if (in_array($oldId->group_id, $updatedGroups)) {
+                    
+                } else {
+                    $oldId->delete();
+                }
+            }
+            foreach ($updatedGroups as $newId) {
+                if (in_array($newId, $groupToTasks)) {
+                    
+                } else {
+                    $newTask = new TasksToStudents([
+                        'task_id' => $id,
+                        'group_id' => $newId,
+                        'ready' => 0
+                    ]);
+                    $newTask->save();
+                }
+            }
+        }
+        return \Redirect::to('tasks');
     }
 
     /**

@@ -48,7 +48,7 @@
             @yield('add_major_all_faculties')
             @yield('tasks')
             @yield('create_task')
-            
+            @yield('edit_task')
         </div>
     </body>
 </html>

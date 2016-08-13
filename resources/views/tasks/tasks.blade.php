@@ -57,6 +57,7 @@
                                     <th>End date</th>
                                     <th>Course</th>
                                     <th>Assigned students</th>
+                                     <th></th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -73,6 +74,11 @@
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;"  id="studentsForTask{{$task->id}}">
                                             <span class="glyphicon glyphicon-eye-open"></span>
+                                        </button>
+                                    </td>
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;"  id="edit{{$task->id}}">
+                                            <span class="glyphicon glyphicon-edit"></span>
                                         </button>
                                     </td>
                                     <td>
@@ -122,6 +128,9 @@
     });
     
     <?php foreach ($tasks as $task) { ?>
+        $("#edit{{$task->id}}").on("click", function () {
+            location.href = "{{url("tasks")}}"+"/"+"{{$task->id}}"+"/edit";
+        });
         $("#studentsForTask{{$task->id}}").on("click", function () {
             location.href = "{{url("tasks")}}"+"/"+"{{$task->id}}"+"/students";
         });

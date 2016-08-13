@@ -9,9 +9,15 @@ use Request;
 
 class RegistrationController extends Controller {
 
+    public function __construct(Registrar $registrar) {
+        $this->middleware('admin');
+        $this->middleware('auth');
+        $this->registrar = $registrar;
+    }
+
     public function checkExistingUseraname() {
         $username = Request::input('username');
-        $usernames= DB::table('users')->where('username', $username)->first();
+        $usernames = DB::table('users')->where('username', $username)->first();
         if (empty($usernames)) {   // <-- if no database match
             return \Response::json(array('msg' => 'true'));
         }

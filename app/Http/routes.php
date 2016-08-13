@@ -99,3 +99,6 @@ Route::post('storeTask','AssignmentController@store');
 Route::get('getGroupsForCourse','AssignmentController@getGroupsForCourse');
 Route::delete('tasks/remove/{id}', 'AssignmentController@destroy');
 Route::get('tasks/{id}/students', 'AssignmentController@getAssignedToTaskUsers');
+Route::get('tasks/{id}/edit','AssignmentController@edit');
+Route::put('tasks/{id}/edit/update', [
+    'as' => 'updateTask', 'uses' => 'AssignmentController@update']);

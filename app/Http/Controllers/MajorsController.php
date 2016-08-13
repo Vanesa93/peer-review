@@ -17,6 +17,7 @@ class MajorsController extends Controller {
     
      public function __construct(Registrar $registrar) {
         $this->middleware('admin');
+        $this->middleware('auth');
         $this->registrar = $registrar;
     }
 
