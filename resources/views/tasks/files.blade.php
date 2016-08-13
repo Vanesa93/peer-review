@@ -38,17 +38,21 @@
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body"> 
+                    <div class="row">
+                        <div class="col-md-6 " style="margin-bottom: 1%;">
+                            <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Go to tasks" />
+                        </div>
+                    </div>
                     <center>
-                        <h2> Help materials</h2>
+                        <h2 style="margin-bottom:2%;"> Help materials for task {{$task->name}}</h2>
                     </center>
                     {!!Form::open(['url' => 'files','id'=>'filesLecturer', 'files' => true])!!}
                     @if(!($files->isEmpty()))
                     <table class="table d">
-                        <!-- List all documents based on authenticated user -->
                         @foreach($files as $file)                        
                         <tr>
-                            <td><a href="/file/{{ $file->filename }}/open">{{ $file->original_filename }}</a></td>
-                            <td><a href="document/remove/{{ $file->id }}" class="btn btn-sm btn-danger">Remove</a></td>
+                            <td><a href="/file/{{$file->id}}/{{ $file->filename }}/open">{{ $file->original_filename }}</a></td>
+                            <td style="float:right"><a href="document/remove/{{ $file->id }}" class="btn btn-sm btn-danger">Remove</a></td>
                         </tr>
                         @endforeach
                     </table>

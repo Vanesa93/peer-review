@@ -270,12 +270,14 @@ class AssignmentController extends Controller {
     }
 
     public function getfilesForTask($id) {
+        $task=  Tasks::find($id);
         $files = Fileentry::where('task_id', $id)->where('tutor_id', Auth::user()->id)->get();
-        return view('tasks.files', compact('files'));
+        return view('tasks.files', compact('files','task'));
     }
 
-    public function openFilesForTask($filename) {
-        $entry = Fileentry::where('filename', '=', $filename)->firstOrFail();
+    public function openFilesForTask($id,$filename) {
+        $tutorId=Auth::user()->id;
+        $entry = Fileentry::where('filename', '=', $filename)->where('tutor_id',$tutorId)->where('id', $id)->firstOrFail();
         $file = Storage::disk('local')->get($entry->filename);
        
         return Response::make($file, 200, [
