@@ -104,3 +104,5 @@ Route::put('tasks/{id}/edit/update', [
     'as' => 'updateTask', 'uses' => 'AssignmentController@update']);
 Route::get('tasks/{id}/helpmaterials', 'AssignmentController@getfilesForTask');
 Route::get('file/{id}/{filename}/open', 'AssignmentController@openFilesForTask');
+Route::get('tasks/{id}/upload', 'AssignmentController@uploadFileToTask');
+Route::post('upload/{id}', 'AssignmentController@upload');

@@ -1,5 +1,5 @@
 @extends('app')
-@section('lecturer_file')
+@section('file_upload_tasks')
 <style>
     .button {
         background-color: #002b80; /* Green */
@@ -44,34 +44,28 @@
                         </div>
                     </div>
                     <center>
-                        <h2 style="margin-bottom:2%;"> Help materials for task {{$task->name}}</h2>
+                        <h2 style="margin-bottom:5%;"> Upload file for task {{$task->name}}</h2>
                     </center>
-                    {!!Form::open(['url' => 'files','id'=>'filesLecturer', 'files' => true])!!}
-                    @if(!($files->isEmpty()))
-                    <table class="table d">
-                        @foreach($files as $file)                        
-                        <tr>
-                            <td><a href="/file/{{$file->id}}/{{ $file->filename }}/open">{{ $file->filename }}</a></td>
-                            <td style="float:right"><a href="document/remove/{{ $file->id }}" class="btn btn-sm btn-danger">Remove</a></td>
-                        </tr>
-                        @endforeach
-                    </table>
-                    @else
-                    <h4>No helps files for these task</h4>
-                    @endif
+                    {!!Form::open(['url' => 'upload/'.$task->id,'id'=>'uploadFileForTask', 'files' => true])!!}
+                    <center>
+                        <div class='row'>
+
+                            <div class="form-group" >
+                                <div class="" style="margin-bottom: 1%;margin-left: 10%;">
+                                    <input type="file" class="btn"  name="filefield"/>
+                                </div>
+                            </div> 
+                        </div>
+                        <div class='row'>
+                            <div class="form-group">
+                                <input type="submit" name="submit" id='submit' class="btn button action-button"  value="Submit" />
+                            </div>
+                        </div>
+                    </center>
                     {!!Form::close()!!}
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
-$(document).ready(function () {
-
-    $('#back').on('click', function () {
-        location.href = '{{url("tasks")}}';
-    });
-    });
-
-</script>
 @stop

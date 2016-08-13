@@ -153,7 +153,8 @@ class AssignmentController extends Controller {
         $entry->task_id = $task->id;
         $entry->extension = $extension;
         $entry->save();
-    }
+    }   
+   
 
     /**
      * Display the specified resource.
@@ -284,6 +285,28 @@ class AssignmentController extends Controller {
                     'Content-Type' => $entry->mime,
                     'Content-Disposition' => 'inline; filename="' . $entry->original_filename . '"',
         ]);
+    }
+    
+    public function uploadFileToTask($id){
+        $task=  Tasks::find($id);
+        return view('tasks.upload')->with('task',$task);
+    }
+    
+      public function upload(Request $file, $task) {
+         $fileTask=  Tasks::find($task);
+        $fileentry = $file->file('filefield');
+        $extension = $fileentry->getClientOriginalExtension();
+        $saveToStorage = Storage::disk('local')->put($fileentry->getFilename() . '.' . $extension, File::get($fileentry));
+        $entry = new Fileentry();
+        $entry->mime = $fileentry->getClientMimeType();
+        $entry->original_filename = $fileentry->getClientOriginalName();
+        $entry->filename = $fileentry->getFilename() . '.' . $extension;
+        $entry->tutor_id = $fileTask->tutor_id;
+        $entry->task_id = $fileTask->id;
+        $entry->extension = $extension;
+        $entry->save();
+        
+         return Redirect::to('tasks/'.$task.'/helpmaterials');
     }
 
 }
