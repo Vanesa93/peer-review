@@ -238,12 +238,9 @@ class AssignmentController extends Controller {
         $task = Tasks::find($id);
         $task->course_id = Courses::where('id', $task->course_id)->pluck('name');
         $students = DB::table('students')
-                ->join('groups_to_students', 'students.id', '=', 'groups_to_students.student_id')
+                ->join('task_to_students', 'students.id', '=', 'task_to_students.student_id')
                 ->join('users', 'students.user_id_students', '=', 'users.id')
-                ->join('groups', 'groups_to_students.group_id', '=', 'groups.id')
-                ->join('task_to_groups', 'groups.id', '=', 'task_to_groups.group_id')
-                ->where('task_to_groups.task_id', $id)
-                ->where('groups.tutor_id', Auth::user()->id)
+                ->where('task_to_students.task_id', $id)
                 ->where('users.account_type', 2)
                 ->get();
         return view('tasks.studentsToTasks')->with('students', $students)->with('task', $task);
