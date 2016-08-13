@@ -153,8 +153,7 @@ class AssignmentController extends Controller {
         $entry->task_id = $task->id;
         $entry->extension = $extension;
         $entry->save();
-    }   
-   
+    }
 
     /**
      * Display the specified resource.
@@ -271,29 +270,30 @@ class AssignmentController extends Controller {
     }
 
     public function getfilesForTask($id) {
-        $task=  Tasks::find($id);
+
+        $task = Tasks::find($id);
         $files = Fileentry::where('task_id', $id)->where('tutor_id', Auth::user()->id)->get();
-        return view('tasks.files', compact('files','task'));
+        return view('tasks.files', compact('files', 'task'));
     }
 
-    public function openFilesForTask($id,$filename) {
-        $tutorId=Auth::user()->id;
-        $entry = Fileentry::where('filename', '=', $filename)->where('tutor_id',$tutorId)->where('id', $id)->firstOrFail();
+    public function openFilesForTask($id, $filename) {
+        $tutorId = Auth::user()->id;
+        $entry = Fileentry::where('filename', '=', $filename)->where('tutor_id', $tutorId)->where('id', $id)->firstOrFail();
         $file = Storage::disk('local')->get($entry->filename);
-       
+
         return Response::make($file, 200, [
                     'Content-Type' => $entry->mime,
                     'Content-Disposition' => 'inline; filename="' . $entry->original_filename . '"',
         ]);
     }
-    
-    public function uploadFileToTask($id){
-        $task=  Tasks::find($id);
-        return view('tasks.upload')->with('task',$task);
+
+    public function uploadFileToTask($id) {
+        $task = Tasks::find($id);
+        return view('tasks.upload')->with('task', $task);
     }
-    
-      public function upload(Request $file, $task) {
-         $fileTask=  Tasks::find($task);
+
+    public function upload(Request $file, $task) {
+        $fileTask = Tasks::find($task);
         $fileentry = $file->file('filefield');
         $extension = $fileentry->getClientOriginalExtension();
         $saveToStorage = Storage::disk('local')->put($fileentry->getFilename() . '.' . $extension, File::get($fileentry));
@@ -305,8 +305,16 @@ class AssignmentController extends Controller {
         $entry->task_id = $fileTask->id;
         $entry->extension = $extension;
         $entry->save();
-        
-         return Redirect::to('tasks/'.$task.'/helpmaterials');
+        return Redirect::to('tasks/' . $task . '/helpmaterials');
+    }
+
+    public function deleteFileFromTask($filename) {
+        $file = Fileentry::where('tutor_id', Auth::user()->id)->where('filename', $filename)->delete();
+
+//        Storage::delete(storage_path('app/'.$filename));
+//        File::delete(storage_path('app/'.$filename));
+        unlink(storage_path('app/' . $filename));
+        return true;
     }
 
 }

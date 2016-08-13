@@ -46,14 +46,22 @@
                     <center>
                         <h2 style="margin-bottom:2%;"> Help materials for task {{$task->name}}</h2>
                     </center>
-                    {!!Form::open(['url' => 'files','id'=>'filesLecturer', 'files' => true])!!}
+                    {!!Form::open(['url' => 'files','id'=>'filesLecturer','files'=>'true'])!!}
+                    <input type="hidden" id="token" name="token" value="{{ csrf_token() }}">
                     @if(!($files->isEmpty()))
-                    <table class="table d">
+                    <table class="table ">
                         @foreach($files as $file)                        
                         <tr>
                             <td><a href="/file/{{$file->id}}/{{ $file->filename }}/open">{{ $file->filename }}</a></td>
-                            <td style="float:right"><a href="document/remove/{{ $file->id }}" class="btn btn-sm btn-danger">Remove</a></td>
+                            <td style="float:right"><button type="button" class="btn btn-sm btn-danger" id="delete{{$file->id}}" >Remove</button></td>
                         </tr>
+                        
+                        <div id="dialog{{$file->id}}" title="Delete file?" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>Are you sure you want to delete these file?</h5>
+                                <button type="button" type="button" class="button" style="float:right" id="onDelete{{$file->id}}">
+                                    Delete
+                                </button>
+                            </div>
                         @endforeach
                     </table>
                     @else
@@ -65,6 +73,7 @@
         </div>
     </div>
 </div>
+
 <script>
 $(document).ready(function () {
 
@@ -72,6 +81,23 @@ $(document).ready(function () {
         location.href = '{{url("tasks")}}';
     });
     });
+    
+    <?php foreach ($files as $file) { ?>       
+        $("#delete{{$file->id}}").on("click", function () {
+        $("#dialog{{$file->id}}").dialog();
+        });
+        $("#onDelete{{$file->id}}").on("click", function () {
+
+        $.ajax({
+        url: "{{url("file/remove/")}}" + "/" + "{{$file -> filename}}",
+                type: 'delete',
+                data: {_token: '{{csrf_token()}}', _method: 'delete'},
+                success: function(){
+                location.href = "{{url("tasks")}}";
+                }
+        });
+        });
+<?php } ?>
 
 </script>
 @stop
