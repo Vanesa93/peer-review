@@ -66,9 +66,9 @@ class UserController extends Controller {
     public function create(Request $data) {
 
         $rules = array(
-            'username' => 'required||unique:users',
+            'username' => 'required',
             'forename' => 'required|max:100',
-            'email' => 'required|email|max:100|unique:users',
+            'email' => 'required|email|max:100',
             'password' => 'required|confirmed|min:6',
             'account_type' => 'required',
         );
@@ -121,6 +121,7 @@ class UserController extends Controller {
      * @return Response
      */
     public function edit($id) {
+
         $user = User::find($id);
         $sessionLanguage = Session::get('locale') . '_name';
         if (empty(Session::get('locale'))) {
@@ -155,33 +156,20 @@ class UserController extends Controller {
      * @return Response
      */
     public function update($id) {
-        $rules = array(
-            'username' => 'required|unique:users,username,' . $id,
-            'forename' => 'required|max:100',
-            'email' => 'required|email|unique:users,email,' . $id,
-            'mobile' => 'required'
-        );
-
-        $validator = \Validator::make(Input::all(), $rules);
-        if ($validator->fails()) {
-            return \Redirect::to('users/edit/' . $id)
-                            ->withErrors($validator);
+        $user = User::find($id);
+        if (!empty($user)) {
+            $user->username = Input::get('username');
+            $user->forename = Input::get('forename');
+            $user->familyName = Input::get('familyName');
+            $user->email = Input::get('email');
+            $user->save();
+            $accounTypeAdditionlData = $this->lecturerOrUserData($user, Input::all());
         } else {
-            $user = User::find($id);
-            if (!empty($user)) {
-                $user->username = Input::get('username');
-                $user->forename = Input::get('forename');
-                $user->familyName = Input::get('familyName');
-                $user->email = Input::get('email');
-                $user->save();
-                $accounTypeAdditionlData = $this->lecturerOrUserData($user, Input::all());
-            } else {
-                return redirect()->back();
-            }
-
-
-            return \Redirect::to('users');
+            return redirect()->back();
         }
+
+
+        return \Redirect::to('users');
     }
 
     private function lecturerOrUser($user) {

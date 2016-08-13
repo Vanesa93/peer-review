@@ -211,6 +211,10 @@
                 number: true,
                 required: true
             },
+             cabinet: {
+                number: true,
+                required: true
+            },
             email: {
                 email: true,
                 required: true
@@ -256,6 +260,9 @@
             },
             faculty: {
                 required: "Please enter your faculty"
+            },
+            cabinet: {
+                required: "Please enter your cabinet number"
             },
             year: {
                 required: "Please enter first year",
