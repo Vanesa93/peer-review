@@ -281,8 +281,8 @@ class AssignmentController extends Controller {
         $file = Storage::disk('local')->get($entry->filename);
        
         return Response::make($file, 200, [
-                    'Content-Type' => 'application/'.$entry->extension,
-                    'Content-Disposition' => 'inline; filename="' . $entry->filename . '"',
+                    'Content-Type' => $entry->mime,
+                    'Content-Disposition' => 'inline; filename="' . $entry->original_filename . '"',
         ]);
     }
 
