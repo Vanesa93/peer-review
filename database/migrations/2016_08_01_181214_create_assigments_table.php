@@ -17,20 +17,22 @@ class CreateAssigmentsTable extends Migration {
             $table->foreign('tutor_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('course_id')->unsigned();
             $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('group_id')->unsigned();
+            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
             $table->string('description');
             $table->date('sent_at');
             $table->date('end_date');
             $table->timestamps();
         });
-
-        Schema::create('task_to_users', function(Blueprint $table) {
+        
+         Schema::create('task_to_students', function(Blueprint $table) {
             $table->increments('id');
             $table->integer('task_id')->unsigned();
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('group_id')->unsigned();
-            $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('ready');
+            $table->integer('student_id')->unsigned();
+            $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('ready')->default(0);
             $table->timestamps();
         });
     }
@@ -40,9 +42,9 @@ class CreateAssigmentsTable extends Migration {
      *
      * @return void
      */
-    public function down() {
+    public function down() {        
+        Schema::drop('task_to_students');
         Schema::drop('tasks');
-        Schema::drop('task_to_users');
     }
 
 }

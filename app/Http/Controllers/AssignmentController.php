@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Redirect;
 use Input;
 use App\Tasks;
 use App\TasksToStudents;
+use DB;
 
 class AssignmentController extends Controller {
 
@@ -90,7 +91,7 @@ class AssignmentController extends Controller {
             'description' => 'required|max:1000',
             'end_date' => 'required|max:100',
             'course_id' => 'required|max:100',
-            'group_ids' => 'required|max:100',
+            'group_id' => 'required|max:100',
         );
 
         $validator = \Validator::make(Input::all(), $rules);
@@ -112,18 +113,20 @@ class AssignmentController extends Controller {
             'description' => $request->get('description'),
             'end_date' => $endDate,
             'course_id' => $request->get('course_id'),
+            'group_id' => $request->get('group_id'),
             'sent_at' => $today,
         ]);
         $task->save();
-        $taskToGroups = $request->get('group_ids');
-        foreach ($taskToGroups as $group) {
-            $taskToStudent = new TasksToStudents([
-                'group_id' => $group,
-                'tutor_id' => $tutor_id,
-                'task_id' => $task->id,
-                'ready' => 0
-            ]);
-            $taskToStudent->save();
+        $groupsToStudents[] = GroupToStudent::where('group_id', $task->group_id)->get();
+
+        foreach ($groupsToStudents as $groupToStudents) {
+            foreach ($groupToStudents as $groupToStudent) {
+                $taskToStudent = new TasksToStudents([
+                    'task_id' => $task->id,
+                    'student_id' => $groupToStudent->student_id,
+                ]);
+                $taskToStudent->save();
+            }
         }
 
         return redirect('tasks');
@@ -149,12 +152,8 @@ class AssignmentController extends Controller {
         $task = Tasks::find($id);
         $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
         $courses = Courses::all()->lists('name', 'id');
-        $allGroups = Group::all();
-        $groups = TasksToStudents::where('task_id', $task->id)->get();
-        foreach ($groups as $group) {
-            $group->name = Group::where('id', $group->group_id)->pluck('name');
-        }
-        return view('tasks.edit')->with('task', $task)->with('courses', $courses)->with('groups', $groups)->with('allGroups', $allGroups);
+        $allGroups = Group::all()->lists('name', 'id');
+        return view('tasks.edit')->with('task', $task)->with('courses', $courses)->with('allGroups', $allGroups);
     }
 
     /**
@@ -169,11 +168,11 @@ class AssignmentController extends Controller {
             'description' => 'required|max:1000',
             'end_date' => 'required|max:100',
             'course_id' => 'max:100',
-            'group_ids' => 'required|max:100',
+            'group_id' => 'required|max:100',
         );
         $validator = \Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
-            return \Redirect::to('tasks/'.$id.'/edit')
+            return \Redirect::to('tasks/' . $id . '/edit')
                             ->withErrors($validator);
         } else {
             $task = Tasks::find($id);
@@ -182,27 +181,35 @@ class AssignmentController extends Controller {
             $endDate = Carbon::parse(Input::get('end_date'));
             $task->end_date = $endDate;
             $task->course_id = Input::get('course_id');
+            $task->group_id = Input::get('group_id');
             $task->save();
-            $updatedGroups = Input::get('group_ids');
-            $groupToTasksToDelete = TasksToStudents::where('task_id', $id)->get();
-            $groupToTasks[] = TasksToStudents::where('task_id', $id)->pluck('group_id');
-            foreach ($groupToTasksToDelete as $oldId) {
-                if (in_array($oldId->group_id, $updatedGroups)) {
+
+            $updatedUsersIds = Input::get('student_ids');
+            $newGroup = $task->group_id;
+
+            $studentsFromNewGroup = GroupToStudent::where('group_id', $newGroup)->get();
+            foreach ($studentsFromNewGroup as $newGroup) {
+                $allStudentsToAdd[] = $newGroup->student_id;
+                //all students, that must be added to group
+            }
+            $studentsTasksToDelete = TasksToStudents::where('task_id', $id)->get();
+            $studentToTasks[] = TasksToStudents::where('task_id', $id)->pluck('student_id');
+            foreach ($studentsTasksToDelete as $oldId) {
+                if (in_array($oldId->student_id, $allStudentsToAdd)) {
                     
                 } else {
                     $oldId->delete();
                 }
             }
-            foreach ($updatedGroups as $newId) {
-                if (in_array($newId, $groupToTasks)) {
+            foreach ($allStudentsToAdd as $newId) {
+                if (in_array($newId, $studentToTasks)) {
                     
                 } else {
-                    $newTask = new TasksToStudents([
+                    $newStudent = new TasksToStudents([
                         'task_id' => $id,
-                        'group_id' => $newId,
-                        'ready' => 0
+                        'student_id' => $newId,
                     ]);
-                    $newTask->save();
+                    $newStudent->save();
                 }
             }
         }
@@ -228,9 +235,18 @@ class AssignmentController extends Controller {
     }
 
     public function getAssignedToTaskUsers($id) {
-
-        $assignedStudents = TasksToStudents::where('task_id', $id)->get();
-        dd($assignedStudents);
+        $task = Tasks::find($id);
+        $task->course_id = Courses::where('id', $task->course_id)->pluck('name');
+        $students = DB::table('students')
+                ->join('groups_to_students', 'students.id', '=', 'groups_to_students.student_id')
+                ->join('users', 'students.user_id_students', '=', 'users.id')
+                ->join('groups', 'groups_to_students.group_id', '=', 'groups.id')
+                ->join('task_to_groups', 'groups.id', '=', 'task_to_groups.group_id')
+                ->where('task_to_groups.task_id', $id)
+                ->where('groups.tutor_id', Auth::user()->id)
+                ->where('users.account_type', 2)
+                ->get();
+        return view('tasks.studentsToTasks')->with('students', $students)->with('task', $task);
     }
 
 }

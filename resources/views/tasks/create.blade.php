@@ -89,17 +89,18 @@
 
                             </div>
                         </div>
-                         <div class="form-group" id="users">
-                            <label class="col-md-offset-3 col-md-2 control-label"> Choose groups</label>
+                        <div class="form-group" id="users">
+                            <label class="col-md-offset-3 col-md-2 control-label"> Choose group</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
-                                <select class="form-group groupsSelect" id="selectGroups" placeholder="Select groups" name="group_ids[]"  multiple="multiple" style="width:250px;" disabled="">
-                                   @foreach($groups as $group)
+                                <select class="form-control " id="selectGroups" name="group_id"   style="width:250px;" disabled>
+                                    <option value="">Select group</option>
+                                    @foreach($groups as $group)
                                    <option value="{{$group->id}}">
                                        {{$group->name}}
                                    </option>
                                     @endforeach
                                 </select>
-                                <label for="group_ids[]" generated="true" class="error"></label>
+                                <label for="course_id" generated="true" class="error"></label>
 
                             </div>
                         </div>
@@ -147,10 +148,8 @@ $(document).ready(function () {
         });
     
     $("#endDate").datepicker({
-        format: 'dd/mm/yyyy'
     });
 
-    $(".groupsSelect").select2();
 
     $('#createTask').validate({
         rules: {
@@ -170,7 +169,7 @@ $(document).ready(function () {
                 required: true,
                 maxlength: 100
             },
-            group_ids: {
+            group_id: {
                 required: true,
                 maxlength: 100
             },
@@ -193,7 +192,7 @@ $(document).ready(function () {
                 required: "Please select course",
                 maxlength: 100
             },
-            group_ids: {
+            group_id: {
                 required: "Please select group/s",
                 maxlength: 100
             }

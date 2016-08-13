@@ -85,14 +85,10 @@
                                 {!! Form::select('course_id', $courses, $task->course_name,['class'=>'form-control','id'=>'selectCourse'])!!}
                             </div>
                         </div>
-                        <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Users</label>
+                       <div class="form-group" >
+                            <label class="col-md-offset-3 col-md-2 control-label">Group</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
-                                <select class="form-group usersSelect" id="selectGroups" name="group_ids[]"  multiple="multiple" style="width:250px;">
-                                @foreach($allGroups as $group)
-                                    <option value="{{$group->id}}" @foreach($groups as $selected) @if($group->id == $selected->group_id)selected="selected"@endif @endforeach>{{$group->name}}</option>
-                                @endforeach                                  
-                                </select>
+                                {!! Form::select('group_id', $allGroups, $task->group_id,['class'=>'form-control'])!!}
                             </div>
                         </div>
                         
@@ -145,7 +141,7 @@ $(document).ready(function () {
         $("#back").on("click", function () {
             location.href = "{{url("tasks")}}";
         });
-        $('#selectGroups    ').select2();
+        
         //select faculty on change
 
         $('#editTask').validate({
@@ -166,7 +162,7 @@ $(document).ready(function () {
                     required: true,
                     maxlength: 100
                 },
-                group_ids: {
+                group_id: {
                     required: true,
                     maxlength: 100
                 }
@@ -185,7 +181,7 @@ $(document).ready(function () {
                     required: "Please select course",
                     maxlength: 100
                 },
-                group_ids: {
+                group_id: {
                     required: "Please select groups",
                     maxlength: 100
                 }
