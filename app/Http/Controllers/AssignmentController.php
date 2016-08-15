@@ -95,6 +95,7 @@ class AssignmentController extends Controller {
             'end_date' => 'required|max:100',
             'course_id' => 'required|max:100',
             'group_id' => 'required|max:100',
+            'filefield'=>'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
         );
 
         $validator = \Validator::make(Input::all(), $rules);
@@ -122,7 +123,8 @@ class AssignmentController extends Controller {
         $task->save();
         $this->saveTaskToStudents($task);
         if (!empty($request->file('filefield'))) {
-            $this->saveFileEntryForLecturer($request, $task);
+           $fileentry = $request->file('filefield');
+            $this->saveFileEntryForLecturer($fileentry, $task);
         }
         return redirect('tasks');
     }
@@ -139,20 +141,6 @@ class AssignmentController extends Controller {
                 $taskToStudent->save();
             }
         }
-    }
-
-    private function saveFileEntryForLecturer($file, $task) {
-        $fileentry = $file->file('filefield');
-        $extension = $fileentry->getClientOriginalExtension();
-        $saveToStorage = Storage::disk('local')->put($fileentry->getFilename() . '.' . $extension, File::get($fileentry));
-        $entry = new Fileentry();
-        $entry->mime = $fileentry->getClientMimeType();
-        $entry->original_filename = $fileentry->getClientOriginalName();
-        $entry->filename = $fileentry->getFilename() . '.' . $extension;
-        $entry->tutor_id = $task->tutor_id;
-        $entry->task_id = $task->id;
-        $entry->extension = $extension;
-        $entry->save();
     }
 
     /**
@@ -293,23 +281,37 @@ class AssignmentController extends Controller {
     }
 
     public function upload(Request $file, $task) {
-        $fileTask = Tasks::find($task);
-        $fileentry = $file->file('filefield');
-        $extension = $fileentry->getClientOriginalExtension();
-        $saveToStorage = Storage::disk('local')->put($fileentry->getFilename() . '.' . $extension, File::get($fileentry));
+        $rules = array(
+           'filefield'=>'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
+        );
+        $validator = \Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            $linkBack='tasks/'.$task.'/upload';
+            return Redirect::to($linkBack)
+                            ->withErrors($validator);
+        } else {        
+            $thisTask = Tasks::find($task);
+            $fileentry = $file->file('filefield');
+            $this->saveFileEntryForLecturer($fileentry,$thisTask);
+            return Redirect::to('tasks/' . $task . '/helpmaterials');
+        }        
+    }
+
+    private function saveFileEntryForLecturer($file, $task) { 
+        $extension = $file->getClientOriginalExtension();
+        Storage::disk('local')->put($file->getFilename() . '.' . $extension, File::get($file));
         $entry = new Fileentry();
-        $entry->mime = $fileentry->getClientMimeType();
-        $entry->original_filename = $fileentry->getClientOriginalName();
-        $entry->filename = $fileentry->getFilename() . '.' . $extension;
-        $entry->tutor_id = $fileTask->tutor_id;
-        $entry->task_id = $fileTask->id;
+        $entry->mime = $file->getClientMimeType();
+        $entry->original_filename = $file->getClientOriginalName();
+        $entry->filename = $file->getFilename() . '.' . $extension;
+        $entry->tutor_id = $task->tutor_id;
+        $entry->task_id = $task->id;
         $entry->extension = $extension;
         $entry->save();
-        return Redirect::to('tasks/' . $task . '/helpmaterials');
     }
 
     public function deleteFileFromTask($filename) {
-        
+
         Fileentry::where('tutor_id', Auth::user()->id)->where('filename', $filename)->delete();
         unlink(storage_path('app/' . $filename));
         return "true";

@@ -47,6 +47,15 @@
                         <h2 style="margin-bottom:5%;"> Upload file for task {{$task->name}}</h2>
                     </center>
                     {!!Form::open(['url' => 'upload/'.$task->id,'id'=>'uploadFileForTask', 'files' => true])!!}
+                    @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <center>
                         <div class='row'>
 
@@ -69,11 +78,11 @@
     </div>
 </div>
 <script>
-$(document).ready(function () {
+    $(document).ready(function () {
 
-    $('#back').on('click', function () {
-        location.href = '{{url("tasks")}}';
+        $('#back').on('click', function () {
+            location.href = '{{url("tasks")}}';
+        });
     });
-});
 </script>
 @stop
