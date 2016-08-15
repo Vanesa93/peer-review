@@ -132,6 +132,7 @@
 </div>
 
 <script>
+    $(document).ready(function () {
     $('#tasksTable').DataTable();
     //hide datatable info tag
     $('.dataTables_info').hide();
@@ -166,5 +167,6 @@
         });
         });
 <?php } ?>
+    });
 </script>
 @stop

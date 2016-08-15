@@ -24,7 +24,13 @@ class LecturersReviewsController extends Controller {
      * @return Response
      */
     public function index() {
-        return view('lecturersReviews.reviews');
+        $tutorId = Auth::user()->id;
+        $lecturersReviews = LecturersReviews::where('tutor_id', $tutorId)->get();
+        foreach ($lecturersReviews as $lecturerReview) {
+            $lecturerReview->filename = Fileentry::where('id', $lecturerReview->file_id)->pluck('filename');
+            $lecturerReview->task_id=  Tasks::where('id',$lecturerReview->task_id)->pluck('name');
+        }
+        return view('lecturersReviews.reviews')->with('lecturersReviews', $lecturersReviews);
     }
 
     /**
@@ -50,14 +56,14 @@ class LecturersReviewsController extends Controller {
             'end_date' => 'required|max:100',
             'questionary' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
         );
-        
+
         $validator = \Validator::make(Input::all(), $rules);
-       
+
         if ($validator->fails()) {
             return Redirect::to('reviews/create')
                             ->withErrors($validator);
         } else {
-            return $this->saveReview($request);            
+            return $this->saveReview($request);
         }
     }
 
@@ -66,9 +72,9 @@ class LecturersReviewsController extends Controller {
         $tutor_id = Auth::user()->id;
         $endDate = Carbon::parse($request->get('end_date'));
         $fileentry = $request->file('questionary');
-        $taskId=$request->get('task_id');
-        $task=  Tasks::find($taskId);
-        $newQuestionaryId=  $this->saveFileEntryForLecturer($fileentry, $task);
+        $taskId = $request->get('task_id');
+        $task = Tasks::find($taskId);
+        $newQuestionaryId = $this->saveFileEntryForLecturer($fileentry, $task);
         $newLecturerReview = new LecturersReviews([
             'tutor_id' => $tutor_id,
             'task_id' => $request->get('task_id'),
@@ -80,8 +86,8 @@ class LecturersReviewsController extends Controller {
         $newLecturerReview->save();
         return Redirect::to('reviews');
     }
-    
-    private function saveFileEntryForLecturer($file, $task) { 
+
+    private function saveFileEntryForLecturer($file, $task) {
         $extension = $file->getClientOriginalExtension();
         Storage::disk('local')->put($file->getFilename() . '.' . $extension, File::get($file));
         $entry = new Fileentry();
@@ -91,7 +97,7 @@ class LecturersReviewsController extends Controller {
         $entry->tutor_id = $task->tutor_id;
         $entry->task_id = $task->id;
         $entry->extension = $extension;
-        $entry->save();        
+        $entry->save();
         return $entry->id;
     }
 
