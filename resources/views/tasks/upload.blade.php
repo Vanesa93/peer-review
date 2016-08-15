@@ -52,7 +52,7 @@
 
                             <div class="form-group" >
                                 <div class="" style="margin-bottom: 1%;margin-left: 10%;">
-                                    <input type="file" class="btn"  name="filefield"/>
+                                    <input type="file" class="btn"   name="filefield"/>
                                 </div>
                             </div> 
                         </div>
@@ -68,4 +68,12 @@
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function () {
+
+    $('#back').on('click', function () {
+        location.href = '{{url("tasks")}}';
+    });
+});
+</script>
 @stop

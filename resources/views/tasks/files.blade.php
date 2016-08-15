@@ -42,6 +42,10 @@
                         <div class="col-md-6 " style="margin-bottom: 1%;">
                             <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Go to tasks" />
                         </div>
+                        <div class="col-md-6 " style="margin-bottom: 1%;">
+                            <input type="button" name="button" id='upload' class="btn buttonBack action-button floatRight" style="float: right;background-color: #5cb85c!important;color:white" value="Go to upload" />
+                        </div>
+                       
                     </div>
                     <center>
                         <h2 style="margin-bottom:2%;"> Help materials for task {{$task->name}}</h2>
@@ -80,6 +84,8 @@ $(document).ready(function () {
     $('#back').on('click', function () {
         location.href = '{{url("tasks")}}';
     });
+    $('#upload').on('click', function () {
+        location.href = '{{url("tasks")}}'+"/"+{{$task->id}}+"/upload";
     });
     
     <?php foreach ($files as $file) { ?>       
@@ -98,6 +104,6 @@ $(document).ready(function () {
         });
         });
 <?php } ?>
-
+});
 </script>
 @stop

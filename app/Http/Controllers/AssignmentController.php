@@ -309,10 +309,8 @@ class AssignmentController extends Controller {
     }
 
     public function deleteFileFromTask($filename) {
-        $file = Fileentry::where('tutor_id', Auth::user()->id)->where('filename', $filename)->delete();
-
-//        Storage::delete(storage_path('app/'.$filename));
-//        File::delete(storage_path('app/'.$filename));
+        
+        Fileentry::where('tutor_id', Auth::user()->id)->where('filename', $filename)->delete();
         unlink(storage_path('app/' . $filename));
         return "true";
     }
