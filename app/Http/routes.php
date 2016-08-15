@@ -107,3 +107,8 @@ Route::get('file/{id}/{filename}/open', 'AssignmentController@openFilesForTask')
 Route::get('tasks/{id}/upload', 'AssignmentController@uploadFileToTask');
 Route::post('upload/{id}', 'AssignmentController@upload');
 Route::delete('file/remove/{filename}', 'AssignmentController@deleteFileFromTask');
+
+//reviews
+Route::get('reviews','LecturersReviewsController@index');
+Route::get('reviews/create','LecturersReviewsController@create');
+Route::post('storeLecturerReview', 'LecturersReviewsController@store');

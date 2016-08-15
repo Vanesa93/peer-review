@@ -92,7 +92,6 @@ class AssignmentController extends Controller {
         $rules = array(
             'name' => 'required|max:100',
             'description' => 'required|max:1000',
-            'end_date' => 'required|max:100',
             'course_id' => 'required|max:100',
             'group_id' => 'required|max:100',
             'filefield'=>'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
@@ -310,8 +309,7 @@ class AssignmentController extends Controller {
         $entry->save();
     }
 
-    public function deleteFileFromTask($filename) {
-
+    public function deleteFileFromTask($filename) {        
         Fileentry::where('tutor_id', Auth::user()->id)->where('filename', $filename)->delete();
         unlink(storage_path('app/' . $filename));
         return "true";

@@ -33,7 +33,7 @@ return [
      'tasks'=>'Задачи',
     'courses'=>'Курсове',
     'assignTasks'=>'Възлагане на задачи',
-    'questionnaires'=>'Въпросници',
+    'reviews'=>'Реценции',
      'groups'=>'Групи',
     'messages'=>'Съобщения',
     'upload'=>'Качи файл'

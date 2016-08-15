@@ -71,7 +71,7 @@
                             <label class="col-md-offset-3 col-md-2 control-label">End date</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <div class="input-group input-append date" id="endDate">
-                                    <input type="text" class="form-control" name="end_date" />
+                                    <input type="text" class="form-control" name="end_date" readonly/>
                                     <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
 
             </div>
         </div>
-    <!--</form>-->
+    {!!Form::close()!!}
 </div>
 <script>
 $(document).ready(function () {

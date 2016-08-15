@@ -45,8 +45,7 @@
                     <li><a href="{{ url('/courses') }}"> {{trans('messages.courses')}}</a></li>
                     <li><a href="/groups"> {{trans('messages.groups')}}</a></li>
                     <li><a href="/tasks"> {{trans('messages.tasks')}}</a></li>                    
-                    <li><a href="/"> {{trans('messages.questionnaires')}}</a></li>
-                    <li><a href="/"> {{trans('messages.upload')}}</a></li>
+                    <li><a href="/reviews"> {{trans('messages.review')}}</a></li>
                     <li><a href="/"> {{trans('messages.messages')}}</a></li>
                     @elseif(Auth::user()->account_type==2)
                     <li><a href="/"> {{trans('messages.groups')}}</a></li>

@@ -31,7 +31,7 @@ return [
      'tasks' => 'Aufgaben',
     'courses' => 'Kurse',
     'assignTasks' => 'Aufgaben betrauen',
-    'questionnaires' => 'Fragebögen',
+    'review  ' => 'Rezensionen',
     'groups' => 'Gruppen',
     'messages'=>'Meldungen',
     'upload'=>'Качи файл'

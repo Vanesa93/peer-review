@@ -38,7 +38,7 @@ return [
     'tasks'=>'Tasks',
     'courses'=>'Courses',
     'assignTasks'=>'Assign task',
-    'questionnaires'=>'Questionnaires',
+    'review'=>'Reviews',
      'groups'=>'Groups',
     'messages'=>'Messages',
     'upload'=>'Datei hochladen'

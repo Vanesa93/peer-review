@@ -52,6 +52,8 @@
             @yield('students_to_task')
             @yield('lecturer_file')
             @yield('file_upload_tasks')
+            @yield('reviews_lecturers')
+            @yield('create_reviews_lecturers')
         </div>
     </body>
 </html>
