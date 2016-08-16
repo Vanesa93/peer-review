@@ -28,7 +28,7 @@ class LecturersReviewsController extends Controller {
         $lecturersReviews = LecturersReviews::where('tutor_id', $tutorId)->get();
         foreach ($lecturersReviews as $lecturerReview) {
             $lecturerReview->filename = Fileentry::where('id', $lecturerReview->file_id)->pluck('filename');
-            $lecturerReview->task_id = Tasks::where('id', $lecturerReview->task_id)->pluck('name');
+            $lecturerReview->task_name = Tasks::where('id', $lecturerReview->task_id)->pluck('name');
         }
         return view('lecturersReviews.reviews')->with('lecturersReviews', $lecturersReviews);
     }

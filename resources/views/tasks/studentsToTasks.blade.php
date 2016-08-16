@@ -27,7 +27,7 @@
                     <button type="button" class="btn button" id="back" >Go to all tasks</button>
                     @if(!(empty($students)))
                     <center>
-                        <h2>Task  {{$task->name}} </h2>
+                        <h2>Students for task {{$task->name}} </h2>
                     </center>
                     <div class="table-responsive">
                         <table id="usersToGroupTable" class="display" style="border: solid;

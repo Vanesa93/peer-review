@@ -62,7 +62,7 @@
                             <tbody>
                                 @foreach($lecturersReviews as $lecturerReview)
                                 <tr>
-                                    <td style="max-width:100px!important;word-wrap: break-word;">{{$lecturerReview->task_id}}</td>
+                                    <td style="max-width:100px!important;word-wrap: break-word;"><a href='{{url('task')}}/{{$lecturerReview->task_id}}'>{{$lecturerReview->task_name}}</a></td>
                                     <td style="max-width:150px!important;word-wrap: break-word;">{{$lecturerReview->description}}</td>
                                     <td style="word-wrap: break-word;">{{$lecturerReview->sent_at}}</td>
                                     <td style="word-wrap: break-word;">{{$lecturerReview->end_date}}</td>                                   

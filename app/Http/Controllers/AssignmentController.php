@@ -51,6 +51,7 @@ class AssignmentController extends Controller {
             $task->course_id = Courses::where('id', $task->course_id)->pluck('name');
             $task->sent_at = Carbon::parse($task->sent_at)->format('d.m.Y');
             $task->end_date = Carbon::parse($task->end_date)->format('d.m.Y');
+            $task->group = Group::where('id', $task->id)->pluck('name');
         }
         return view('tasks.tasks')->with('tasks', $tasks);
     }
@@ -94,7 +95,7 @@ class AssignmentController extends Controller {
             'description' => 'required|max:1000',
             'course_id' => 'required|max:100',
             'group_id' => 'required|max:100',
-            'filefield'=>'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
+            'filefield' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
         );
 
         $validator = \Validator::make(Input::all(), $rules);
@@ -122,7 +123,7 @@ class AssignmentController extends Controller {
         $task->save();
         $this->saveTaskToStudents($task);
         if (!empty($request->file('filefield'))) {
-           $fileentry = $request->file('filefield');
+            $fileentry = $request->file('filefield');
             $this->saveFileEntryForLecturer($fileentry, $task);
         }
         return redirect('tasks');
@@ -149,7 +150,10 @@ class AssignmentController extends Controller {
      * @return Response
      */
     public function show($id) {
-        //
+        $task = Tasks::find($id);
+        $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
+        $task->group_name = Group::where('id', $task->group_id)->pluck('name');
+        return view('tasks.view')->with('task',$task);
     }
 
     /**
@@ -281,22 +285,22 @@ class AssignmentController extends Controller {
 
     public function upload(Request $file, $task) {
         $rules = array(
-           'filefield'=>'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
+            'filefield' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
         );
         $validator = \Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
-            $linkBack='tasks/'.$task.'/upload';
+            $linkBack = 'tasks/' . $task . '/upload';
             return Redirect::to($linkBack)
                             ->withErrors($validator);
-        } else {        
+        } else {
             $thisTask = Tasks::find($task);
             $fileentry = $file->file('filefield');
-            $this->saveFileEntryForLecturer($fileentry,$thisTask);
+            $this->saveFileEntryForLecturer($fileentry, $thisTask);
             return Redirect::to('tasks/' . $task . '/helpmaterials');
-        }        
+        }
     }
 
-    private function saveFileEntryForLecturer($file, $task) { 
+    private function saveFileEntryForLecturer($file, $task) {
         $extension = $file->getClientOriginalExtension();
         Storage::disk('local')->put($file->getFilename() . '.' . $extension, File::get($file));
         $entry = new Fileentry();
@@ -309,7 +313,7 @@ class AssignmentController extends Controller {
         $entry->save();
     }
 
-    public function deleteFileFromTask($filename) {        
+    public function deleteFileFromTask($filename) {
         Fileentry::where('tutor_id', Auth::user()->id)->where('filename', $filename)->delete();
         unlink(storage_path('app/' . $filename));
         return "true";

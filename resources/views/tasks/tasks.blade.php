@@ -56,6 +56,7 @@
                                     <th>Created at</th>
                                     <th>End date</th>
                                     <th>Course</th>
+                                    <th>Group</th>
                                      <th>Upload</th>
                                     <th>Files</th>
                                     <th>Students</th>
@@ -68,11 +69,12 @@
 
                                 @foreach($tasks as $task)
                                 <tr>
-                                    <td style="max-width:100px!important;word-wrap: break-word;">{{$task->name}}</td>
+                                    <td style="max-width:100px!important;word-wrap: break-word;"><a href='{{url('task')}}/{{$task->id}}'>{{$task->name}}</a></td>
                                     <td style="max-width:150px!important;word-wrap: break-word;">{{$task->description}}</td>
                                     <td style="word-wrap: break-word;">{{$task->sent_at}}</td>
                                     <td style="word-wrap: break-word;">{{$task->end_date}}</td>
                                     <td style="word-wrap: break-word;">{{$task->course_id}}</td>
+                                    <td style="word-wrap: break-word;">{{$task->group}}</td>
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;"  id="uploadFile{{$task->id}}">
                                             <span class="glyphicon glyphicon-upload"></span>
