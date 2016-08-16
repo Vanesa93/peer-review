@@ -56,6 +56,7 @@
             @yield('create_reviews_lecturers')
             @yield('edit_lecturer_review')
             @yield('view_task')
+            @yield('mycourses')
         </div>
     </body>
 </html>

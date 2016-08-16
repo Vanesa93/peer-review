@@ -48,10 +48,10 @@
                     <li><a href="/reviews"> {{trans('messages.review')}}</a></li>
                     <li><a href="/"> {{trans('messages.messages')}}</a></li>
                     @elseif(Auth::user()->account_type==2)
-                    <li><a href="/"> My courses</a></li>
-                    <li><a href="/"> My groups</a></li>
-                    <li><a href="/"> My tasks</a></li>
-                    <li><a href="/reviews"> {{trans('messages.review')}}</a></li>
+                    <li><a href="/mycourses"> All courses</a></li>
+                    <li><a href="/mygroups"> My groups</a></li>
+                    <li><a href="/mytasks"> My tasks</a></li>
+                    <li><a href="/myreviews"> {{trans('messages.review')}}</a></li>
                     <li><a href="/"> {{trans('messages.messages')}}</a></li>
                     @elseif(Auth::user()->account_type==0)
                     <li><a href="/faculties"> Faculties</a></li>

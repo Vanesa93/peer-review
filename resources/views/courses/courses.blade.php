@@ -32,9 +32,6 @@
         text-decoration: none;
     }
 </style>
-<div id="dialog" title="Basic dialog" style="display:none;">
-    <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
@@ -56,8 +53,8 @@
                                     <th>Duration</th>
                                     <th>Prerequisites</th>
                                     <th>Language</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>

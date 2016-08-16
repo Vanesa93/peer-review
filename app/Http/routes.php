@@ -37,7 +37,7 @@ Route::get('/checkUsername', 'RegistrationController@checkExistingUseraname');
 Route::get('/checkEmail', 'RegistrationController@checkExistingEmail');
 Route::get('/checkFacNumbers', 'RegistrationController@checkExistingFacNumber');
 
-//courses
+//lecturer's courses
 Route::get('courses', 'CoursesController@index');
 Route::get('courses/create', 'CoursesController@create');
 Route::post('/storeCourse', 'CoursesController@store');
@@ -117,4 +117,16 @@ Route::delete('reviews/remove/{id}','LecturersReviewsController@destroy');
 Route::get('reviews/{id}/edit','LecturersReviewsController@edit');
 Route::put('reviews/{id}/edit/update', [
     'as' => 'updateLecturerReview', 'uses' => 'LecturersReviewsController@update']);
+
+//student's courses
+Route::get('mycourses','StudentCoursesController@index');
+
+//student's groups
+Route::get('mygroups','StudentGroupsController@index');
+
+//student's tasks
+Route::get('mytasks','StudentTasksController@index');
+
+//student's reviews
+Route::get('myreviews','StudentReviewsController@index');
 
