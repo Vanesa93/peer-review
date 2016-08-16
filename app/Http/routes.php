@@ -113,4 +113,7 @@ Route::get('reviews','LecturersReviewsController@index');
 Route::get('reviews/create','LecturersReviewsController@create');
 Route::post('storeLecturerReview', 'LecturersReviewsController@store');
 Route::delete('reviews/remove/{id}','LecturersReviewsController@destroy');
+Route::get('reviews/{id}/edit','LecturersReviewsController@edit');
+Route::put('reviews/{id}/edit/update', [
+    'as' => 'updateLecturerReview', 'uses' => 'LecturersReviewsController@update']);
 

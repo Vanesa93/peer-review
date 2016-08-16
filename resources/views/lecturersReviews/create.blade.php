@@ -119,6 +119,36 @@ $(document).ready(function () {
 
     $("#endDate").datepicker({
     });
+    
+      $('#createLecturerReview').validate({
+            rules: {
+                task_id: {
+                    required: true,
+                    maxlength: 100
+                },
+                description:{
+                    maxlength:100
+                },
+                end_date: {
+                    required: true,
+                    maxlength: 100
+                }
+            },
+            // Specify the validation error messages
+            messages: {
+                task_id: {
+                    required: "Please select task",
+                    maxlength: 100
+                },
+                description:{
+                    maxlength:100
+                },
+                end_date: {
+                    required: "Please select end date",
+                    maxlength: 100
+                }
+            }
+        });
 });
 </script>
 @stop

@@ -95,6 +95,15 @@
                             </tbody>
                         </table>
                     </div>
+                    @else
+                    <div>
+                        <center>
+                            <h5>
+                                No questionaries found.
+                                You must have created courses, groups and tasks to create questionaries.
+                            </h5>
+                        </center>
+                    </div>
                     @endif
                 </div>
             </div>
@@ -107,7 +116,7 @@
     //hide datatable info tag
     $('.dataTables_info').hide();
     $("#create").on("click", function () {
-        location.href = "{{url("tasks/create")}}";
+        location.href = "{{url("reviews/create")}}";
     });
     
     <?php foreach ($lecturersReviews as $lecturerReview) { ?>
@@ -118,7 +127,7 @@
             location.href="{{url("tasks")}}"+"/"+"{{$lecturerReview->id}}"+"/helpmaterials";
         });
         $("#edit{{$lecturerReview->id}}").on("click", function () {
-            location.href = "{{url("tasks")}}"+"/"+"{{$lecturerReview->id}}"+"/edit";
+            location.href = "{{url("reviews")}}"+"/"+"{{$lecturerReview->id}}"+"/edit";
         });
         $("#studentsForTask{{$lecturerReview->id}}").on("click", function () {
             location.href = "{{url("tasks")}}"+"/"+"{{$lecturerReview->id}}"+"/students";

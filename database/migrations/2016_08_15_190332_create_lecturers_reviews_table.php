@@ -19,6 +19,7 @@ class CreateLecturersReviewsTable extends Migration {
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('file_id')->unsigned();
             $table->foreign('file_id')->references('id')->on('fileentries_lecturers')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('description');
             $table->date('end_date');
             $table->date('sent_at');
             $table->timestamps();

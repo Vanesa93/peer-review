@@ -54,7 +54,7 @@ class LecturersReviewsController extends Controller {
             'task_id' => 'required|max:100',
             'description' => 'required|max:1000',
             'end_date' => 'required|max:100',
-            'questionary' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
+            'questionary' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,bmp,pdf'
         );
 
         $validator = \Validator::make(Input::all(), $rules);
@@ -118,7 +118,12 @@ class LecturersReviewsController extends Controller {
      * @return Response
      */
     public function edit($id) {
-        //
+        $tutorId = Auth::user()->id;
+        $lecturerReview = LecturersReviews::find($id);
+        $lecturerReview->task_id = Tasks::where('id', $lecturerReview->task_id)->pluck('name');
+        $tasks = Tasks::where('tutor_id', $tutorId)->whereDate('end_date', '<=', date('Y-m-d'))->lists('name', 'id');
+        return view('lecturersReviews.edit')->with('lecturerReview', $lecturerReview)
+                        ->with('tasks', $tasks);
     }
 
     /**
@@ -127,8 +132,40 @@ class LecturersReviewsController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function update($id) {
-        //
+    public function update($id) {        
+        $rules = array(
+            'task_id' => 'required|max:100',
+            'description' => 'required|max:1000',
+            'end_date' => 'required|max:100',
+            'questionary' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,bmp,pdf'
+        );
+
+        $validator = \Validator::make(Input::all(), $rules);
+
+        if ($validator->fails()) {
+            return Redirect::to('reviews/' . $id . '/edit')
+                            ->withErrors($validator);
+        } else {
+            return $this->updateReview($id);
+        }
+    }
+
+    private function updateReview($id) {
+        $lecturerReview = LecturersReviews::find($id);
+        $lecturerReview->task_id = Input::get('task_id');
+        $lecturerReview->description = Input::get('description');
+        $endDate = Carbon::parse(Input::get('end_date'));
+        $lecturerReview->end_date = $endDate;
+        $fileentry = Input::get('questionary');
+        if (!empty($fileentry)) {
+            $questionary = Fileentry::where('id', $lecturerReview->file_id)->where('tutor_id', $lecturerReview->tutor_id)->first();
+            unlink(storage_path('app/' . $questionary->filename));
+            $questionary->delete();
+            $fileId = $this->saveFileEntryForLecturer($fileentry, $lecturerReview->task_id);
+            $lecturerReview->file_id = $fileId;
+        }
+        $lecturerReview->save();
+        return \Redirect::to('reviews');
     }
 
     /**
@@ -137,9 +174,9 @@ class LecturersReviewsController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id) {       
+    public function destroy($id) {
         $lecturerReview = LecturersReviews::find($id);
-        $questionary=  Fileentry::where('id',$lecturerReview->file_id)->where('tutor_id', Auth::user()->id)->first();
+        $questionary = Fileentry::where('id', $lecturerReview->file_id)->where('tutor_id', Auth::user()->id)->first();
         unlink(storage_path('app/' . $questionary->filename));
         $questionary->delete();
         $lecturerReview->delete();
