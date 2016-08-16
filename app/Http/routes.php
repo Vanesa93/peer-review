@@ -112,3 +112,5 @@ Route::delete('file/remove/{filename}', 'AssignmentController@deleteFileFromTask
 Route::get('reviews','LecturersReviewsController@index');
 Route::get('reviews/create','LecturersReviewsController@create');
 Route::post('storeLecturerReview', 'LecturersReviewsController@store');
+Route::delete('reviews/remove/{id}','LecturersReviewsController@destroy');
+

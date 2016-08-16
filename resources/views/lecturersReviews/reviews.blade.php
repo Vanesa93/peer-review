@@ -85,6 +85,12 @@
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
+                                <div id="dialog{{$lecturerReview->id}}" title="Delete task?" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>Are you sure you want to delete these review task?</h5>
+                                <button type="button" class="button" style="float:right" id="onDelete{{$lecturerReview->id}}">
+                                    Delete
+                                </button>
+                            </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -122,11 +128,11 @@
         });
         $("#onDelete{{$lecturerReview->id}}").on("click", function () {
         $.ajax({
-        url: "{{url("tasks/remove/")}}" + "/" + "{{$lecturerReview -> id}}",
+        url: "{{url("reviews/remove/")}}" + "/" + "{{$lecturerReview -> id}}",
                 type: 'delete',
                 data: {_token: '{{csrf_token()}}', _method: 'delete'},
                 success: function(){
-                location.href = "{{url("tasks")}}";
+                location.href = "{{url("reviews")}}";
                 }
         });
         });

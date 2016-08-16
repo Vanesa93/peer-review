@@ -28,7 +28,7 @@ class LecturersReviewsController extends Controller {
         $lecturersReviews = LecturersReviews::where('tutor_id', $tutorId)->get();
         foreach ($lecturersReviews as $lecturerReview) {
             $lecturerReview->filename = Fileentry::where('id', $lecturerReview->file_id)->pluck('filename');
-            $lecturerReview->task_id=  Tasks::where('id',$lecturerReview->task_id)->pluck('name');
+            $lecturerReview->task_id = Tasks::where('id', $lecturerReview->task_id)->pluck('name');
         }
         return view('lecturersReviews.reviews')->with('lecturersReviews', $lecturersReviews);
     }
@@ -137,8 +137,12 @@ class LecturersReviewsController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id) {
-        //
+    public function destroy($id) {       
+        $lecturerReview = LecturersReviews::find($id);
+        $questionary=  Fileentry::where('id',$lecturerReview->file_id)->where('tutor_id', Auth::user()->id)->first();
+        unlink(storage_path('app/' . $questionary->filename));
+        $questionary->delete();
+        $lecturerReview->delete();
     }
 
 }
