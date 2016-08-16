@@ -126,7 +126,11 @@
     {!!Form::close()!!}
 </div>
 <script>
-    $(document).ready(function () {  
+    $(document).ready(function () { 
+
+    $('#back').on('click', function () {
+        location.href = '{{url("tasks")}}';
+    });
         $("#filesForTask{{$task->id}}").on("click", function () {
             location.href="{{url("tasks")}}"+"/"+"{{$task->id}}"+"/helpmaterials";
         });
