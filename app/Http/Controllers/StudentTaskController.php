@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
 
 class StudentTaskController extends Controller {
 
@@ -39,6 +40,14 @@ class StudentTaskController extends Controller {
             $familyName = User::where('id', $task->tutor_id)->pluck('familyName');
             $task->tutor_name = $forename . " " . $familyName;
             $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
+            $solution = TasksSolutions::where('student_id', Auth::user()->id)->where('task_id', $task->task_id)->first();
+            if (!empty($solution)) {
+                $task->file_id = $solution->id;
+                $task->solution_filename = $solution->filename;
+            } else {
+                $task->file_id = "";
+                $task->solution_filename = "";
+            }
         }
         return view('studentTasks.mytasks')->with('tasks', $tasks);
     }
@@ -101,6 +110,18 @@ class StudentTaskController extends Controller {
         unlink(storage_path('app/' . $filename));
         return "true";
     }
+
+    public function openSolution($id, $filename) {
+        $studentId = Auth::user()->id;
+        $entry = TasksSolutions::where('filename', '=', $filename)->where('student_id', $studentId)->where('id', $id)->firstOrFail();
+        $file = Storage::disk('local')->get($entry->filename);
+
+        return Response::make($file, 200, [
+                    'Content-Type' => $entry->mime,
+                    'Content-Disposition' => 'inline; filename="' . $entry->original_filename . '"',
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -54,7 +54,7 @@ class AssignmentController extends Controller {
     public function create() {
         $tutorId = Auth::user()->id;
         $groups = [];
-        $courses = Courses::all();
+        $courses = Courses::where('tutor_id',$tutorId)->get();
         return view('tasks.create')->with('groups', $groups)->with('courses', $courses);
     }
 

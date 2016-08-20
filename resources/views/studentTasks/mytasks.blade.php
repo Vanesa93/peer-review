@@ -55,6 +55,7 @@
                                     <th>End date</th>
                                     <th>Course</th>
                                     <th>Group</th>
+                                    <th>Solution</th>
                                     <th>Upload solution</th>
                                     <th>Help materials</th>
                                 </tr>
@@ -64,13 +65,26 @@
 
                                 @foreach($tasks as $task)
                                 <tr>                                   
-                                    <td style="max-width:100px!important;word-wrap: break-word;"><a href='{{url('mytasks')}}/{{$task->task_id}}'>{{$task->name}}</a></td>
-                                    <td style="max-width:100px!important;word-wrap: break-word;">{{$task->tutor_name}}</td>
-                                    <td style="max-width:150px!important;word-wrap: break-word;">{{$task->description}}</td>
+                                    <td style="word-wrap: break-word;"><a href='{{url('mytasks')}}/{{$task->task_id}}'>{{$task->name}}</a></td>
+                                    <td style="word-wrap: break-word;">{{$task->tutor_name}}</td>
+                                    <td style="word-wrap: break-word;">{{$task->description}}</td>
                                     <td style="word-wrap: break-word;">{{$task->sent_at}}</td>
                                     <td style="word-wrap: break-word;">{{$task->end_date}}</td>
                                     <td style="word-wrap: break-word;">{{$task->course_name}}</td>
                                     <td style="word-wrap: break-word;">{{$task->group}}</td>
+                                    @if(!empty($task->file_id))
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;"  id="seeSolution{{$task->task_id}}">
+                                            <span class="glyphicon glyphicon-check"></span>
+                                        </button>     
+                                    </td>
+                                    @else
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;"  id="noSolution{{$task->task_id}}">
+                                            <span class="glyphicon glyphicon-unchecked"></span>
+                                        </button>     
+                                    </td>
+                                    @endif
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;"  id="uploadFile{{$task->task_id}}">
                                             <span class="glyphicon glyphicon-upload"></span>
@@ -80,9 +94,12 @@
                                         <button type="button" class="buttonEdit" style="float:right;"  id="filesForTask{{$task->task_id}}">
                                             <span class="glyphicon glyphicon-file"></span>
                                         </button>
-                                    </td>                                
+                                    </td>  
+                            <div id="dialog{{$task->task_id}}" title="No solution!" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>There is no uploaded solution for these task.</h5>
+                            </div>
 
-                                    @endforeach
+                            @endforeach
 
                             </tbody>
                         </table>
@@ -116,7 +133,12 @@
         $("#filesForTask{{$task->task_id}}").on("click", function () {
         location.href = "{{url("mytasks")}}" + "/" + "{{$task->task_id}}" + "/helpmaterials";
         });
-    
+        $("#seeSolution{{$task->task_id}}").on("click", function () {
+        location.href = "{{url("solution")}}" + "/" + "{{$task->file_id}}" + "/" + "{{ $task->solution_filename }}" + "/open";
+        });
+         $("#noSolution{{$task->task_id}}").on("click", function () {
+        $("#dialog{{$task->task_id}}").dialog();
+        });
 <?php } ?>
     });
 </script>
