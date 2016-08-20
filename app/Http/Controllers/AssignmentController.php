@@ -43,7 +43,7 @@ class AssignmentController extends Controller {
             $task->course_id = Courses::where('id', $task->course_id)->pluck('name');
             $task->sent_at = Carbon::parse($task->sent_at)->format('d.m.Y');
             $task->end_date = Carbon::parse($task->end_date)->format('d.m.Y');
-            $task->group = Group::where('id', $task->id)->pluck('name');
+            $task->group = Group::where('id', $task->group_id)->pluck('name');
         }
         return view('tasks.tasks')->with('tasks', $tasks);
     }
