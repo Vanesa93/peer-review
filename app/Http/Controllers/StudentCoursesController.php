@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Courses;
 use DB;
 use Auth;
+use App\User;
 
 class StudentCoursesController extends Controller {
 
@@ -17,15 +18,21 @@ class StudentCoursesController extends Controller {
      * @return Response
      */
     public function index() {
-        $studentId=Auth::user()->id;
+        $studentId = Auth::user()->id;
+        //id- groups_to_students
         $courses = DB::table('groups_to_students')
                 ->join('groups', 'groups_to_students.group_id', '=', 'groups.id')
                 ->join('students', 'groups_to_students.student_id', '=', 'students.id')
                 ->join('users', 'students.user_id_students', '=', 'users.id')
                 ->join('courses', 'groups.course_id', '=', 'courses.id')
-                ->where('users.id',$studentId)
-                ->get();   
-        return view('studentCourses.mycourses')->with('courses',$courses);
+                ->where('users.id', $studentId)
+                ->get();
+        foreach ($courses as $course) {
+            $forename = User::where('id', $course->tutor_id)->pluck('forename');
+            $familyName = User::where('id', $course->tutor_id)->pluck('familyName');
+            $course->tutor_name=$forename." ".$familyName;
+        }
+        return view('studentCourses.mycourses')->with('courses', $courses);
     }
 
     /**

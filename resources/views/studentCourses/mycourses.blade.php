@@ -58,7 +58,7 @@
                                 @if(!empty($courses))
                                 @foreach($courses as $course)
                                 <tr>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$course->forename}} {{$course->familyName}}</td>
+                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$course->tutor_name}}</td>
                                     <td style="max-width:60px!important;word-wrap: break-word;">{{$course->name}}</td>
 
                                     <td style="max-width:100px;">{{$course->description}}</td>
