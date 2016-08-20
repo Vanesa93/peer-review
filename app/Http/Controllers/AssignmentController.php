@@ -27,17 +27,7 @@ class AssignmentController extends Controller {
         $this->middleware('auth');
         $this->middleware('notAdmin');
         $this->middleware('language');
-    }
-
-    private function getLocale() {
-        if (!empty(Session::get('locale'))) {
-            $locale = Session::get('locale') . '_name';
-        } else {
-            $locale = 'en_name';
-        }
-
-        return $locale;
-    }
+    }  
 
     /**
      * Display a listing of the resource.

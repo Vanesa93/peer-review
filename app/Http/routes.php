@@ -125,7 +125,13 @@ Route::get('mycourses','StudentCoursesController@index');
 Route::get('mygroups','StudentsGroupsController@index');
 
 //student's tasks
-Route::get('mytasks','StudentTasksController@index');
+Route::get('mytasks','StudentTaskController@index');
+Route::get('mytasks/{id}/helpmaterials', 'StudentTaskController@getfilesForTask');
+Route::get('mytasks/{id}/upload', 'StudentTaskController@uploadFileToTask');
+Route::get('mytasks/{id}','StudentTaskController@show');
+Route::post('upload/solution/{id}', 'StudentTaskController@upload');
+
+
 
 //student's reviews
 Route::get('myreviews','StudentReviewsController@index');

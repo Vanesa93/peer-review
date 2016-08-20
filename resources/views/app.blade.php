@@ -58,6 +58,10 @@
             @yield('view_task')
             @yield('mycourses')
             @yield('mygroups')
+            @yield('mytasks')
+            @yield('student_file')
+            @yield('file_upload_tasks_student')
+            @yield('view_task_student')
         </div>
     </body>
 </html>
