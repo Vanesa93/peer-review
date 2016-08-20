@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use App\TasksToStudents;
+use App\Lecturer;
 
 class StudentTaskController extends Controller {
 
@@ -30,21 +31,28 @@ class StudentTaskController extends Controller {
     public function index() {
         $studentId = Auth::user()->id;
         //id- users
-        $tasks = DB::table('task_to_students')
+        $taskInfo = DB::table('task_to_students')
                 ->join('tasks', 'task_to_students.task_id', '=', 'tasks.id')
                 ->join('students', 'task_to_students.student_id', '=', 'students.id')
                 ->join('users', 'students.user_id_students', '=', 'users.id')
+                ->join('lecturer', 'tasks.tutor_id', '=', 'lecturer.id')
                 ->where('users.id', $studentId)
                 ->get();
+        $tasks = $this->getTaskInfo($taskInfo);
+
+        return view('studentTasks.mytasks')->with('tasks', $tasks);
+    }
+
+    private function getTaskInfo($tasks) {
         foreach ($tasks as $task) {
-            $forename = User::where('id', $task->tutor_id)->pluck('forename');
-            $familyName = User::where('id', $task->tutor_id)->pluck('familyName');
-            $task->tutor_name = $forename . " " . $familyName;
             $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
             $this->getSolutins($task);
             $task->active = $this->checkEndDate($task);
+            $forename = User::where('id',$task->user_id_lecturer)->pluck('forename');
+            $familyName =User::where('id',$task->user_id_lecturer)->pluck('familyName');;
+            $task->tutor_name = $forename . " " . $familyName;
         }
-        return view('studentTasks.mytasks')->with('tasks', $tasks);
+        return $tasks;
     }
 
     private function checkEndDate($task) {
@@ -68,9 +76,9 @@ class StudentTaskController extends Controller {
     }
 
     public function getfilesForTask($id) {
-
         $task = Tasks::find($id);
-        $files = Fileentry::where('task_id', $id)->where('tutor_id', Auth::user()->id)->get();
+        $lecturerId=  Lecturer::where('id',$task->tutor_id)->pluck('id');
+        $files = Fileentry::where('task_id', $id)->where('tutor_id', $lecturerId)->get();
         return view('studentTasks.files', compact('files', 'task'));
     }
 
@@ -118,10 +126,9 @@ class StudentTaskController extends Controller {
         $entry->extension = $extension;
         $entry->sent_at = $today;
         $entry->save();
-        $readyTask=  TasksToStudents::where('student_id',Auth::user()->id)->where('task_id',$task->id)->get();
-        $readyTask->ready=1;
+        $readyTask = TasksToStudents::where('student_id', Auth::user()->id)->where('task_id', $task->id)->get();
+        $readyTask->ready = 1;
         $readyTask->save();
-                
     }
 
     private function deleteFileFromTask($filename) {
