@@ -59,8 +59,8 @@ class StudentTaskController extends Controller {
         $rules = array(
             'filefield' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
         );
-        
-        
+
+
         $validator = \Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
             $linkBack = 'mytasks/' . $task . '/upload';
@@ -69,16 +69,22 @@ class StudentTaskController extends Controller {
         } else {
             $thisTask = Tasks::find($task);
             $fileentry = $file->file('filefield');
-            $this->saveSolution($fileentry, $thisTask);
+            $studentId = Auth::user()->id;
+            $uploadedSolution = TasksSolutions::where('task_id', $task)->where('student_id', $studentId)->first();
+            if (empty($uploadedSolution)) {
+                $this->saveSolution($fileentry, $thisTask, $studentId);
+            } else {
+                $this->deleteFileFromTask($uploadedSolution->filename);
+                $this->saveSolution($fileentry, $thisTask, $studentId);
+            }
             return Redirect::to('mytasks');
         }
     }
 
-    private function saveSolution($file, $task) {
-        $studentId=Auth::user()->id;
+    private function saveSolution($file, $task, $studentId) {
         $extension = $file->getClientOriginalExtension();
         Storage::disk('local')->put($file->getFilename() . '.' . $extension, File::get($file));
-        $today=  Carbon::today();
+        $today = Carbon::today();
         $entry = new TasksSolutions();
         $entry->mime = $file->getClientMimeType();
         $entry->original_filename = $file->getClientOriginalName();
@@ -90,6 +96,11 @@ class StudentTaskController extends Controller {
         $entry->save();
     }
 
+    private function deleteFileFromTask($filename) {
+        TasksSolutions::where('student_id', Auth::user()->id)->where('filename', $filename)->delete();
+        unlink(storage_path('app/' . $filename));
+        return "true";
+    }
     /**
      * Show the form for creating a new resource.
      *
