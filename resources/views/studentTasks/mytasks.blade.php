@@ -16,7 +16,7 @@
         margin-bottom: 2%;
     }
     .buttonEdit{
-        /*          background-color: #002b80;  Green */
+        background: #b3c6ff;  
         border: solid;
         border-width: 1px;
         color: white;
@@ -129,6 +129,8 @@
 <?php foreach ($tasks as $task) { 
     if ($task->active === false) { ?>
             $("#uploadFile{{$task->task_id}}").attr('disabled', true); 
+            $("#uploadFile{{$task->task_id}}").css('background','#ff8080');
+           
     <?php } ?>
         $("#uploadFile{{$task->task_id}}").on("click", function () {
         location.href = "{{url("mytasks")}}" + "/" + "{{$task->task_id}}" + "/upload";
