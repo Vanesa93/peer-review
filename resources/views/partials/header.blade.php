@@ -48,7 +48,7 @@
                     <li><a href="/reviews"> {{trans('messages.review')}}</a></li>
                     <li><a href="/"> {{trans('messages.messages')}}</a></li>
                     @elseif(Auth::user()->account_type==2)
-                    <li><a href="/mycourses"> All courses</a></li>
+                    <li><a href="/mycourses"> My courses</a></li>
                     <li><a href="/mygroups"> My groups</a></li>
                     <li><a href="/mytasks"> My tasks</a></li>
                     <li><a href="/myreviews"> {{trans('messages.review')}}</a></li>
