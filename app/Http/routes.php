@@ -122,7 +122,7 @@ Route::put('reviews/{id}/edit/update', [
 Route::get('mycourses','StudentCoursesController@index');
 
 //student's groups
-Route::get('mygroups','StudentGroupsController@index');
+Route::get('mygroups','StudentsGroupsController@index');
 
 //student's tasks
 Route::get('mytasks','StudentTasksController@index');

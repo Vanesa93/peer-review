@@ -1,6 +1,5 @@
 @extends('app')
 @section('get_groups')
-
 <style>
     .button {
         background-color: #002b80; /* Green */

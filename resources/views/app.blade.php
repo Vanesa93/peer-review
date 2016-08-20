@@ -57,6 +57,7 @@
             @yield('edit_lecturer_review')
             @yield('view_task')
             @yield('mycourses')
+            @yield('mygroups')
         </div>
     </body>
 </html>
