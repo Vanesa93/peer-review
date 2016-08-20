@@ -23,6 +23,7 @@ class CreateAssigmentsTable extends Migration {
             $table->string('description');
             $table->date('sent_at');
             $table->date('end_date');
+            $table->integer('active')->default(1);
             $table->timestamps();
         });
         

@@ -20,6 +20,7 @@ use DB;
 use Storage;
 use File;
 use App\Fileentry;
+use App\Lecturer;
 
 class AssignmentController extends Controller {
 
@@ -36,7 +37,8 @@ class AssignmentController extends Controller {
      */
     public function index() {
         $tutorId = Auth::user()->id;
-        $tasks = Tasks::where('tutor_id', $tutorId)->get();
+        $lecturerId=  Lecturer::where('user_id_lecturer',$tutorId)->pluck('id');
+        $tasks = Tasks::where('tutor_id', $lecturerId)->get();
         foreach ($tasks as $task) {
             $task->course_id = Courses::where('id', $task->course_id)->pluck('name');
             $task->sent_at = Carbon::parse($task->sent_at)->format('d.m.Y');
@@ -100,9 +102,10 @@ class AssignmentController extends Controller {
     private function saveTask($request) {
         $today = Carbon::today();
         $tutor_id = Auth::user()->id;
+        $lecturerId=  Lecturer::where('user_id_lecturer',$tutor_id)->pluck('id');
         $endDate = Carbon::parse($request->get('end_date'));
         $task = new Tasks([
-            'tutor_id' => $tutor_id,
+            'tutor_id' => $lecturerId,
             'name' => $request->get('name'),
             'description' => $request->get('description'),
             'end_date' => $endDate,
@@ -187,7 +190,6 @@ class AssignmentController extends Controller {
             $task->course_id = Input::get('course_id');
             $task->group_id = Input::get('group_id');
             $task->save();
-
             $updatedUsersIds = Input::get('student_ids');
             $newGroup = $task->group_id;
 
@@ -253,13 +255,15 @@ class AssignmentController extends Controller {
     public function getfilesForTask($id) {
 
         $task = Tasks::find($id);
-        $files = Fileentry::where('task_id', $id)->where('tutor_id', Auth::user()->id)->get();
+        $lecturerId=  Lecturer::where('user_id_lecturer', Auth::user()->id)->pluck('id');
+        $files = Fileentry::where('task_id', $id)->where('tutor_id',$lecturerId)->get();
         return view('tasks.files', compact('files', 'task'));
     }
 
     public function openFilesForTask($id, $filename) {
         $tutorId = Auth::user()->id;
-        $entry = Fileentry::where('filename', '=', $filename)->where('tutor_id', $tutorId)->where('id', $id)->firstOrFail();
+        $lecturerId=  Lecturer::where('user_id_lecturer',$tutorId)->pluck('id');
+        $entry = Fileentry::where('filename', '=', $filename)->where('tutor_id', $lecturerId)->where('id', $id)->firstOrFail();
         $file = Storage::disk('local')->get($entry->filename);
 
         return Response::make($file, 200, [
@@ -304,7 +308,9 @@ class AssignmentController extends Controller {
     }
 
     public function deleteFileFromTask($filename) {
-        Fileentry::where('tutor_id', Auth::user()->id)->where('filename', $filename)->delete();
+        $tutorId = Auth::user()->id;
+        $lecturerId=  Lecturer::where('user_id_lecturer',$tutorId)->pluck('id');
+        Fileentry::where('tutor_id',$lecturerId)->where('filename', $filename)->delete();
         unlink(storage_path('app/' . $filename));
         return "true";
     }

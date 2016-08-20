@@ -16,7 +16,7 @@
         margin-bottom: 2%;
     }
     .buttonEdit{
-        /*          background-color: #002b80;  Green */
+        background: #b3c6ff;  
         border: solid;
         border-width: 1px;
         color: white;

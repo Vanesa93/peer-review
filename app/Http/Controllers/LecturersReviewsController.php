@@ -15,6 +15,7 @@ use App\LecturersReviews;
 use App\Fileentry;
 use Illuminate\Support\Facades\Redirect;
 use Input;
+use App\Lecturer;
 
 class LecturersReviewsController extends Controller {
 
@@ -25,7 +26,8 @@ class LecturersReviewsController extends Controller {
      */
     public function index() {
         $tutorId = Auth::user()->id;
-        $lecturersReviews = LecturersReviews::where('tutor_id', $tutorId)->get();
+        $lecturerId=  Lecturer::where('user_id_lecturer', $tutorId)->pluck('id');
+        $lecturersReviews = LecturersReviews::where('tutor_id', $lecturerId)->get();        
         foreach ($lecturersReviews as $lecturerReview) {
             $lecturerReview->filename = Fileentry::where('id', $lecturerReview->file_id)->pluck('filename');
             $lecturerReview->task_name = Tasks::where('id', $lecturerReview->task_id)->pluck('name');
@@ -40,7 +42,8 @@ class LecturersReviewsController extends Controller {
      */
     public function create() {
         $tutorId = Auth::user()->id;
-        $tasks = Tasks::where('tutor_id', $tutorId)->whereDate('end_date', '<=', date('Y-m-d'))->get();
+        $lecturerId=  Lecturer::where('user_id_lecturer', $tutorId)->pluck('id');
+        $tasks = Tasks::where('tutor_id', $lecturerId)->whereDate('end_date', '<=', date('Y-m-d'))->get();
         return view('lecturersReviews.create')->with('tasks', $tasks);
     }
 
@@ -56,7 +59,6 @@ class LecturersReviewsController extends Controller {
             'end_date' => 'required|max:100',
             'questionary' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,bmp,pdf'
         );
-
         $validator = \Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
@@ -70,13 +72,14 @@ class LecturersReviewsController extends Controller {
     private function saveReview($request) {
         $today = Carbon::today();
         $tutor_id = Auth::user()->id;
+        $lecturerId=  Lecturer::where('user_id_lecturer', $tutor_id)->pluck('id');
         $endDate = Carbon::parse($request->get('end_date'));
         $fileentry = $request->file('questionary');
         $taskId = $request->get('task_id');
         $task = Tasks::find($taskId);
         $newQuestionaryId = $this->saveFileEntryForLecturer($fileentry, $task);
         $newLecturerReview = new LecturersReviews([
-            'tutor_id' => $tutor_id,
+            'tutor_id' => $lecturerId,
             'task_id' => $request->get('task_id'),
             'description' => $request->get('description'),
             'end_date' => $endDate,
@@ -119,9 +122,10 @@ class LecturersReviewsController extends Controller {
      */
     public function edit($id) {
         $tutorId = Auth::user()->id;
+        $lecturerId=  Lecturer::where('user_id_lecturer', $tutorId)->pluck('id');
         $lecturerReview = LecturersReviews::find($id);
         $lecturerReview->task_id = Tasks::where('id', $lecturerReview->task_id)->pluck('name');
-        $tasks = Tasks::where('tutor_id', $tutorId)->whereDate('end_date', '<=', date('Y-m-d'))->lists('name', 'id');
+        $tasks = Tasks::where('tutor_id', $lecturerId)->whereDate('end_date', '<=', date('Y-m-d'))->lists('name', 'id');
         return view('lecturersReviews.edit')->with('lecturerReview', $lecturerReview)
                         ->with('tasks', $tasks);
     }
@@ -176,7 +180,8 @@ class LecturersReviewsController extends Controller {
      */
     public function destroy($id) {
         $lecturerReview = LecturersReviews::find($id);
-        $questionary = Fileentry::where('id', $lecturerReview->file_id)->where('tutor_id', Auth::user()->id)->first();
+        $lecturerId=  Lecturer::where('user_id_lecturer',  Auth::user()->id)->pluck('id');
+        $questionary = Fileentry::where('id', $lecturerReview->file_id)->where('tutor_id',$lecturerId)->first();
         unlink(storage_path('app/' . $questionary->filename));
         $questionary->delete();
         $lecturerReview->delete();

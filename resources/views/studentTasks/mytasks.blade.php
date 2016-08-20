@@ -58,6 +58,7 @@
                                     <th>Solution</th>
                                     <th>Upload solution</th>
                                     <th>Help materials</th>
+                                    <th>Review</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -95,6 +96,11 @@
                                             <span class="glyphicon glyphicon-file"></span>
                                         </button>
                                     </td>  
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;"  id="reviews{{$task->task_id}}">
+                                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                                        </button>
+                                    </td> 
                             <div id="dialog{{$task->task_id}}" title="No solution!" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>There is no uploaded solution for these task.</h5>
                             </div>

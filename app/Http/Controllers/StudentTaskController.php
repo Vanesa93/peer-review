@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
+use App\TasksToStudents;
 
 class StudentTaskController extends Controller {
 
@@ -41,16 +42,16 @@ class StudentTaskController extends Controller {
             $task->tutor_name = $forename . " " . $familyName;
             $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
             $this->getSolutins($task);
-            $task->active=$this->checkEndDate($task);
+            $task->active = $this->checkEndDate($task);
         }
         return view('studentTasks.mytasks')->with('tasks', $tasks);
     }
-    
-    private function checkEndDate($task) {        
-        $today=  Carbon::today();
-        if($today>$task->end_date){
+
+    private function checkEndDate($task) {
+        $today = Carbon::today();
+        if ($today > $task->end_date) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
@@ -117,6 +118,10 @@ class StudentTaskController extends Controller {
         $entry->extension = $extension;
         $entry->sent_at = $today;
         $entry->save();
+        $readyTask=  TasksToStudents::where('student_id',Auth::user()->id)->where('task_id',$task->id)->get();
+        $readyTask->ready=1;
+        $readyTask->save();
+                
     }
 
     private function deleteFileFromTask($filename) {
@@ -136,65 +141,11 @@ class StudentTaskController extends Controller {
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create() {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store() {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
     public function show($id) {
         $task = Tasks::find($id);
         $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
         $task->group_name = Group::where('id', $task->group_id)->pluck('name');
         return view('studentTasks.view')->with('task', $task);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id) {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id) {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id) {
-        //
     }
 
 }
