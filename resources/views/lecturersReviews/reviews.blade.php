@@ -67,9 +67,9 @@
                                     <td style="word-wrap: break-word;">{{$lecturerReview->sent_at}}</td>
                                     <td style="word-wrap: break-word;">{{$lecturerReview->end_date}}</td>                                   
                                     <td style="word-wrap: break-word;">
-                                        <button type="button" class="buttonEdit" style="float:right;" >
-                                           <a href="/file/{{$lecturerReview->file_id}}/{{ $lecturerReview->filename }}/open"> <span class="glyphicon glyphicon-file"></span></a>
-                                        </button>
+<!--                                        <button type="button" >-->
+                                           <a href="/file/{{$lecturerReview->file_id}}/{{ $lecturerReview->filename }}/open"  class="buttonEdit" style="float:right;"> <span class="glyphicon glyphicon-file"></span></a>
+                                        <!--</button>-->
                                     </td>                                
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;"  id="edit{{$lecturerReview->id}}">

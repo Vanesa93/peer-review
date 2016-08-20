@@ -265,7 +265,6 @@ class AssignmentController extends Controller {
         $lecturerId=  Lecturer::where('user_id_lecturer',$tutorId)->pluck('id');
         $entry = Fileentry::where('filename', '=', $filename)->where('tutor_id', $lecturerId)->where('id', $id)->firstOrFail();
         $file = Storage::disk('local')->get($entry->filename);
-
         return Response::make($file, 200, [
                     'Content-Type' => $entry->mime,
                     'Content-Disposition' => 'inline; filename="' . $entry->original_filename . '"',
