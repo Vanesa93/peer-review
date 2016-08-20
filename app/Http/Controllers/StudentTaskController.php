@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 use App\TasksToStudents;
 use App\Lecturer;
+use App\Students;
 
 class StudentTaskController extends Controller {
 
@@ -39,7 +40,6 @@ class StudentTaskController extends Controller {
                 ->where('users.id', $studentId)
                 ->get();
         $tasks = $this->getTaskInfo($taskInfo);
-
         return view('studentTasks.mytasks')->with('tasks', $tasks);
     }
 
@@ -48,8 +48,8 @@ class StudentTaskController extends Controller {
             $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
             $this->getSolutins($task);
             $task->active = $this->checkEndDate($task);
-            $forename = User::where('id',$task->user_id_lecturer)->pluck('forename');
-            $familyName =User::where('id',$task->user_id_lecturer)->pluck('familyName');;
+            $forename = User::where('id', $task->user_id_lecturer)->pluck('forename');
+            $familyName = User::where('id', $task->user_id_lecturer)->pluck('familyName');            
             $task->tutor_name = $forename . " " . $familyName;
         }
         return $tasks;
@@ -65,7 +65,8 @@ class StudentTaskController extends Controller {
     }
 
     private function getSolutins($task) {
-        $solution = TasksSolutions::where('student_id', Auth::user()->id)->where('task_id', $task->task_id)->first();
+        $studentId=Students::where('user_id_students', Auth::user()->id)->pluck('id');
+        $solution = TasksSolutions::where('student_id',$studentId)->where('task_id', $task->task_id)->first();
         if (!empty($solution)) {
             $task->file_id = $solution->id;
             $task->solution_filename = $solution->filename;
@@ -77,7 +78,7 @@ class StudentTaskController extends Controller {
 
     public function getfilesForTask($id) {
         $task = Tasks::find($id);
-        $lecturerId=  Lecturer::where('id',$task->tutor_id)->pluck('id');
+        $lecturerId = Lecturer::where('id', $task->tutor_id)->pluck('id');
         $files = Fileentry::where('task_id', $id)->where('tutor_id', $lecturerId)->get();
         return view('studentTasks.files', compact('files', 'task'));
     }
@@ -92,7 +93,6 @@ class StudentTaskController extends Controller {
             'filefield' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
         );
 
-
         $validator = \Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
             $linkBack = 'mytasks/' . $task . '/upload';
@@ -101,7 +101,7 @@ class StudentTaskController extends Controller {
         } else {
             $thisTask = Tasks::find($task);
             $fileentry = $file->file('filefield');
-            $studentId = Auth::user()->id;
+            $studentId = Students::where('user_id_students', Auth::user()->id)->pluck('id');
             $uploadedSolution = TasksSolutions::where('task_id', $task)->where('student_id', $studentId)->first();
             if (empty($uploadedSolution)) {
                 $this->saveSolution($fileentry, $thisTask, $studentId);
@@ -115,9 +115,9 @@ class StudentTaskController extends Controller {
 
     private function saveSolution($file, $task, $studentId) {
         $extension = $file->getClientOriginalExtension();
-        Storage::disk('local')->put($file->getFilename() . '.' . $extension, File::get($file));
+        $r=Storage::disk('local')->put($file->getFilename() . '.' . $extension, File::get($file));
         $today = Carbon::today();
-        $entry = new TasksSolutions();
+        $entry = new TasksSolutions();        
         $entry->mime = $file->getClientMimeType();
         $entry->original_filename = $file->getClientOriginalName();
         $entry->filename = $file->getFilename() . '.' . $extension;
@@ -126,19 +126,22 @@ class StudentTaskController extends Controller {
         $entry->extension = $extension;
         $entry->sent_at = $today;
         $entry->save();
-        $readyTask = TasksToStudents::where('student_id', Auth::user()->id)->where('task_id', $task->id)->get();
+        $readyTask = TasksToStudents::where('student_id', $studentId)->where('task_id', $entry->task_id)->first();
         $readyTask->ready = 1;
         $readyTask->save();
     }
 
     private function deleteFileFromTask($filename) {
-        TasksSolutions::where('student_id', Auth::user()->id)->where('filename', $filename)->delete();
+        $userId = Auth::user()->id;
+        $studentId=Students::where('user_id_students',$userId)->pluck('id');
+        TasksSolutions::where('student_id', $studentId)->where('filename', $filename)->delete();
         unlink(storage_path('app/' . $filename));
         return "true";
     }
 
     public function openSolution($id, $filename) {
-        $studentId = Auth::user()->id;
+        $userId = Auth::user()->id;
+        $studentId=Students::where('user_id_students',$userId)->pluck('id');
         $entry = TasksSolutions::where('filename', '=', $filename)->where('student_id', $studentId)->where('id', $id)->firstOrFail();
         $file = Storage::disk('local')->get($entry->filename);
 
