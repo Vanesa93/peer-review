@@ -126,7 +126,10 @@
     $('#tasksTable').DataTable();
     //hide datatable info tag
     $('.dataTables_info').hide();
-<?php foreach ($tasks as $task) { ?>
+<?php foreach ($tasks as $task) { 
+    if ($task->active === false) { ?>
+            $("#uploadFile{{$task->task_id}}").attr('disabled', true); 
+    <?php } ?>
         $("#uploadFile{{$task->task_id}}").on("click", function () {
         location.href = "{{url("mytasks")}}" + "/" + "{{$task->task_id}}" + "/upload";
         });
@@ -136,7 +139,7 @@
         $("#seeSolution{{$task->task_id}}").on("click", function () {
         location.href = "{{url("solution")}}" + "/" + "{{$task->file_id}}" + "/" + "{{ $task->solution_filename }}" + "/open";
         });
-         $("#noSolution{{$task->task_id}}").on("click", function () {
+        $("#noSolution{{$task->task_id}}").on("click", function () {
         $("#dialog{{$task->task_id}}").dialog();
         });
 <?php } ?>

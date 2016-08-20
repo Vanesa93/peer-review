@@ -40,16 +40,30 @@ class StudentTaskController extends Controller {
             $familyName = User::where('id', $task->tutor_id)->pluck('familyName');
             $task->tutor_name = $forename . " " . $familyName;
             $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
-            $solution = TasksSolutions::where('student_id', Auth::user()->id)->where('task_id', $task->task_id)->first();
-            if (!empty($solution)) {
-                $task->file_id = $solution->id;
-                $task->solution_filename = $solution->filename;
-            } else {
-                $task->file_id = "";
-                $task->solution_filename = "";
-            }
+            $this->getSolutins($task);
+            $task->active=$this->checkEndDate($task);
         }
         return view('studentTasks.mytasks')->with('tasks', $tasks);
+    }
+    
+    private function checkEndDate($task) {        
+        $today=  Carbon::today();
+        if($today>$task->end_date){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    private function getSolutins($task) {
+        $solution = TasksSolutions::where('student_id', Auth::user()->id)->where('task_id', $task->task_id)->first();
+        if (!empty($solution)) {
+            $task->file_id = $solution->id;
+            $task->solution_filename = $solution->filename;
+        } else {
+            $task->file_id = "";
+            $task->solution_filename = "";
+        }
     }
 
     public function getfilesForTask($id) {
