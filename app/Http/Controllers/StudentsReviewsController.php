@@ -5,6 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\QuestionaryToStudent;
+use App\Students;
+use Auth;
+use App\Tasks;
+use App\LecturersReviews;
+use App\Fileentry;
+use App\TasksSolutions;
+use Illuminate\Support\Facades\Response;
+use Storage;
 
 class StudentsReviewsController extends Controller {
 
@@ -14,14 +23,16 @@ class StudentsReviewsController extends Controller {
      * @return Response
      */
     public function index() {
-//        $student_id = Auth::user()->id;
-//        $lecturersReviews = LecturersReviews::where('tutor_id', $tutorId)->get();
-//        foreach ($lecturersReviews as $lecturerReview) {
-//            $lecturerReview->filename = Fileentry::where('id', $lecturerReview->file_id)->pluck('filename');
-//            $lecturerReview->task_name = Tasks::where('id', $lecturerReview->task_id)->pluck('name');
-//        }
-        return view('studentsReviews.myreviews');
-//                ->with('reviews', $reviews);
+        $userId = Auth::user()->id;
+        $studentWriter = Students::where('user_id_students', $userId)->first();
+        $reviews = QuestionaryToStudent::where('student_id_writer', $studentWriter->id)->get();
+        foreach ($reviews as $reviewTask) {
+            $reviewTask->task_name = Tasks::where('id', $reviewTask->task_id)->pluck('name');
+            $lecturerReview = LecturersReviews::where('id', $reviewTask->lecturers_review_id)->first();
+            $reviewTask->questionary = Fileentry::where('id', $lecturerReview->file_id)->first();
+            $reviewTask->review_file = TasksSolutions::where('id', $reviewTask->file_for_review)->first();
+        }
+        return view('studentsReviews.myreviews')->with('reviews', $reviews);
     }
 
     /**
@@ -29,6 +40,24 @@ class StudentsReviewsController extends Controller {
      *
      * @return Response
      */
+    public function openQuestionary($id, $filename) {
+        $questionary=Fileentry::where('id', $id)->where('filename', '=', $filename)->first();
+        $file = Storage::disk('local')->get($questionary->filename);
+        return Response::make($file, 200, [
+                    'Content-Type' => $questionary->mime,
+                    'Content-Disposition' => 'inline; filename="' . $questionary->original_filename . '"',
+        ]);
+    }
+    
+    public function openSolutionToReview($id, $filename){
+        $taskSolution=  TasksSolutions::where('id', $id)->where('filename', '=', $filename)->first();
+        $file = Storage::disk('local')->get($taskSolution->filename);
+        return Response::make($file, 200, [
+                    'Content-Type' => $taskSolution->mime,
+                    'Content-Disposition' => 'inline; filename="' . $taskSolution->original_filename . '"',
+        ]);
+    }
+
     public function create() {
         //
     }

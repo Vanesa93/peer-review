@@ -135,4 +135,5 @@ Route::get('solution/{id}/{filename}/open', 'StudentTaskController@openSolution'
 
 //student's reviews
 Route::get('myreviews','StudentsReviewsController@index');
-
+Route::get('myreviews/questionary/{id}/{filename}/open', 'StudentsReviewsController@openQuestionary');
+Route::get('myreviews/solutionreview/{id}/{filename}/open', 'StudentsReviewsController@openSolutionToReview');

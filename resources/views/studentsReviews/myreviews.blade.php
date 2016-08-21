@@ -47,28 +47,27 @@
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Tutor name</th>
                                     <th>Task name</th>
-                                    <th>Task description</th>
-                                    <th>Created at</th>
-                                    <th>End date</th>
-                                    <th>Questionary</th>                                  
+                                    <th>Sent at</th>
+                                    <th>Questionary to fill</th>
+                                    <th>Solution to review</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($reviews as $review)
                                 <tr>
                                     <td style="word-wrap: break-word;"><a href='{{url('task')}}/{{$review->task_id}}'>{{$review->task_name}}</a></td>
-                                    <td style="word-wrap: break-word;">{{$review->task_name}}</td>
-
-                                    <td style="word-wrap: break-word;">{{$review->description}}</td>
                                     <td style="word-wrap: break-word;">{{$review->sent_at}}</td>
-                                    <td style="word-wrap: break-word;">{{$review->end_date}}</td>                                   
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" >
-                                           <a href="/file/{{$review->file_id}}/{{ $review->filename }}/open"> <span class="glyphicon glyphicon-file"></span></a>
+                                           <a href="myreviews/questionary/{{$review->questionary->id}}/{{ $review->questionary->filename }}/open"> <span class="glyphicon glyphicon-file"></span></a>
                                         </button>
-                                    </td>                               
+                                    </td> 
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;" >
+                                           <a href="/myreviews/solutionreview/{{$review->review_file->id}}/{{ $review->review_file->filename }}/open"> <span class="glyphicon glyphicon-file"></span></a>
+                                        </button>
+                                    </td>                 
                                 
                                         {!! Form::close() !!}
                                 </tr>                             
@@ -80,8 +79,7 @@
                     <div>
                         <center>
                             <h5>
-                                No questionaries found.
-                                You must have created courses, groups and tasks to create questionaries.
+                                No review tasks found.
                             </h5>
                         </center>
                     </div>

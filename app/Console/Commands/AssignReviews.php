@@ -80,7 +80,6 @@ class AssignReviews extends Command {
         }
         $endedTask->active=3;
         $endedTask->save();
-        //  id	student_id_writer task_id lecturers_review_id file_for_review sent_at
     }
 
     /**
