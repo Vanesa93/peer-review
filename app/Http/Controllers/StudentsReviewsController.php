@@ -29,8 +29,8 @@ class StudentsReviewsController extends Controller {
      */
     public function index() {
         $userId = Auth::user()->id;
-        $studentWriter = Students::where('user_id_students', $userId)->first();
-        $reviews = QuestionaryToStudent::where('student_id_writer', $studentWriter->id)->get();
+        $studentWriter = Students::where('user_id_students', $userId)->first();        
+        $reviews = QuestionaryToStudent::where('student_id_writer', $studentWriter->id)->get();        
         foreach ($reviews as $reviewTask) {
             $reviewTask->task_name = Tasks::where('id', $reviewTask->task_id)->pluck('name');
             $lecturerReview = LecturersReviews::where('id', $reviewTask->lecturers_review_id)->first();
@@ -38,6 +38,7 @@ class StudentsReviewsController extends Controller {
             $reviewTask->review_file = TasksSolutions::where('id', $reviewTask->file_for_review)->first();
             $reviewTask->uploaded_solution = StudentsReviews::where('student_id_writer', $reviewTask->student_id_writer)->where('task_id',$reviewTask->task_id)->first();
         }
+        
         return view('studentsReviews.myreviews')->with('reviews', $reviews);
     }
 

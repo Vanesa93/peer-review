@@ -23,8 +23,7 @@ class CreateQuestionaryToStudentsTable extends Migration {
             $table->foreign('lecturers_review_id')->references('id')->on('lecturers_reviews')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('file_for_review')->unsigned();
             $table->foreign('file_for_review')->references('id')->on('tasks_solution')->onDelete('cascade')->onUpdate('cascade');
-            $table->date('sent_at');
-            $table->integer('active')->default(0);
+            $table->date('sent_at');            
             $table->timestamps();
         });
     }

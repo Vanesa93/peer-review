@@ -7,6 +7,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use App\Tasks;
 use Carbon\Carbon;
+use App\LecturersReviews;
+use App\QuestionaryToStudent;
 
 class DeactivateTasks extends Command {
 
@@ -45,6 +47,13 @@ class DeactivateTasks extends Command {
             if ($task->end_date < $today) {
                 $task->active = 0;
                 $task->save();
+            }
+        }
+        $lecturersReviews=  LecturersReviews::all();
+        foreach ($lecturersReviews as $lecturersReview) {
+            if ($lecturersReview->end_date < $today) {
+                $lecturersReview->active = 0;
+                $lecturersReview->save();
             }
         }
         $this->info('All tasks, that must be deactivate, were deactivated');

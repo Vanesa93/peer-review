@@ -75,11 +75,14 @@
                                             <a href="/myreviews/upload/review/{{$review->id}}"> <span class="glyphicon glyphicon-upload"></span></a>
                                         </button>
                                     </td> 
+                                    @if( !empty($review->uploaded_solution) ){
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" >
                                             <a href="/myreviews/writerreview/{{ $review->uploaded_solution->id}}/{{  $review->uploaded_solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
                                         </button>
                                     </td>
+                                    @else
+                                    @endif
 
                                     {!! Form::close() !!}
                                 </tr>                             
@@ -109,12 +112,7 @@
 
 <?php
 foreach ($reviews as $review) {
-    if ($review->active === 0) {
-        ?>
-                $("#uploadFile{{$review->id}}").attr('disabled', true);
-                $("#uploadFile{{$review->id}}").css('background', '#ff8080');
-
-    <?php } ?>
+   ?>
             $("#filesForTask{{$review->id}}").on("click", function () {
                 location.href = "{{url("tasks")}}" + "/" + "{{$review->id}}" + "/helpmaterials";
             });

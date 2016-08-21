@@ -49,7 +49,7 @@ class AssignReviews extends Command {
         if (!($endedTasks->isEmpty())) {
             foreach ($endedTasks as $endedTask) {
                 //questionary created from lecturer
-                $questionary = LecturersReviews::where('task_id', $endedTask->id)->where('end_date', ">=", $today)->first();
+                $questionary = LecturersReviews::where('task_id', $endedTask->id)->where('end_date', "<=", $today)->first();
                 //students in this task
                 $allStudentsToTheseTask = TasksToStudents::where('task_id', $endedTask->id)->where('ready', 1)->get();
                 //function to assign questionary to student
@@ -63,7 +63,8 @@ class AssignReviews extends Command {
         //random array from students
         $today = Carbon::today();
         foreach ($allStudentsToTheseTask as $student) {
-            $taskForReview = TasksSolutions::where('student_id', '!=', $student->student_id)->where('assign', "!=", 1)->first();
+            $taskForReview = TasksSolutions::where('student_id', '!=', $student->student_id)->where('assign', "!==", 1)->first();
+
             $questionaryToStudent = new QuestionaryToStudent([
                 'student_id_writer' => $student->student_id,
                 'student_id_for_review' => $taskForReview->student_id,
@@ -76,9 +77,8 @@ class AssignReviews extends Command {
             $questionaryToStudent->save();
             $taskForReview->assign = 1;
             $taskForReview->save();
-            
         }
-        $endedTask->active=3;
+        $endedTask->active = 3;
         $endedTask->save();
     }
 

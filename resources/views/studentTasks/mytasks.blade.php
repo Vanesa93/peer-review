@@ -104,7 +104,7 @@
                                     </td>
                                     @else
                                     <td style="word-wrap: break-word;">
-                                        <button type="button" class="buttonEdit" style="float:right;"  id="noReview{$task->task_id}}">
+                                        <button type="button" class="buttonEdit" style="float:right;"  id="noReview{{$task->task_id}}">
                                             <span class="glyphicon glyphicon-unchecked"></span>
                                         </button>     
                                     </td>
@@ -145,7 +145,7 @@
     //hide datatable info tag
     $('.dataTables_info').hide();
 <?php foreach ($tasks as $task) {
-    if ($task->uploaded_review->isEmpty()) {
+    if ($task->active==false) {
         ?>
             $("#uploadFile{{$task->task_id}}").attr('disabled', true);
             $("#uploadFile{{$task->task_id}}").css('background', '#ff8080');
