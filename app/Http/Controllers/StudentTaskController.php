@@ -21,6 +21,9 @@ use Illuminate\Support\Facades\Response;
 use App\TasksToStudents;
 use App\Lecturer;
 use App\Students;
+use App\StudentsReviews;
+use App\QuestionaryToStudent;
+use App\LecturersReviews;
 
 class StudentTaskController extends Controller {
 
@@ -49,7 +52,7 @@ class StudentTaskController extends Controller {
             $this->getSolutins($task);
             $task->active = $this->checkEndDate($task);
             $forename = User::where('id', $task->user_id_lecturer)->pluck('forename');
-            $familyName = User::where('id', $task->user_id_lecturer)->pluck('familyName');            
+            $familyName = User::where('id', $task->user_id_lecturer)->pluck('familyName');
             $task->tutor_name = $forename . " " . $familyName;
         }
         return $tasks;
@@ -65,8 +68,8 @@ class StudentTaskController extends Controller {
     }
 
     private function getSolutins($task) {
-        $studentId=Students::where('user_id_students', Auth::user()->id)->pluck('id');
-        $solution = TasksSolutions::where('student_id',$studentId)->where('task_id', $task->task_id)->first();
+        $studentId = Students::where('user_id_students', Auth::user()->id)->pluck('id');
+        $solution = TasksSolutions::where('student_id', $studentId)->where('task_id', $task->task_id)->first();
         if (!empty($solution)) {
             $task->file_id = $solution->id;
             $task->solution_filename = $solution->filename;
@@ -117,7 +120,7 @@ class StudentTaskController extends Controller {
         $extension = $file->getClientOriginalExtension();
         Storage::disk('local')->put($file->getFilename() . '.' . $extension, File::get($file));
         $today = Carbon::today();
-        $entry = new TasksSolutions();        
+        $entry = new TasksSolutions();
         $entry->mime = $file->getClientMimeType();
         $entry->original_filename = $file->getClientOriginalName();
         $entry->filename = $file->getFilename() . '.' . $extension;
@@ -133,7 +136,7 @@ class StudentTaskController extends Controller {
 
     private function deleteFileFromTask($filename) {
         $userId = Auth::user()->id;
-        $studentId=Students::where('user_id_students',$userId)->pluck('id');
+        $studentId = Students::where('user_id_students', $userId)->pluck('id');
         TasksSolutions::where('student_id', $studentId)->where('filename', $filename)->delete();
         unlink(storage_path('app/' . $filename));
         return "true";
@@ -141,7 +144,7 @@ class StudentTaskController extends Controller {
 
     public function openSolution($id, $filename) {
         $userId = Auth::user()->id;
-        $studentId=Students::where('user_id_students',$userId)->pluck('id');
+        $studentId = Students::where('user_id_students', $userId)->pluck('id');
         $entry = TasksSolutions::where('filename', '=', $filename)->where('student_id', $studentId)->where('id', $id)->firstOrFail();
         $file = Storage::disk('local')->get($entry->filename);
 
@@ -156,6 +159,35 @@ class StudentTaskController extends Controller {
         $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
         $task->group_name = Group::where('id', $task->group_id)->pluck('name');
         return view('studentTasks.view')->with('task', $task);
+    }
+
+    public function reviewToTask($taskId) {
+        $review = StudentsReviews::where('task_id', $taskId)->first();
+        $review->task_name = Tasks::where('id', $taskId)->pluck('name');
+        $questionaryToStudent = QuestionaryToStudent::where('id', $review->questionary_to_student_id)->first();
+        $lecturersReview = LecturersReviews::where('id', $questionaryToStudent->lecturers_review_id)->first();
+        $review->questionaryToStudent=  Fileentry::where('id',$lecturersReview->file_id)->first();
+        return view('studentTasks.reviews')->with('review', $review);
+    }
+
+    public function questionaryToTask($id, $filename) {
+        $questionary = Fileentry::where('id', $id)->where('filename', '=', $filename)->first();
+        $file = Storage::disk('local')->get($questionary->filename);
+        return Response::make($file, 200, [
+                    'Content-Type' => $questionary->mime,
+                    'Content-Disposition' => 'inline; filename="' . $questionary->original_filename . '"',
+        ]);
+    }
+    
+    public function reviewToTaskOpen($id, $filename) {
+        $userId=  Auth::user()->id;
+        $studentId=  Students::where('user_id_students',$userId)->pluck('id');
+        $review = StudentsReviews::where('id', $id)->where('filename', '=', $filename)->where('student_id_writer',$studentId)->first();
+        $file = Storage::disk('local')->get($review->filename);
+        return Response::make($file, 200, [
+                    'Content-Type' => $review->mime,
+                    'Content-Disposition' => 'inline; filename="' . $review->original_filename . '"',
+        ]);
     }
 
 }

@@ -138,6 +138,10 @@
             $("#uploadFile{{$task->task_id}}").css('background','#ff8080');
            
     <?php } ?>
+        
+         $("#reviews{{$task->task_id}}").on("click", function () {
+        location.href = "{{url("mytasks")}}" + "/" + "{{$task->task_id}}" + "/review";
+        });
         $("#uploadFile{{$task->task_id}}").on("click", function () {
         location.href = "{{url("mytasks")}}" + "/" + "{{$task->task_id}}" + "/upload";
         });

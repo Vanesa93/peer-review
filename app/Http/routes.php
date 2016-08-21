@@ -131,7 +131,9 @@ Route::get('mytasks/{id}/upload', 'StudentTaskController@uploadFileToTask');
 Route::get('mytasks/{id}','StudentTaskController@show');
 Route::post('upload/solution/{id}', 'StudentTaskController@upload');
 Route::get('solution/{id}/{filename}/open', 'StudentTaskController@openSolution');
-
+Route::get('mytasks/{id}/review', 'StudentTaskController@reviewToTask');
+Route::get('questionary/{id}/{filename}/open', 'StudentTaskController@questionaryToTask');
+Route::get('review/{id}/{filename}/open', 'StudentTaskController@reviewToTaskOpen');
 
 //student's reviews
 Route::get('myreviews','StudentsReviewsController@index');
