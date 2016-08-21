@@ -96,13 +96,25 @@
                                             <span class="glyphicon glyphicon-file"></span>
                                         </button>
                                     </td>  
+                                    @if(!($task->uploaded_review->isEmpty()))
                                     <td style="word-wrap: break-word;">
-                                        <button type="button" class="buttonEdit" style="float:right;"  id="reviews{{$task->task_id}}">
+                                         <button type="button" class="buttonEdit" style="float:right;"  id="reviews{{$task->task_id}}">
                                             <span class="glyphicon glyphicon-thumbs-up"></span>
-                                        </button>
-                                    </td> 
+                                        </button>    
+                                    </td>
+                                    @else
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;"  id="noReview{$task->task_id}}">
+                                            <span class="glyphicon glyphicon-unchecked"></span>
+                                        </button>     
+                                    </td>
+                                    @endif
+
                             <div id="dialog{{$task->task_id}}" title="No solution!" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>There is no uploaded solution for these task.</h5>
+                            </div>
+                             <div id="dialogReview{{$task->task_id}}" title="No review!" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>There is no uploaded review for these task.</h5>
                             </div>
 
                             @endforeach
@@ -132,14 +144,14 @@
     $('#tasksTable').DataTable();
     //hide datatable info tag
     $('.dataTables_info').hide();
-<?php foreach ($tasks as $task) { 
-    if ($task->active === false) { ?>
-            $("#uploadFile{{$task->task_id}}").attr('disabled', true); 
-            $("#uploadFile{{$task->task_id}}").css('background','#ff8080');
-           
+<?php foreach ($tasks as $task) {
+    if ($task->uploaded_review->isEmpty()) {
+        ?>
+            $("#uploadFile{{$task->task_id}}").attr('disabled', true);
+            $("#uploadFile{{$task->task_id}}").css('background', '#ff8080');
     <?php } ?>
-        
-         $("#reviews{{$task->task_id}}").on("click", function () {
+
+        $("#reviews{{$task->task_id}}").on("click", function () {
         location.href = "{{url("mytasks")}}" + "/" + "{{$task->task_id}}" + "/review";
         });
         $("#uploadFile{{$task->task_id}}").on("click", function () {
@@ -153,6 +165,9 @@
         });
         $("#noSolution{{$task->task_id}}").on("click", function () {
         $("#dialog{{$task->task_id}}").dialog();
+        });
+        $("#noReview{{$task->task_id}}").on("click", function () {
+        $("#dialogReview{{$task->task_id}}").dialog();
         });
 <?php } ?>
     });

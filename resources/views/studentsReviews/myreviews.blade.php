@@ -52,7 +52,7 @@
                                     <th>Questionary to fill</th>
                                     <th>Solution to review</th>
                                     <th>Upload review</th>
-                                    <th>Open review</th>
+                                    <th>Open review solution</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,11 +71,11 @@
                                         </button>
                                     </td>  
                                     <td style="word-wrap: break-word;">
-                                        <button type="button" class="buttonEdit" style="float:right;" >
+                                        <button type="button" class="buttonEdit" style="float:right;" id='uploadFile{{$review->id}}'>
                                             <a href="/myreviews/upload/review/{{$review->id}}"> <span class="glyphicon glyphicon-upload"></span></a>
                                         </button>
                                     </td> 
-                                     <td style="word-wrap: break-word;">
+                                    <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" >
                                             <a href="/myreviews/writerreview/{{ $review->uploaded_solution->id}}/{{  $review->uploaded_solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
                                         </button>
@@ -107,8 +107,14 @@
         //hide datatable info tag
         $('.dataTables_info').hide();
 
-<?php foreach ($reviews as $review) { ?>
+<?php
+foreach ($reviews as $review) {
+    if ($review->active === 0) {
+        ?>
+                $("#uploadFile{{$review->id}}").attr('disabled', true);
+                $("#uploadFile{{$review->id}}").css('background', '#ff8080');
 
+    <?php } ?>
             $("#filesForTask{{$review->id}}").on("click", function () {
                 location.href = "{{url("tasks")}}" + "/" + "{{$review->id}}" + "/helpmaterials";
             });

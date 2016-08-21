@@ -24,6 +24,7 @@ class CreateQuestionaryToStudentsTable extends Migration {
             $table->integer('file_for_review')->unsigned();
             $table->foreign('file_for_review')->references('id')->on('tasks_solution')->onDelete('cascade')->onUpdate('cascade');
             $table->date('sent_at');
+            $table->integer('active')->default(0);
             $table->timestamps();
         });
     }

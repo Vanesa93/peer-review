@@ -91,8 +91,7 @@
     $(document).ready(function () {
         $('#lecturersReviewsTable').DataTable();
         //hide datatable info tag
-        $('.dataTables_info').hide();
-      
+        $('.dataTables_info').hide();      
 
     });
 </script>

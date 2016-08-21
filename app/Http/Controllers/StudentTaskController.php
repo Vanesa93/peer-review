@@ -54,6 +54,7 @@ class StudentTaskController extends Controller {
             $forename = User::where('id', $task->user_id_lecturer)->pluck('forename');
             $familyName = User::where('id', $task->user_id_lecturer)->pluck('familyName');
             $task->tutor_name = $forename . " " . $familyName;
+            $task->uploaded_review=  StudentsReviews::where('task_id',$task->id)->get();
         }
         return $tasks;
     }
