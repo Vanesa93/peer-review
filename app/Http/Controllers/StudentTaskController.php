@@ -115,7 +115,7 @@ class StudentTaskController extends Controller {
 
     private function saveSolution($file, $task, $studentId) {
         $extension = $file->getClientOriginalExtension();
-        $r=Storage::disk('local')->put($file->getFilename() . '.' . $extension, File::get($file));
+        Storage::disk('local')->put($file->getFilename() . '.' . $extension, File::get($file));
         $today = Carbon::today();
         $entry = new TasksSolutions();        
         $entry->mime = $file->getClientMimeType();

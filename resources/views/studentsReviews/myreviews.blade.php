@@ -51,6 +51,8 @@
                                     <th>Sent at</th>
                                     <th>Questionary to fill</th>
                                     <th>Solution to review</th>
+                                    <th>Upload review</th>
+                                    <th>Open review</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,16 +62,26 @@
                                     <td style="word-wrap: break-word;">{{$review->sent_at}}</td>
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" >
-                                           <a href="myreviews/questionary/{{$review->questionary->id}}/{{ $review->questionary->filename }}/open"> <span class="glyphicon glyphicon-file"></span></a>
+                                            <a href="myreviews/questionary/{{$review->questionary->id}}/{{ $review->questionary->filename }}/open"> <span class="glyphicon glyphicon-file"></span></a>
                                         </button>
                                     </td> 
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" >
-                                           <a href="/myreviews/solutionreview/{{$review->review_file->id}}/{{ $review->review_file->filename }}/open"> <span class="glyphicon glyphicon-file"></span></a>
+                                            <a href="/myreviews/solutionreview/{{$review->review_file->id}}/{{ $review->review_file->filename }}/open"> <span class="glyphicon glyphicon-file"></span></a>
                                         </button>
-                                    </td>                 
-                                
-                                        {!! Form::close() !!}
+                                    </td>  
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;" >
+                                            <a href="/myreviews/upload/review/{{$review->id}}"> <span class="glyphicon glyphicon-upload"></span></a>
+                                        </button>
+                                    </td> 
+                                     <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;" >
+                                            <a href="/myreviews/writerreview/{{ $review->uploaded_solution->id}}/{{  $review->uploaded_solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
+                                        </button>
+                                    </td>
+
+                                    {!! Form::close() !!}
                                 </tr>                             
                                 @endforeach
                             </tbody>
@@ -90,16 +102,16 @@
     </div>
 </div>
 <script>
-  $(document).ready(function () {
-    $('#lecturersReviewsTable').DataTable();
-    //hide datatable info tag
-    $('.dataTables_info').hide();
-    
-    <?php foreach ($reviews as $review) { ?>
-        
-        $("#filesForTask{{$review->id}}").on("click", function () {
-            location.href="{{url("tasks")}}"+"/"+"{{$review->id}}"+"/helpmaterials";
-        });
+    $(document).ready(function () {
+        $('#lecturersReviewsTable').DataTable();
+        //hide datatable info tag
+        $('.dataTables_info').hide();
+
+<?php foreach ($reviews as $review) { ?>
+
+            $("#filesForTask{{$review->id}}").on("click", function () {
+                location.href = "{{url("tasks")}}" + "/" + "{{$review->id}}" + "/helpmaterials";
+            });
 
 <?php } ?>
     });

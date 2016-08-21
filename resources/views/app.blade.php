@@ -63,6 +63,7 @@
             @yield('file_upload_tasks_student')
             @yield('view_task_student')
             @yield('myreviews')
+            @yield('upload_review_solution')
         </div>
     </body>
 </html>

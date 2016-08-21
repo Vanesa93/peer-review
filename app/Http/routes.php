@@ -137,3 +137,6 @@ Route::get('solution/{id}/{filename}/open', 'StudentTaskController@openSolution'
 Route::get('myreviews','StudentsReviewsController@index');
 Route::get('myreviews/questionary/{id}/{filename}/open', 'StudentsReviewsController@openQuestionary');
 Route::get('myreviews/solutionreview/{id}/{filename}/open', 'StudentsReviewsController@openSolutionToReview');
+Route::get('myreviews/upload/review/{id}', 'StudentsReviewsController@uploadReview');
+Route::get('myreviews/writerreview/{id}/{filename}/open', 'StudentsReviewsController@openUploadedReview');
+Route::post('myreviews/upload/review/solution/{id}', 'StudentsReviewsController@upload');
