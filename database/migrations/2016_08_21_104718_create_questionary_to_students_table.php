@@ -15,6 +15,8 @@ class CreateQuestionaryToStudentsTable extends Migration {
             $table->increments('id');
             $table->integer('student_id_writer')->unsigned();
             $table->foreign('student_id_writer')->references('id')->on('students')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('student_id_for_review')->unsigned();
+            $table->foreign('student_id_for_review')->references('id')->on('students')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('task_id')->unsigned();
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('lecturers_review_id')->unsigned();

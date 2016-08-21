@@ -11,6 +11,7 @@ use App\Fileentry;
 use App\Tasks;
 use App\TasksToStudents;
 use App\TasksSolutions;
+use App\QuestionaryToStudent;
 
 class AssignReviews extends Command {
 
@@ -59,12 +60,26 @@ class AssignReviews extends Command {
     }
 
     private function setQuestionaryToStudents($allStudentsToTheseTask, $questionary, $endedTask) {
-        $allStudentsToTheseTaskToArray = $allStudentsToTheseTask->toArray();
         //random array from students
-        foreach ($allStudentsToTheseTaskToArray as $student) {
-            $taskForReview=  TasksSolutions::where('student_id','!=',$student->id)->where('assign',"!=",1)->first();
-            dd($student);
+        $today = Carbon::today();
+        foreach ($allStudentsToTheseTask as $student) {
+            $taskForReview = TasksSolutions::where('student_id', '!=', $student->student_id)->where('assign', "!=", 1)->first();
+            $questionaryToStudent = new QuestionaryToStudent([
+                'student_id_writer' => $student->student_id,
+                'student_id_for_review' => $taskForReview->student_id,
+                'task_id' => $endedTask->id,
+                //link to Fileentry questionary
+                'lecturers_review_id' => $questionary->id,
+                'file_for_review' => $taskForReview->id,
+                'sent_at' => $today
+            ]);
+            $questionaryToStudent->save();
+            $taskForReview->assign = 1;
+            $taskForReview->save();
+            
         }
+        $endedTask->active=3;
+        $endedTask->save();
         //  id	student_id_writer task_id lecturers_review_id file_for_review sent_at
     }
 
