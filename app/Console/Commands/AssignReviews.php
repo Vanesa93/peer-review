@@ -9,6 +9,8 @@ use App\LecturersReviews;
 use Carbon\Carbon;
 use App\Fileentry;
 use App\Tasks;
+use App\TasksToStudents;
+use App\TasksSolutions;
 
 class AssignReviews extends Command {
 
@@ -41,13 +43,30 @@ class AssignReviews extends Command {
      * @return mixed
      */
     public function fire() {
+        $endedTasks = Tasks::where('active', 0)->get();
         $today = Carbon::today();
-        $endedTasks = Tasks::where('end_date', $today)->get();
         if (!($endedTasks->isEmpty())) {
-                    dd($endedTasks);
+            foreach ($endedTasks as $endedTask) {
+                //questionary created from lecturer
+                $questionary = LecturersReviews::where('task_id', $endedTask->id)->where('end_date', ">=", $today)->first();
+                //students in this task
+                $allStudentsToTheseTask = TasksToStudents::where('task_id', $endedTask->id)->where('ready', 1)->get();
+                //function to assign questionary to student
+                $this->setQuestionaryToStudents($allStudentsToTheseTask, $questionary, $endedTask);
             }
+            $this->info('All questionaries - assigned');
         }
-    
+    }
+
+    private function setQuestionaryToStudents($allStudentsToTheseTask, $questionary, $endedTask) {
+        $allStudentsToTheseTaskToArray = $allStudentsToTheseTask->toArray();
+        //random array from students
+        foreach ($allStudentsToTheseTaskToArray as $student) {
+            $taskForReview=  TasksSolutions::where('student_id','!=',$student->id)->where('assign',"!=",1)->first();
+            dd($student);
+        }
+        //  id	student_id_writer task_id lecturers_review_id file_for_review sent_at
+    }
 
     /**
      * Get the console command arguments.

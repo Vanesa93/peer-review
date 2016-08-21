@@ -26,8 +26,8 @@ class LecturersReviewsController extends Controller {
      */
     public function index() {
         $tutorId = Auth::user()->id;
-        $lecturerId=  Lecturer::where('user_id_lecturer', $tutorId)->pluck('id');
-        $lecturersReviews = LecturersReviews::where('tutor_id', $lecturerId)->get();        
+        $lecturerId = Lecturer::where('user_id_lecturer', $tutorId)->pluck('id');
+        $lecturersReviews = LecturersReviews::where('tutor_id', $lecturerId)->get();
         foreach ($lecturersReviews as $lecturerReview) {
             $lecturerReview->filename = Fileentry::where('id', $lecturerReview->file_id)->pluck('filename');
             $lecturerReview->task_name = Tasks::where('id', $lecturerReview->task_id)->pluck('name');
@@ -42,8 +42,8 @@ class LecturersReviewsController extends Controller {
      */
     public function create() {
         $tutorId = Auth::user()->id;
-        $lecturerId=  Lecturer::where('user_id_lecturer', $tutorId)->pluck('id');
-        $tasks = Tasks::where('tutor_id', $lecturerId)->whereDate('end_date', '<=', date('Y-m-d'))->get();
+        $lecturerId = Lecturer::where('user_id_lecturer', $tutorId)->pluck('id');
+        $tasks = Tasks::where('tutor_id', $lecturerId)->where('active', 1)->get();
         return view('lecturersReviews.create')->with('tasks', $tasks);
     }
 
@@ -72,7 +72,7 @@ class LecturersReviewsController extends Controller {
     private function saveReview($request) {
         $today = Carbon::today();
         $tutor_id = Auth::user()->id;
-        $lecturerId=  Lecturer::where('user_id_lecturer', $tutor_id)->pluck('id');
+        $lecturerId = Lecturer::where('user_id_lecturer', $tutor_id)->pluck('id');
         $endDate = Carbon::parse($request->get('end_date'));
         $fileentry = $request->file('questionary');
         $taskId = $request->get('task_id');
@@ -122,7 +122,7 @@ class LecturersReviewsController extends Controller {
      */
     public function edit($id) {
         $tutorId = Auth::user()->id;
-        $lecturerId=  Lecturer::where('user_id_lecturer', $tutorId)->pluck('id');
+        $lecturerId = Lecturer::where('user_id_lecturer', $tutorId)->pluck('id');
         $lecturerReview = LecturersReviews::find($id);
         $lecturerReview->task_id = Tasks::where('id', $lecturerReview->task_id)->pluck('name');
         $tasks = Tasks::where('tutor_id', $lecturerId)->whereDate('end_date', '<=', date('Y-m-d'))->lists('name', 'id');
@@ -136,7 +136,7 @@ class LecturersReviewsController extends Controller {
      * @param  int  $id
      * @return Response
      */
-    public function update($id) {        
+    public function update($id) {
         $rules = array(
             'task_id' => 'required|max:100',
             'description' => 'required|max:1000',
@@ -180,8 +180,8 @@ class LecturersReviewsController extends Controller {
      */
     public function destroy($id) {
         $lecturerReview = LecturersReviews::find($id);
-        $lecturerId=  Lecturer::where('user_id_lecturer',  Auth::user()->id)->pluck('id');
-        $questionary = Fileentry::where('id', $lecturerReview->file_id)->where('tutor_id',$lecturerId)->first();
+        $lecturerId = Lecturer::where('user_id_lecturer', Auth::user()->id)->pluck('id');
+        $questionary = Fileentry::where('id', $lecturerReview->file_id)->where('tutor_id', $lecturerId)->first();
         unlink(storage_path('app/' . $questionary->filename));
         $questionary->delete();
         $lecturerReview->delete();

@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel {
     protected $commands = [
         'App\Console\Commands\Inspire',
         'App\Console\Commands\AssignReviews',
+        'App\Console\Commands\DeactivateTasks',
     ];
 
     /**
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel {
     protected function schedule(Schedule $schedule) {
         $schedule->command('inspire')->hourly();
         $schedule->command('assign:reviews')->daily();
+        $schedule->command('deactivate:tasks')->daily();
     }
 
 }

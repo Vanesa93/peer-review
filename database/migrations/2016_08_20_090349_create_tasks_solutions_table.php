@@ -17,6 +17,7 @@ class CreateTasksSolutionsTable extends Migration {
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('task_id')->unsigned();
             $table->foreign('task_id')->references('id')->on('tasks')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('assign')->default(0);
             $table->string('extension');
             $table->string('filename');
             $table->string('mime');

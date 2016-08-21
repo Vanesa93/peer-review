@@ -115,7 +115,6 @@ $(document).ready(function () {
     var date = new Date("{{$task->end_date}}");
     
      $("#endDate").datepicker({
-        format: 'dd/mm/yyyy'
     });
     $("#endDate").datepicker().datepicker("setDate",date);
     
