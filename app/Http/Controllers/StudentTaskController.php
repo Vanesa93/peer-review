@@ -33,20 +33,21 @@ class StudentTaskController extends Controller {
      * @return Response
      */
     public function index() {
-        $studentId = Auth::user()->id;
+        $userId = Auth::user()->id;
+        $studentId=Students::where('user_id_students',$userId)->pluck('id');
         //id- users
         $taskInfo = DB::table('task_to_students')
                 ->join('tasks', 'task_to_students.task_id', '=', 'tasks.id')
                 ->join('students', 'task_to_students.student_id', '=', 'students.id')
                 ->join('users', 'students.user_id_students', '=', 'users.id')
                 ->join('lecturer', 'tasks.tutor_id', '=', 'lecturer.id')
-                ->where('users.id', $studentId)
+                ->where('users.id', $userId)
                 ->get();
-        $tasks = $this->getTaskInfo($taskInfo);
+        $tasks = $this->getTaskInfo($taskInfo,$studentId);
         return view('studentTasks.mytasks')->with('tasks', $tasks);
     }
 
-    private function getTaskInfo($tasks) {
+    private function getTaskInfo($tasks,$studentId) {
         foreach ($tasks as $task) {
             $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
             $this->getSolutins($task);
@@ -54,8 +55,8 @@ class StudentTaskController extends Controller {
             $forename = User::where('id', $task->user_id_lecturer)->pluck('forename');
             $familyName = User::where('id', $task->user_id_lecturer)->pluck('familyName');
             $task->tutor_name = $forename . " " . $familyName;
-            $task->uploaded_review=  StudentsReviews::where('task_id',$task->id)->get();
-        }
+            $task->uploaded_review=  StudentsReviews::where('task_id',$task->task_id)->where('student_id_writer',$studentId)->get();
+       }
         return $tasks;
     }
 
@@ -183,7 +184,7 @@ class StudentTaskController extends Controller {
     public function reviewToTaskOpen($id, $filename) {
         $userId=  Auth::user()->id;
         $studentId=  Students::where('user_id_students',$userId)->pluck('id');
-        $review = StudentsReviews::where('id', $id)->where('filename', '=', $filename)->where('student_id_writer',$studentId)->first();
+        $review = StudentsReviews::where('id',$id)->where('filename', '=', $filename)->where('student_id_for_review',$studentId)->first();
         $file = Storage::disk('local')->get($review->filename);
         return Response::make($file, 200, [
                     'Content-Type' => $review->mime,
