@@ -45,11 +45,12 @@ class AssignReviews extends Command {
      */
     public function fire() {
         $endedTasks = Tasks::where('active', 0)->get();
+       
         $today = Carbon::today();
         if (!($endedTasks->isEmpty())) {
-            foreach ($endedTasks as $endedTask) {
+            foreach ($endedTasks as $endedTask) { 
                 //questionary created from lecturer
-                $questionary = LecturersReviews::where('task_id', $endedTask->id)->where('end_date', "<=", $today)->first();
+                $questionary = LecturersReviews::where('task_id', $endedTask->id)->where('end_date', ">=", $today)->first();
                 //students in this task
                 $allStudentsToTheseTask = TasksToStudents::where('task_id', $endedTask->id)->where('ready', 1)->get();
                 //function to assign questionary to student

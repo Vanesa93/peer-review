@@ -72,7 +72,7 @@
                                     </td>  
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" id='uploadFile{{$review->id}}'>
-                                            <a href="/myreviews/upload/review/{{$review->id}}"> <span class="glyphicon glyphicon-upload"></span></a>
+                                            <a href="/myreviews/upload/review/{{$review->id}}" id="uploadFileHref{{$review->id}}"> <span class="glyphicon glyphicon-upload"></span></a>
                                         </button>
                                     </td> 
                                     @if( !empty($review->uploaded_solution) ){
@@ -112,7 +112,12 @@
 
 <?php
 foreach ($reviews as $review) {
-   ?>
+    if ($review->lecturersReviewActive==0) {
+        ?>
+            $("#uploadFile{{$review->id}}").attr('disabled', true);
+            $("#uploadFileHref{{$review->id}}").attr('href', "");
+            $("#uploadFile{{$review->id}}").css('background', '#ff8080');
+    <?php } ?>
             $("#filesForTask{{$review->id}}").on("click", function () {
                 location.href = "{{url("tasks")}}" + "/" + "{{$review->id}}" + "/helpmaterials";
             });
