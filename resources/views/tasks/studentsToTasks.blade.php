@@ -49,9 +49,24 @@
                                     <td style="max-width:100px;">{{$student->forename}}</td>
                                     <td style="max-width:100px;">{{$student->familyName}}</td>
                                     <td style="max-width:100px;"><input type="checkbox" disabled name="ready" class='readyTask' value="{{$student->ready}}"></td>
-                                    <td style="max-width:100px;"></td>
+                                    @if( !empty( $student->solution) ){
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;" >
+                                            <a href="/myreviews/writerreview/{{ $student->solution->id}}/{{  $student->solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
+                                        </button>
+                                    </td>
+                                    @else
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;"  id="noReview{{$student->id}}">
+                                            <span class="glyphicon glyphicon-unchecked"></span>
+                                        </button>     
+                                    </td>
+                                    @endif
                                 </tr>
-                                @endforeach
+                            <div id="dialogReview{{$student->id}}" title="No review!" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>There is no uploaded review for these task.</h5>
+                            </div>
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -64,21 +79,21 @@
     </div>
 </div>
 
-<!--{{$task->name}}
-@foreach($students as $student)
-{{$student->username}}
-@endforeach
--->
 <script>
     $(document).ready(function () {
-        
-        if( $('.readyTask').val()==0){
-            $('.readyTask')[0].checked = false;            
-        }else{
-             $('.readyTask')[0].checked = true;    
+
+        if ($('.readyTask').val() == 0) {
+            $('.readyTask')[0].checked = false;
+        } else {
+            $('.readyTask')[0].checked = true;
         }
-       
-        
+<?php foreach ($students as $student) { ?>
+            $("#noReview{{$student->id}}").on("click", function () {
+                $("#dialogReview{{$student->id}}").dialog();
+            });
+<?php } ?>
+
+
         //datatable create
         $('#usersToGroupTable').DataTable();
         //hide datatable info tag

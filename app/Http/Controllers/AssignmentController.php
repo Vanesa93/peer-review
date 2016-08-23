@@ -21,6 +21,7 @@ use Storage;
 use File;
 use App\Fileentry;
 use App\Lecturer;
+use App\StudentsReviews;
 
 class AssignmentController extends Controller {
 
@@ -249,6 +250,10 @@ class AssignmentController extends Controller {
                 ->where('task_to_students.task_id', $id)
                 ->where('users.account_type', 2)
                 ->get();
+        foreach($students as $student){
+            $student->solution= StudentsReviews::where('student_id_writer',$student->student_id)->first();
+        }
+        
         return view('tasks.studentsToTasks')->with('students', $students)->with('task', $task);
     }
 
