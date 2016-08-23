@@ -108,6 +108,7 @@ Route::get('file/{id}/{filename}/open', 'AssignmentController@openFilesForTask')
 Route::get('tasks/{id}/upload', 'AssignmentController@uploadFileToTask');
 Route::post('upload/{id}', 'AssignmentController@upload');
 Route::delete('file/remove/{filename}', 'AssignmentController@deleteFileFromTask');
+Route::get('myreviews/solutionreviews/{id}/{filename}/open', 'AssignmentController@openUploadedSolution');
 
 //reviews
 Route::get('reviews','LecturersReviewsController@index');
@@ -134,6 +135,7 @@ Route::get('solution/{id}/{filename}/open', 'StudentTaskController@openSolution'
 Route::get('mytasks/{id}/review', 'StudentTaskController@reviewToTask');
 Route::get('questionary/{id}/{filename}/open', 'StudentTaskController@questionaryToTask');
 Route::get('review/{id}/{filename}/open', 'StudentTaskController@reviewToTaskOpen');
+
 
 //student's reviews
 Route::get('myreviews','StudentsReviewsController@index');

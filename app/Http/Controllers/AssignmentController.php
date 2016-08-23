@@ -22,6 +22,7 @@ use File;
 use App\Fileentry;
 use App\Lecturer;
 use App\StudentsReviews;
+use App\TasksSolutions;
 
 class AssignmentController extends Controller {
 
@@ -252,9 +253,20 @@ class AssignmentController extends Controller {
                 ->get();
         foreach($students as $student){
             $student->solution= StudentsReviews::where('student_id_writer',$student->student_id)->first();
+            $student->review_to_solution=  TasksSolutions::where('student_id',$student->student_id)->first();
         }
+       
         
         return view('tasks.studentsToTasks')->with('students', $students)->with('task', $task);
+    }
+    
+    public function openUploadedSolution($id, $filename) {
+        $studentsReview = TasksSolutions::where('id', $id)->where('filename', '=', $filename)->first();
+        $file = Storage::disk('local')->get($studentsReview->filename);
+        return Response::make($file, 200, [
+                    'Content-Type' => $studentsReview->mime,
+                    'Content-Disposition' => 'inline; filename="' . $studentsReview->original_filename . '"',
+        ]);
     }
 
     public function getfilesForTask($id) {

@@ -39,6 +39,7 @@
                                     <th>Family name</th>        
                                     <th>Task Ready</th>
                                     <th>Uploaded solution</th>
+                                    <th>Uploaded review to these solution</th>
                                 </tr>
                             </thead>
                             <tbody>                             
@@ -58,6 +59,19 @@
                                     @else
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;"  id="noReview{{$student->id}}">
+                                            <span class="glyphicon glyphicon-unchecked"></span>
+                                        </button>     
+                                    </td>
+                                    @endif
+                                     @if( !empty( $student->review_to_solution) ){
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;" >
+                                            <a href="/myreviews/solutionreviews/{{ $student->review_to_solution->id}}/{{  $student->review_to_solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
+                                        </button>
+                                    </td>
+                                    @else
+                                    <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;"  id="noUploadedReview{{$student->id}}">
                                             <span class="glyphicon glyphicon-unchecked"></span>
                                         </button>     
                                     </td>
@@ -89,6 +103,9 @@
         }
 <?php foreach ($students as $student) { ?>
             $("#noReview{{$student->id}}").on("click", function () {
+                $("#dialogReview{{$student->id}}").dialog();
+            });
+            $("#noUploadedReview{{$student->id}}").on("click", function () {
                 $("#dialogReview{{$student->id}}").dialog();
             });
 <?php } ?>
