@@ -113,7 +113,7 @@
                             <div id="dialog{{$task->task_id}}" title="No solution!" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>There is no uploaded solution for these task.</h5>
                             </div>
-                             <div id="dialogReview{{$task->task_id}}" title="No review!" style="display:none;max-width:400px;word-wrap: break-word;">
+                            <div id="dialogReview{{$task->task_id}}" title="No review!" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>There is no uploaded review for these task.</h5>
                             </div>
 

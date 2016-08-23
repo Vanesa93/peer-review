@@ -22,7 +22,7 @@ class CreateLecturersReviewsTable extends Migration {
             $table->string('description');
             $table->date('end_date');
             $table->date('sent_at');
-            $table->integer('active')->default(0);
+            $table->integer('active')->default(1);
             $table->timestamps();
         });
     }

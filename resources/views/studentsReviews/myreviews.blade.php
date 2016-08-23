@@ -82,11 +82,19 @@
                                         </button>
                                     </td>
                                     @else
+                                     <td style="word-wrap: break-word;">
+                                        <button type="button" class="buttonEdit" style="float:right;"  id="noReview{{$review->id}}">
+                                            <span class="glyphicon glyphicon-unchecked"></span>
+                                        </button>     
+                                    </td>
                                     @endif
+                            <div id="dialogReview{{$review->id}}" title="No review!" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>There is no uploaded review for these task.</h5>
+                            </div>
 
-                                    {!! Form::close() !!}
-                                </tr>                             
-                                @endforeach
+                            {!! Form::close() !!}
+                            </tr>                             
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -112,15 +120,19 @@
 
 <?php
 foreach ($reviews as $review) {
-    if ($review->lecturersReviewActive==0) {
+    if ($review->lecturersReviewActive == 0) {
         ?>
-            $("#uploadFile{{$review->id}}").attr('disabled', true);
-            $("#uploadFileHref{{$review->id}}").attr('href', "");
-            $("#uploadFile{{$review->id}}").css('background', '#ff8080');
+                $("#uploadFile{{$review->id}}").attr('disabled', true);
+                $("#uploadFileHref{{$review->id}}").attr('href', "");
+                $("#uploadFile{{$review->id}}").css('background', '#ff8080');
     <?php } ?>
             $("#filesForTask{{$review->id}}").on("click", function () {
                 location.href = "{{url("tasks")}}" + "/" + "{{$review->id}}" + "/helpmaterials";
             });
+            
+            $("#noReview{{$review->id}}").on("click", function () {
+        $("#dialogReview{{$review->id}}").dialog();
+        });
 
 <?php } ?>
     });
