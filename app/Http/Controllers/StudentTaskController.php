@@ -28,6 +28,12 @@ use App\Grade;
 
 class StudentTaskController extends Controller {
 
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('notAdmin');
+        $this->middleware('language');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +41,7 @@ class StudentTaskController extends Controller {
      */
     public function index() {
         $userId = Auth::user()->id;
-        $studentId=Students::where('user_id_students',$userId)->pluck('id');
+        $studentId = Students::where('user_id_students', $userId)->pluck('id');
         //id- users
         $taskInfo = DB::table('task_to_students')
                 ->join('tasks', 'task_to_students.task_id', '=', 'tasks.id')
@@ -44,11 +50,11 @@ class StudentTaskController extends Controller {
                 ->join('lecturer', 'tasks.tutor_id', '=', 'lecturer.id')
                 ->where('users.id', $userId)
                 ->get();
-        $tasks = $this->getTaskInfo($taskInfo,$studentId);
+        $tasks = $this->getTaskInfo($taskInfo, $studentId);
         return view('studentTasks.mytasks')->with('tasks', $tasks);
     }
 
-    private function getTaskInfo($tasks,$studentId) {
+    private function getTaskInfo($tasks, $studentId) {
         foreach ($tasks as $task) {
             $task->course_name = Courses::where('id', $task->course_id)->pluck('name');
             $this->getSolutins($task);
@@ -57,8 +63,8 @@ class StudentTaskController extends Controller {
             $familyName = User::where('id', $task->user_id_lecturer)->pluck('familyName');
             $task->tutor_name = $forename . " " . $familyName;
             $task->grade = Grade::where('task_id', $task->task_id)->where('student_id', $studentId)->pluck('grade');
-            $task->uploaded_review=  StudentsReviews::where('task_id',$task->task_id)->where('student_id_writer',$studentId)->get();
-       }
+            $task->uploaded_review = StudentsReviews::where('task_id', $task->task_id)->where('student_id_writer', $studentId)->get();
+        }
         return $tasks;
     }
 
@@ -170,7 +176,7 @@ class StudentTaskController extends Controller {
         $review->task_name = Tasks::where('id', $taskId)->pluck('name');
         $questionaryToStudent = QuestionaryToStudent::where('id', $review->questionary_to_student_id)->first();
         $lecturersReview = LecturersReviews::where('id', $questionaryToStudent->lecturers_review_id)->first();
-        $review->questionaryToStudent=  Fileentry::where('id',$lecturersReview->file_id)->first();
+        $review->questionaryToStudent = Fileentry::where('id', $lecturersReview->file_id)->first();
         return view('studentTasks.reviews')->with('review', $review);
     }
 
@@ -182,11 +188,11 @@ class StudentTaskController extends Controller {
                     'Content-Disposition' => 'inline; filename="' . $questionary->original_filename . '"',
         ]);
     }
-    
+
     public function reviewToTaskOpen($id, $filename) {
-        $userId=  Auth::user()->id;
-        $studentId=  Students::where('user_id_students',$userId)->pluck('id');
-        $review = StudentsReviews::where('id',$id)->where('filename', '=', $filename)->where('student_id_for_review',$studentId)->first();
+        $userId = Auth::user()->id;
+        $studentId = Students::where('user_id_students', $userId)->pluck('id');
+        $review = StudentsReviews::where('id', $id)->where('filename', '=', $filename)->where('student_id_for_review', $studentId)->first();
         $file = Storage::disk('local')->get($review->filename);
         return Response::make($file, 200, [
                     'Content-Type' => $review->mime,
