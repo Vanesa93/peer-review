@@ -12,6 +12,13 @@ use App\User;
 
 class StudentCoursesController extends Controller {
 
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('notAdmin');
+        $this->middleware('language');
+        $this->middleware('student');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -30,7 +37,7 @@ class StudentCoursesController extends Controller {
         foreach ($courses as $course) {
             $forename = User::where('id', $course->tutor_id)->pluck('forename');
             $familyName = User::where('id', $course->tutor_id)->pluck('familyName');
-            $course->tutor_name=$forename." ".$familyName;
+            $course->tutor_name = $forename . " " . $familyName;
         }
         return view('studentCourses.mycourses')->with('courses', $courses);
     }

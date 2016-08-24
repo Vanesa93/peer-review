@@ -16,6 +16,7 @@ class CoursesController extends Controller {
         $this->middleware('auth');
         $this->middleware('notAdmin');
         $this->middleware('language');
+        $this->middleware('tutor');
     }
 
     /**

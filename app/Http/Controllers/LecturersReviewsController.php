@@ -19,6 +19,13 @@ use App\Lecturer;
 
 class LecturersReviewsController extends Controller {
 
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('notAdmin');
+        $this->middleware('language');
+        $this->middleware('tutor');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -123,8 +130,8 @@ class LecturersReviewsController extends Controller {
     public function edit($id) {
         $tutorId = Auth::user()->id;
         $lecturerId = Lecturer::where('user_id_lecturer', $tutorId)->pluck('id');
-        $today=  Carbon::today();
-        $lecturerReview = LecturersReviews::find($id);  
+        $today = Carbon::today();
+        $lecturerReview = LecturersReviews::find($id);
         $lecturerReview->task_id = Tasks::where('id', $lecturerReview->task_id)->pluck('name');
         $tasks = Tasks::where('tutor_id', $lecturerId)->whereDate('end_date', '>=', $today)->lists('name', 'id');
         return view('lecturersReviews.edit')->with('lecturerReview', $lecturerReview)

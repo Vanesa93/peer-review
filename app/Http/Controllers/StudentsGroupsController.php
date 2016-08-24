@@ -15,6 +15,13 @@ use Session;
 
 class StudentsGroupsController extends Controller {
 
+    public function __construct() {
+        $this->middleware('auth');
+        $this->middleware('notAdmin');
+        $this->middleware('language');
+        $this->middleware('student');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,7 +39,7 @@ class StudentsGroupsController extends Controller {
 
     public function index() {
         $studentId = Auth::user()->id;
-        $locale=  $this->getLocale();
+        $locale = $this->getLocale();
         //id- groups_to_students
         $groups = DB::table('groups_to_students')
                 ->join('groups', 'groups_to_students.group_id', '=', 'groups.id')
