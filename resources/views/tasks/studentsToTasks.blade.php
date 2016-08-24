@@ -47,7 +47,7 @@
                                     <th>Task Ready</th>
                                     <th>Uploaded solution</th>
                                     <th>Uploaded review to these solution</th>
-                                    <th>Enter grade</th>
+                                    <th>Grade</th>
                                 </tr>
                             </thead>
                             <tbody>                             
@@ -93,9 +93,9 @@
                             <div id="dialogReview{{$student->id}}" title="No review!" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>There is no uploaded review for these task.</h5>
                             </div>
-                            <div id="grade{{$student->id}}" title="Enter grade for student {{$student->username}} " style="display:none;max-width:400px;word-wrap: break-word;">
+                            <div id="grade{{$student->id}}" title="Grade for task {{$task->name}} " style="display:none;max-width:400px;word-wrap: break-word;">
                                 {!!Form::open(['url' => 'storeGrade','id'=>'setGrade'])!!}
-                                <h5>Grade {{$student->id}}</h5>
+                                <h5>Enter grade for student {{$student->username}}: </h5>
                                 <div>
                                     <input type="text" class="form-control" name="grade" style="margin-bottom: 5%;"/>
                                     <input hidden class="form-control" name="task_id" value="{{$task->id}}" style="margin-bottom: 5%;"/>
