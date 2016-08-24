@@ -132,7 +132,7 @@ $(document).ready(function () {
             end_date: {
                 required: true,
                 maxlength: 100
-            }
+            },
         },
         // Specify the validation error messages
         messages: {
