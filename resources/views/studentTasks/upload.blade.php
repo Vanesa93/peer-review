@@ -80,6 +80,21 @@
 <script>
     $(document).ready(function () {
 
+        $('#uploadFileForTask').validate({
+            ignore: ":hidden",
+            rules: {
+                filefield: {
+                    required: true,
+                    maxlength: 100
+                }
+            },
+            // Specify the validation error messages
+            messages: {
+                filefield: {
+                    required: "Please upload file",
+                }
+            }
+        });
         $('#back').on('click', function () {
             location.href = '{{url("mytasks")}}';
         });
