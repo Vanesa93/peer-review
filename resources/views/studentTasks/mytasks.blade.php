@@ -59,6 +59,7 @@
                                     <th>Upload solution</th>
                                     <th>Help materials</th>
                                     <th>Review</th>
+                                    <th>Grade</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -107,6 +108,19 @@
                                         <button type="button" class="buttonEdit" style="float:right;"  id="noReview{{$task->task_id}}">
                                             <span class="glyphicon glyphicon-unchecked"></span>
                                         </button>     
+                                    </td>
+                                    @endif
+                                    @if( !empty( $task->grade) )
+                                    <td style="word-wrap: break-word;">
+                                        <center style="font-weight:bold;">
+                                       {{$task->grade}}
+                                        </center>
+                                    </td>
+                                    @else
+                                   <td style="word-wrap: break-word;">
+                                       <center style="font-weight:bold;">
+                                        X   
+                                        </center>
                                     </td>
                                     @endif
 

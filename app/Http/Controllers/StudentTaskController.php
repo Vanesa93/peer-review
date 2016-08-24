@@ -24,6 +24,7 @@ use App\Students;
 use App\StudentsReviews;
 use App\QuestionaryToStudent;
 use App\LecturersReviews;
+use App\Grade;
 
 class StudentTaskController extends Controller {
 
@@ -55,6 +56,7 @@ class StudentTaskController extends Controller {
             $forename = User::where('id', $task->user_id_lecturer)->pluck('forename');
             $familyName = User::where('id', $task->user_id_lecturer)->pluck('familyName');
             $task->tutor_name = $forename . " " . $familyName;
+            $task->grade = Grade::where('task_id', $task->task_id)->where('student_id', $studentId)->pluck('grade');
             $task->uploaded_review=  StudentsReviews::where('task_id',$task->task_id)->where('student_id_writer',$studentId)->get();
        }
         return $tasks;
