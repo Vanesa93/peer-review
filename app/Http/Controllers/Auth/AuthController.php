@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use DB;
 use Illuminate\Http\Request;
 use Response;
+use Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller {
     /*
@@ -32,10 +34,10 @@ use AuthenticatesAndRegistersUsers;
      * @return void
      */
     public function __construct(Guard $auth, Registrar $registrar) {
-        
+
         $this->auth = $auth;
         $this->registrar = $registrar;
-        
+
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
@@ -48,9 +50,16 @@ use AuthenticatesAndRegistersUsers;
         //check if the login is with username or email
         $field = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
         $credentials = $request->input('login');
-
         if ($this->auth->attempt(array($field => $credentials, 'password' => $request->input('password')), $request->has('remember'))) {
-            return redirect()->intended($this->redirectPath());
+            $user=Auth::user();
+            if($user->account_type==1){
+                $redirectPath=  url('tasks');
+            }elseif($user->account_type==2){
+                $redirectPath=  url('mytasks');
+            }elseif($user->account_type==0){
+                $redirectPath=  url('users');
+            }
+            return Redirect::to($redirectPath);
         }
         return redirect($this->loginPath())
                         ->withInput($request->only('email', 'remember'))
