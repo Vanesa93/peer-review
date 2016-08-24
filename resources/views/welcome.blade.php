@@ -3,8 +3,14 @@
 
 <link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 <link href='{{ URL::asset('styles/welcome.css')}}' rel='stylesheet' type='text/css'>
-<div class="wrapper" >
-        <img src="{{ URL::asset('images/welcomeBanner.jpg')}}" alt="" class="welcomeBanner">
+<style>
+    body{
+        background: white!important;
+    }
+    
+</style>
+<div class="wrapper" style="margin-top:-35px;">
+    <img src="{{ URL::asset('images/welcomeBanner.jpg')}}" alt="" class="welcomeBanner" >
     </div>
 <div class="container-fluid">
    
