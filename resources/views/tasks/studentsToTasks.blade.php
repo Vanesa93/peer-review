@@ -50,7 +50,7 @@
                                     <td style="max-width:100px;">{{$student->forename}}</td>
                                     <td style="max-width:100px;">{{$student->familyName}}</td>
                                     <td style="max-width:100px;"><input type="checkbox" disabled name="ready" class='readyTask' value="{{$student->ready}}"></td>
-                                    @if( !empty( $student->solution) ){
+                                    @if( !empty( $student->solution) )
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" >
                                             <a href="/myreviews/writerreview/{{ $student->solution->id}}/{{  $student->solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
@@ -63,7 +63,7 @@
                                         </button>     
                                     </td>
                                     @endif
-                                     @if( !empty( $student->review_to_solution) ){
+                                     @if( !empty( $student->review_to_solution) )
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" >
                                             <a href="/myreviews/solutionreviews/{{ $student->review_to_solution->id}}/{{  $student->review_to_solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>

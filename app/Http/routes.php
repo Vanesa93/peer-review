@@ -26,11 +26,11 @@ Route::get('/language/{locale}', [
     'uses' => 'LanguageController@chooser']);
 
 //files
-Route::get('fileentry', 'FileEntryController@index');
-Route::get('fileentry/get/{filename}', [
-    'as' => 'getentry', 'uses' => 'FileEntryController@get']);
-Route::post('/addFileFromLecturer', [
-    'as' => 'addFileFromLecturer', 'uses' => 'FileEntryController@addFileFromLecturer']);
+//Route::get('fileentry', 'FileEntryController@index');
+//Route::get('fileentry/get/{filename}', [
+//    'as' => 'getentry', 'uses' => 'FileEntryController@get']);
+//Route::post('/addFileFromLecturer', [
+//    'as' => 'addFileFromLecturer', 'uses' => 'FileEntryController@addFileFromLecturer']);
 
 //registration validation
 Route::get('/checkUsername', 'RegistrationController@checkExistingUseraname');
