@@ -84,11 +84,18 @@
                                         </button>     
                                     </td>
                                     @endif
+                                    @if( !empty( $student->grade) )
                                     <td style="word-wrap: break-word;">
+                                       {{$student->grade}}  
+                                    </td>
+                                    @else
+                                   <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;"  id="enterGrade{{$student->id}}">
                                             <span class="glyphicon glyphicon-arrow-up"></span>
                                         </button>     
                                     </td>
+                                    @endif
+                                   
                                 </tr>
                             <div id="dialogReview{{$student->id}}" title="No review!" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>There is no uploaded review for these task.</h5>

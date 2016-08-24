@@ -255,6 +255,7 @@ class AssignmentController extends Controller {
         foreach ($students as $student) {
             $student->solution = StudentsReviews::where('student_id_writer', $student->student_id)->first();
             $student->review_to_solution = TasksSolutions::where('student_id', $student->student_id)->first();
+            $student->grade = Grade::where('task_id', $student->task_id)->where('student_id', $student->student_id)->pluck('grade');
         }
 
 
@@ -338,15 +339,15 @@ class AssignmentController extends Controller {
         );
         $urlBack = 'tasks/' . $request->task_id . '/students';
         $validator = \Validator::make(Input::all(), $rules);
-        if ($validator->fails()) {            
+        if ($validator->fails()) {
             return Redirect::to($urlBack)->withErrors($validator);
         } else {
-            $today=  Carbon::today();
+            $today = Carbon::today();
             $grade = new Grade([
                 'student_id' => $request->student_id,
                 'task_id' => $request->task_id,
-                'grade'=>$request->grade,
-                'sent_at'=>$today
+                'grade' => $request->grade,
+                'sent_at' => $today
             ]);
             $grade->save();
             return Redirect::to($urlBack);
