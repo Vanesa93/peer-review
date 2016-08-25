@@ -36,6 +36,15 @@ return [
     'reviews'=>'Реценции',
      'groups'=>'Групи',
     'messages'=>'Съобщения',
-    'upload'=>'Качи файл'
+    'upload'=>'Качи файл',
+    'addFaculty'=>'Добави факултет',
+    'bulgarianName'=>'Име на български',
+    'germanName'=>'Име на немски',
+    'englishName'=>'Име на английски',
+    'goToFaculties'=>'Отиди на Факултети',
+    'enterBgName'=>'Изисква се Име на български',
+    'enterEnName'=>'Изисква се Име на английски',
+    'enterDeName'=>'Изисква се Име на немски',
 ];
+
 ?>

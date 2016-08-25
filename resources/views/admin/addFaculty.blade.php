@@ -46,21 +46,21 @@
                 <div class="panel panel-default" style="border-radius: 0px;">
                     <div class="panel-body">
 
-                        <h2 style="margin-bottom: 2%;">Add faculty</h2>
+                        <h2 style="margin-bottom: 2%;"> {{trans('messages.addFaculty')}}</h2>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Bulgarian name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.bulgarianName')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <input type="text" class="form-control" name="bg_name"/>
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> German name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.germanName')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <input  type="text" class="form-control" name="de_name"/>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-offset-3 col-md-2 control-label">English name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.englishName')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <input type="text" class="form-control" name="en_name"/>
                             </div>
@@ -68,10 +68,10 @@
                         <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
                         <div class="form-group">
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Go to faculties" />
+                                <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="{{trans('messages.goToFaculties')}}" />
                             </div>
                             <div class="col-md-6  " style="margin-bottom: 1%;">
-                                <input type="submit" name="submit" id='submit' class="btn button action-button floatRight" style="float: right;" value="Submit" />
+                                <input type="submit" name="submit" id='submit' class="btn button action-button floatRight" style="float: right;" value="{{trans('messages.submit')}}" />
                             </div>
                         </div>
                     </div>
@@ -108,15 +108,15 @@
             // Specify the validation error messages
             messages: {
                 bg_name: {
-                    required: "Please enter faculty bulgarian name",
+                    required: "{{trans('messages.enterBgName')}}",
                     maxlength: 100
                 },
                 en_name: {
-                    required: "Please enter faculty english name",
+                    required: "{{trans('messages.enterDeName')}}",
                     maxlength: 100
                 },
                 de_name: {
-                    required: "Please enter faculty german name",
+                    required: "{{trans('messages.enterEnName')}}",
                     maxlength: 100
                 }
             }
