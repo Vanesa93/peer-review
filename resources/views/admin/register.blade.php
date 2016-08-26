@@ -11,7 +11,7 @@
                     <li class="active" id='firstActive'></li>
                     <li id='secondActive'></li>                
                 </ul>
-                <div class="panel-heading">Register user</div>
+                <div class="panel-heading">{{trans('messages.registerUser')}}</div>
                 <div class="panel-body">
 
 
@@ -28,11 +28,11 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         @if($faculties->isEmpty())
                         <center>
-                            <p>No faculties found. Please create faculty to register users</p>
+                            <p>{{trans('messages.noFacultiesFound')}}</p>
                         </center>
                         @elseif($majors->isEmpty())
                         <center>
-                            <p>No majors found. Please add majors to faculty to register users</p>
+                            <p>{{trans('messages.noMajorsFound')}}</p>
                         </center>
                         @else
                         @include('partials.firstRegistrationForm')
@@ -145,12 +145,6 @@
             $("#firstActive").addClass("active");
         });
 
-//TO DO show image - later to implement
-//        $(' input:file').change(function (e) {
-//            var img = URL.createObjectURL(e.target.files[0]);
-//            $('#show_Image').attr('src', img);
-//
-//        });
         jQuery.validator.addMethod("phone", function (phone_number, element) {
             phone_number = phone_number.replace(/\s+/g, "");
             return this.optional(element) || phone_number.length > 9 &&
@@ -196,7 +190,6 @@
                 },
                 group: {
                     required: true,
-                    number: true
                 },
                 degree: {
                     required: true
@@ -250,56 +243,55 @@
             // Specify the validation error messages
             messages: {
                 username: {
-                    required: "Please enter your username/faculty number(for students)",
-                    remote: "Not unique",
+                    required: "{{trans('messages.usernameRequired')}}",
+                    remote: "{{trans('message.notUnique')}}",
                 },
                 forename: {
-                    required: "Please enter your first name"
+                    required: "{{trans('messages.forenameRequired')}}"
                 },
                 email: {
-                    required: "Please enter your email",
-                    email: "Enter valid email",
-                    remote: "Not unique",
+                    required: "{{trans('messages.emailRequired')}}",
+                    email: "{{trans('messages.notValidEmail')}}",
+                    remote: "{{trans('messages.notUniqueEmail')}}",
                 },
                 password: {
-                    required: "Please enter your password",
+                    required: "{{trans('messages.passwortRequired')}}",
                 },
                 password_confirmation: {
-                    equalTo: "Password doesn't match"
+                    equalTo: "{{trans('messages.passwortDontMatch')}}"
                 },
                 account_type: {
-                    required: "Please enter your position"
+                    required: "{{trans('messages.positionRequired')}}"
                 },
                 faculty: {
-                    required: "Please enter your faculty"
+                    required: "{{trans('messages.facultyRequired')}}"
                 },
                 year: {
-                    required: "Please enter first year",
-                    number: "Please enter valid first year"
+                    required: "{{trans('messages.firstYearRequired')}}",
+                    number: "{{trans('messages.validFirstYear')}}"
                 },
                 familyName: {
-                    required: "Please enter your family name"
+                    required: "{{trans('messages.familyNameRequired')}}"
                 },
                 group: {
-                    required: "Please enter your group",
-                    number: "Please enter valid group"
+                    required: "{{trans('messages.groupRequired')}}",
                 },
                 degree: {
-                    required: "Please enter your degree"
+                    required: "{{trans('messages.degreeRequired')}}"
                 },
                 semester: {
-                    required: "Please enter your semester",
-                    number: "Please enter valid semester"
+                    required: "{{trans('messages.semesterRequired')}}",
+                    number: "{{trans('messages.validSemester')}}"
                 },
                 department: {
-                    required: "Please enter your department name"
+                    required: "{{trans('messages.departmentRequired')}}"
                 },
                 major: {
-                    required: "Please choose your major"
+                    required: "{{trans('messages.majorRequired')}}"
                 },
                 mobile: {
-                    required: "Please enter your mobile number",
-                    phone: 'Please enter valid mobile'
+                    required: "{{trans('messages.mobileNumberRequired')}}",
+                    phone: "{{trans('messages.validMobileNumber')}}"
                 },
             }
         });

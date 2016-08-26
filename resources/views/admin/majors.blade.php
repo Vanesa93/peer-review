@@ -40,21 +40,21 @@
                 <div class="panel-body">
                     @if(!empty($majors) AND !(empty($faculty)))
                     <div class="row">
-                        <button type="button" class="btn button" id="create" >Add Major To These Faculty</button>
+                        <button type="button" class="btn button" id="create" >{{trans('messages.addMajorToTheseFaculty')}}</button>
                     </div>                    
                     <center>
-                        <h2>Majors for faculty {{$facultyName}}</h2>
+                        <h2>{{trans('messages.majorsForFaculty')}}{{$facultyName}}</h2>
                     </center>
                     <div class="table-responsive">
                         <table id="coursesTable" class="display" style="border: solid;
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Bulgarian name</th>
-                                    <th>English name</th>
-                                    <th>German name</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th>{{trans('messages.bulgarianName')}}</th>
+                                    <th>{{trans('messages.englishName')}}</th>
+                                    <th>{{trans('messages.germanName')}}</th>
+                                    <th>{{trans('messages.edit')}}</th>
+                                    <th>{{trans('messages.delete')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -80,8 +80,8 @@
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                            <div id="dialog{{$major->id}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>Are you sure you want to delete these major</h5>
+                            <div id="dialog{{$major->id}}" title="{{trans('messages.deleteMajor')}}" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.areYouSureYouWantToDeleteTheseMajor')}}</h5>
                                 <button type="button" class="button" style="float:right" id="onDelete{{$major->id}}">
                                     Delete
                                 </button>

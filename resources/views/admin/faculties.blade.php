@@ -39,28 +39,28 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class='col-md-6'>
-                            <button type="button" class="btn button" id="create" >Add Faculty</button>
+                            <button type="button" class="btn button" id="create" >{{trans('messages.addFaculty')}}</button>
                         </div>
                         <div class='col-md-6'>
-                            <button type="button" class="btn button" id="createMajor" style="float:right;">Add Major To Faculty </button>
+                            <button type="button" class="btn button" id="createMajor" style="float:right;">{{trans('messages.addMajorToFaculty')}}</button>
                         </div>
                     </div>
 
                     <center>
-                        <h2>Faculties</h2>
+                        <h2>{{trans('messages.faculties')}}</h2>
                     </center>
                     <div class="table-responsive">
                         <table id="coursesTable" class="display" style="border: solid;
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Number</th>
-                                    <th>Bulgarian name</th>
-                                    <th>English name</th>
-                                    <th>German name</th>
-                                    <th>Majors</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>{{trans('messages.number')}}</th>
+                                    <th>{{trans('messages.bulgarianName')}}</th>
+                                    <th>{{trans('messages.englishName')}}</th>
+                                    <th>{{trans('messages.germanName')}}</th>
+                                    <th>{{trans('messages.majors')}}</th>
+                                    <th>{{trans('messages.edit')}}</th>
+                                    <th>{{trans('messages.delete')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -92,10 +92,10 @@
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                            <div id="dialog{{$faculty->id}}" title="Delete faculty?" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>Are you sure you want to delete these faculty</h5>
+                            <div id="dialog{{$faculty->id}}" title="{{trans('messages.deleteFaculty')}}" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.areYouSureYouWantToDeleteTheseFaculty')}}</h5>
                                 <button type="button" class="button" style="float:right" id="onDelete{{$faculty->id}}">
-                                    Delete
+                                    {{trans('messages.delete')}}
                                 </button>
                             </div>
 

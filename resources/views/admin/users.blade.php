@@ -32,33 +32,30 @@
         text-decoration: none;
     }
 </style>
-<div id="dialog" title="Basic dialog" style="display:none;">
-    <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
                     <div class="row">
-                        <button type="button" class="btn button" id="create" >Register user</button>
+                        <button type="button" class="btn button" id="create" >{{trans('messages.registerUser')}}</button>
                     </div>
                     <center>
-                        <h2>Lecturers</h2>
+                        <h2>{{trans('messages.lecturers')}}</h2>
                     </center>
                     <div class="table-responsive">
                         <table id="lecturersTable" class="display" style="border: solid;
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                   <th>Username</th>
-                                    <th>Forename</th>
-                                    <th>Family Name</th>
-                                    <th>Email</th>
-                                    <th>Department</th>
-                                    <th>Degree</th>
-                                    <th>Mobile</th>
-                                    <th>Cabinet Number</th>                                    
+                                   <th>{{trans('messages.username')}}</th>
+                                    <th>{{trans('messages.forename')}}</th>
+                                    <th>{{trans('messages.familyName')}}</th>
+                                    <th>{{trans('messages.email')}}</th>
+                                    <th>{{trans('messages.department')}}</th>
+                                    <th>{{trans('messages.degree')}}</th>
+                                    <th>{{trans('messages.mobile')}}</th>
+                                    <th>{{trans('messages.cabinetNumber')}}</th>                                    
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -94,10 +91,10 @@
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                                    <div id="dialogLecturer{{$lecturer->user_id_lecturer}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>Are you sure you want to delete lecturer <b>{{$lecturer->username}}<b></h5>
+                                    <div id="dialogLecturer{{$lecturer->user_id_lecturer}}" title="{{trans('messages.deleteLecturer')}}" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.areYouSureYouWantToDeleteLecturer')}}<b>{{$lecturer->username}}<b></h5>
                                             <button type="button" class="button" style="float:right" id="onDeleteLecturer{{$lecturer->user_id_lecturer}}">
-                                    Delete
+                                    {{trans('messages.delete')}}
                                 </button>
                             </div>
 
@@ -107,23 +104,23 @@
                         </table>
                     </div>
                     <center>
-                        <h2>Students</h2>
+                        <h2>{{trans('messages.students')}}</h2>
                     </center>
                      <div class="table-responsive">
                         <table id="studentsTable" class="display" style="border: solid;
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Faculty Number</th>
-                                    <th>Forename</th>
-                                    <th>Family Name</th>
-                                    <th>Email</th>
-                                    <th>Faculty</th>
-                                    <th>Major</th>
-                                    <th>First year</th>
-                                    <th>Semester</th>
-                                    <th>Group</th>
-                                    <th>Mobile</th>
+                                    <th>{{trans('messages.facultyNumber')}}</th>
+                                    <th>{{trans('messages.forename')}}</th>
+                                    <th>{{trans('messages.familyName')}}</th>
+                                    <th>{{trans('messages.email')}}</th>
+                                    <th>{{trans('messages.faculty')}}</th>
+                                    <th>{{trans('messages.major')}}</th>
+                                    <th>{{trans('messages.year')}}</th>
+                                    <th>{{trans('messages.semester')}}</th>
+                                    <th>{{trans('messages.group')}}</th>
+                                    <th>{{trans('messages.mobile')}}</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -161,10 +158,10 @@
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                            <div id="dialogStudent{{$student->user_id_students}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>Are you sure you want to delete student <b>{{$student->username}}<b></h5>
+                            <div id="dialogStudent{{$student->user_id_students}}" title="{{trans('messages.deleteStudent')}}" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.areYouSureDeleteStudent')}} <b>{{$student->username}}<b></h5>
                                             <button type="button" class="button" style="float:right" id="onDeleteStudent{{$student->user_id_students}}">
-                                    Delete
+                                    {{trans('messages.delete')}}
                                 </button>
                             </div>
 

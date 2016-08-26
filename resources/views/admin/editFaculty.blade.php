@@ -49,34 +49,34 @@
                         @endif
                     <center>
                         <div class="form-group">
-                            <h2 style="margin-left: -55%;">Edit faculty</h2> 
+                            <h2 style="margin-left: -55%;"> {{trans('messages.editFaculty')}}</h2> 
 
                         </div>
                         {!! Form::model($faculty, array('route' => array('updateFaculty', $faculty->id), 'method' => 'PUT','id'=>'editFaculty')) !!}
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Bulgarian name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">  {{trans('messages.bulgarianName')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('bg_name', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> English name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">  {{trans('messages.englishName')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('en_name', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> German name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">  {{trans('messages.germanName')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('de_name', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>              
                         <div class="form-group">
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::button('Go to faculties', array('class' => 'btn buttonBack','id'=>'back')) !!}
+                                {!! Form::button(trans('messages.goToFaculties'), array('class' => 'btn buttonBack','id'=>'back')) !!}
                             </div>
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::submit('Update', array('class' => 'btn button')) !!}
+                                {!! Form::submit(trans('messages.update'), array('class' => 'btn button')) !!}
                             </div>
                         </div>
                         {!! Form::close() !!}
@@ -112,13 +112,13 @@
         // Specify the validation error messages
         messages: {
             bg_name: {
-                required: "Please enter faculty bulgarian name",
+                required: "{{trans('messages.enterBgName')}}",
             },
              en_name: {
-                required: "Please enter faculty englis name",
+                required: "{{trans('messages.enterEnName')}}",
             },
              de_name: {
-                required: "Please enter faculty german name",
+                required: "{{trans('messages.enterDeName')}}",
             },
            
         }
