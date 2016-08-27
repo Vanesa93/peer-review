@@ -95,7 +95,19 @@ return [
     'deleteLecturer'=>'Delete lecturer?',
     'areYouSureYouWantToDeleteLecturer'=>'Are you sure that you want to delete these lecturer?',
     'deleteStudent'=>'Delete student?',
-    'areYouSureDeleteStudent'=>'Are you sure that you want to delete these student'
+    'areYouSureDeleteStudent'=>'Are you sure that you want to delete these student',
+    'myCourses'=>'My courses',
+    'myGroups'=>'My groups',
+    'myTasks'=>'My tasks',
+    'review'=>'Review',
+    'reviewTasks'=>'Review tasks',
+    'registerUsers'=>'Register users',
+    'users'=>'Users',
+    'whoops'=>'Whoops!',
+    'problemsWithTheInput'=>'There were some problems with your input.',
+    'usernameFacNumberEmail'=>'Username,Fac.Number or Email',
+    'resetPassword'=>'Reset Password',
+    'sendPasswordResetLink'=>'Send password reset link'
          
           
         

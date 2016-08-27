@@ -56,8 +56,8 @@
                                     <th>{{trans('messages.degree')}}</th>
                                     <th>{{trans('messages.mobile')}}</th>
                                     <th>{{trans('messages.cabinetNumber')}}</th>                                    
-                                    <th></th>
-                                    <th></th>
+                                    <th>{{trans('messages.edit')}}</th>
+                                    <th>{{trans('messages.delete')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -121,8 +121,8 @@
                                     <th>{{trans('messages.semester')}}</th>
                                     <th>{{trans('messages.group')}}</th>
                                     <th>{{trans('messages.mobile')}}</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th>{{trans('messages.edit')}}</th>
+                                    <th>{{trans('messages.delete')}}</th>
                                 </tr>
                             </thead>
                             <tbody>

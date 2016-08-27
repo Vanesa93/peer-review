@@ -90,7 +90,19 @@ return [
     'deleteLecturer'=>'Dozent löschen?',
     'areYouSureYouWantToDeleteLecturer'=>'Sind Sie sicher, dass Sie diesen Dozent löschen wollen',
     'deleteStudent'=>'Student löschen?',
-    'areYouSureDeleteStudent'=>'Sind Sie sicher, dass Sie diesen Dozent löschen wollen'
+    'areYouSureDeleteStudent'=>'Sind Sie sicher, dass Sie diesen Dozent löschen wollen',
+    'myCourses'=>'My Kurse',
+    'myGroups'=>'My Gruppen',
+    'myTasks'=>'My Aufgaben',
+    'review'=>'Aufgaben ',
+    'reviewTasks'=>'Aufgaben für Rezensionen',
+    'registerUsers'=>'Benutzer registrieren',
+    'users'=>'Benutzern',
+    'whoops'=>'Whoops!',
+    'problemsWithTheInput'=>'Es gab einige Probleme mit Ihrem Eingang.',
+    'usernameFacNumberEmail'=>'Benutzername, Fakultät Nummer oder Email',
+    'resetPassword'=>'Neues Kennwort anfordern',
+    'sendPasswordResetLink'=>'Link senden, um das Kennwort zu verändern'
     
 
 

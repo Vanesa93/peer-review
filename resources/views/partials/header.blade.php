@@ -45,17 +45,16 @@
                     <li><a href="{{ url('/courses') }}"> {{trans('messages.courses')}}</a></li>
                     <li><a href="/groups"> {{trans('messages.groups')}}</a></li>
                     <li><a href="/tasks"> {{trans('messages.tasks')}}</a></li>                    
-                    <li><a href="/reviews"> {{trans('messages.review')}}</a></li>
+                    <li><a href="/reviews"> {{trans('messages.reviews')}}</a></li>
                     @elseif(Auth::user()->account_type==2)
-                    <li><a href="/mycourses"> My courses</a></li>
-                    <li><a href="/mygroups"> My groups</a></li>
-                    <li><a href="/mytasks"> My tasks</a></li>
-                    <li><a href="/myreviews"> Review tasks</a></li>
-                    <li><a href="/"> {{trans('messages.messages')}}</a></li>
-                    @elseif(Auth::user()->account_type==0)
-                    <li><a href="/faculties"> Faculties</a></li>
-                    <li><a href="/register"> Register User</a></li>
-                    <li><a href="/users"> Users</a></li>
+                    <li><a href="/mycourses"> {{trans('messages.myCourses')}}</a></li>
+                    <li><a href="/mygroups"> {{trans('messages.myGroups')}}</a></li>
+                    <li><a href="/mytasks">{{trans('messages.myTasks')}}</a></li>
+                    <li><a href="/myreviews"> {{trans('messages.reviewTasks')}}</a></li>
+                    @elseif(Auth::user()->account_type==0)                   
+                    <li><a href="/register"> {{trans('messages.registerUsers')}}</a></li>
+                    <li><a href="/users"> {{trans('messages.users')}}</a></li>
+                    <li><a href="/faculties">{{trans('messages.faculties')}}</a></li>
                     @endif
                     @endif
 

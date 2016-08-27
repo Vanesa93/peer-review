@@ -87,7 +87,19 @@ return [
     'mobileNumberRequired'=>'Изисква се телефонен номер',
     'forename'=>'Име',
     'lecturers'=>'Преподаватели',
-    'students'=>'Студенти'
+    'students'=>'Студенти',
+    'myCourses'=>'Моите курсове',
+    'myGroups'=>'Моите групи',
+    'myTasks'=>'Моите задачи',
+    'review'=>'Рецензия',
+    'reviewTasks'=>'Задачи за рецензии',
+    'registerUsers'=>'Регистрирай потребител',
+    'users'=>'Потребители',
+    'whoops'=>'Уупс!',
+    'problemsWithTheInput'=>'Вашите данни са грешни или невалидни',
+    'usernameFacNumberEmail'=>'Потребителско име, Факултетен номер или Електронна поща',
+    'resetPassword'=>'Смяна на паролата',
+    'sendPasswordResetLink'=>'Изпрати линк за смяна на паролата'
 ];
 
 ?>

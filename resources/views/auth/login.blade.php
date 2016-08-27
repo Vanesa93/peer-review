@@ -9,7 +9,7 @@
                 <div class="panel-body">
                     @if (count($errors) > 0)
                     <div class="alert alert-danger">
-                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                        <strong>{{trans('messages.whoops')}}</strong>{{trans('messages.problemsWithTheInput')}}<br><br>
                         <ul>
                             @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -28,7 +28,7 @@
                                                     <span class="glyphicon form-control-feedback" id="fname1"></span>
                                                 </div>
                                             </div>-->
-                            <label class="col-md-4 control-label">Username or email</label>
+                            <label class="col-md-4 control-label">{{trans('messages.usernameFacNumberEmail')}}</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="login" >
 
