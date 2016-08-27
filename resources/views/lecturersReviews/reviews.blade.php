@@ -99,9 +99,7 @@
                     <div>
                         <center>
                             <h5>
-                                {{trans('messages.noQuestionaryFound')}}
-                                {{trans('messages.mustCreatedReviewTask')}}
-                                You must have created courses, groups and tasks to create questionaries.
+                                {{trans('messages.noQuestionariesFound')}}                              
                             </h5>
                         </center>
                     </div>

@@ -75,7 +75,7 @@
                                             <a href="/myreviews/upload/review/{{$review->id}}" id="uploadFileHref{{$review->id}}"> <span class="glyphicon glyphicon-upload"></span></a>
                                         </button>
                                     </td> 
-<!--                                    @if( !empty($review->uploaded_solution) ){
+                                    @if( !empty($review->uploaded_solution) )
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" >
                                             <a href="/myreviews/writerreview/{{ $review->uploaded_solution->id}}/{{  $review->uploaded_solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
@@ -87,7 +87,7 @@
                                             <span class="glyphicon glyphicon-unchecked"></span>
                                         </button>     
                                     </td>
-                                    @endif-->
+                                    @endif
                             <div id="dialogReview{{$review->id}}" title="{{trans('messages.noReview')}}" style="display:none;max-width:400px;word-wrap: break-word;">
                                 <h5>{{trans('messages.noUploadedReview')}}</h5>
                             </div>
