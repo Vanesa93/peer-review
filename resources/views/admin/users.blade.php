@@ -72,7 +72,7 @@
 
                                     <td style="max-width:60px;">{{$lecturer->familyName}}</td>
 
-                                    <td style="max-width:40px;">{{$lecturer->email}}</td>
+                                    <td style="max-width:40px;word-wrap: break-word;">{{$lecturer->email}}</td>
                                     <td style="max-width:40px;">{{$lecturer->department}}</td>
                                     <td style="max-width:40px;">{{$lecturer->degree}}</td>
                                     <td style="max-width:40px;">{{$lecturer->mobile}}</td>
@@ -136,7 +136,7 @@
 
                                     <td style="max-width:40px;">{{$student->familyName}}</td>
 
-                                    <td style="max-width:60px;">{{$student->email}}</td>
+                                    <td style="max-width:60px;word-wrap: break-word;">{{$student->email}}</td>
 
                                     <td style="max-width:40px;">{{$student->faculty}}</td>
                                      <td style="max-width:40px;">{{$student->major}}</td>
