@@ -41,7 +41,7 @@
 
                     <center>
                         <div class="form-group">
-                            <h2 style="margin-left: -55%;">Edit {{$userAccountType}} {{$user->username}}</h2> 
+                            <h2 style="margin-left: -55%;"> {{trans('messages.edit')}} {{$userAccountType}} {{$user->username}}</h2> 
                         </div>
                         {!! Form::model($user, array('route' => array('updateUser', $userId), 'method' => 'PUT','id'=>'editForm')) !!}
                         @if(\Session::has('error'))
@@ -56,95 +56,104 @@
                             Username and email must be unique
                         </div>
                         @endif
+                         @if($user->account_type==1)
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Username</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">  {{trans('messages.username')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('username', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
+                         @elseif($user->account_type==2)
+                         <div class="form-group" >
+                            <label class="col-md-offset-3 col-md-2 control-label">  {{trans('messages.facultyNumber')}}</label>
+                            <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
+                                {!! Form::text('username', null, array('class' => 'form-control')) !!}
+                            </div>
+                        </div>
+                         @endif
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Forename</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">   {{trans('messages.forename')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('forename', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
 
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Family name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">  {{trans('messages.familyName')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('familyName', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Email</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.email')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('email', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         @if($user->account_type==1)
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Mobile</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.mobile')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('mobile', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Cabinet number</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.cabinetNumber')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('cabinet', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Department/катедра</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.department')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('department', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Degree</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.degree')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('degree', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         @elseif($user->account_type==2)
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Mobile</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.mobile')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('mobile', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Year</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.year')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('year', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Semester</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.semester')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('semester', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Group</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.group')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('group', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Faculty</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.faculty')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                          {!! Form::select('faculty', $faculties, $user->faculty,['class'=>'form-control'])!!}           
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Major/Специалност</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.major')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                  {!! Form::select('major', $majors, $user->major,['class'=>'form-control'])!!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Degree</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.degree')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('degree', null, array('class' => 'form-control')) !!}
                             </div>
@@ -152,10 +161,10 @@
                         @endif
                         <div class="form-group">
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::button('Back to users', array('class' => 'btn buttonBack','id'=>'back')) !!}
+                                {!! Form::button(trans('messages.goToUsers'), array('class' => 'btn buttonBack','id'=>'back')) !!}
                             </div>
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::submit('Update', array('class' => 'btn button')) !!}
+                                {!! Form::submit(trans('messages.update'), array('class' => 'btn button')) !!}
                             </div>
                         </div>
                         {!! Form::close() !!}
@@ -238,58 +247,59 @@
             },
         },
         // Specify the validation error messages
-        messages: {
-            username: {
-                required: "Please enter your username/faculty number(for students)",
-            },
-            forename: {
-                required: "Please enter your first name"
-            },
-            email: {
-                required: "Please enter your email",
-                email: "Enter valid email",
-            },
-            password: {
-                required: "Please enter your password",
-            },
-            password_confirmation: {
-                equalTo: "Password doesn't match"
-            },
-            account_type: {
-                required: "Please enter your position"
-            },
-            faculty: {
-                required: "Please enter your faculty"
-            },
-            cabinet: {
-                required: "Please enter your cabinet number"
-            },
-            year: {
-                required: "Please enter first year",
-                number: "Please enter valid first year"
-            },
-            familyName: {
-                required: "Please enter your family name"
-            },
-            group: {
-                required: "Please enter your group",
-                number: "Please enter valid group"
-            },
-            degree: {
-                required: "Please enter your degree"
-            },
-            semester: {
-                required: "Please enter your semester",
-                number: "Please enter valid semester"
-            },
-            department: {
-                required: "Please enter your department name"
-            },
-            mobile: {
-                required: "Please enter your mobile number",
-                phone: 'Please enter valid mobile'
-            },
-        }
+         messages: {
+                username: {
+                    required: "{{trans('messages.usernameRequired')}}",
+                    remote: "{{trans('message.notUnique')}}",
+                },
+                forename: {
+                    required: "{{trans('messages.forenameRequired')}}"
+                },
+                email: {
+                    required: "{{trans('messages.emailRequired')}}",
+                    email: "{{trans('messages.notValidEmail')}}",
+                    remote: "{{trans('messages.notUniqueEmail')}}",
+                },
+                password: {
+                    required: "{{trans('messages.passwortRequired')}}",
+                },
+                password_confirmation: {
+                    equalTo: "{{trans('messages.passwortDontMatch')}}"
+                },
+                account_type: {
+                    required: "{{trans('messages.positionRequired')}}"
+                },
+                faculty: {
+                    required: "{{trans('messages.facultyRequired')}}"
+                },
+                year: {
+                    required: "{{trans('messages.firstYearRequired')}}",
+                    number: "{{trans('messages.validFirstYear')}}"
+                },
+                familyName: {
+                    required: "{{trans('messages.familyNameRequired')}}"
+                },
+                group: {
+                    required: "{{trans('messages.groupRequired')}}",
+                },
+                degree: {
+                    required: "{{trans('messages.degreeRequired')}}"
+                },
+                semester: {
+                    required: "{{trans('messages.semesterRequired')}}",
+                    number: "{{trans('messages.validSemester')}}"
+                },
+                department: {
+                    required: "{{trans('messages.departmentRequired')}}"
+                },
+                major: {
+                    required: "{{trans('messages.majorRequired')}}"
+                },
+                mobile: {
+                    required: "{{trans('messages.mobileNumberRequired')}}",
+                    phone: "{{trans('messages.validMobileNumber')}}"
+                },
+            }
     });
 </script>
 @stop

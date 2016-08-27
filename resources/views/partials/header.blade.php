@@ -30,7 +30,6 @@
                     </li>
 
                     @else
-                    <li><a href="/">{{trans('messages.home')}}</a></li>
                     <li class="dropdown" style="float:right">   
                         <span class=" dropdown-toggle glyphicon glyphicon-globe" data-toggle="dropdown" role="button" aria-expanded="false" style="cursor:pointer;font-size: 18px"></span>
                         <ul class="dropdown-menu" role="menu" name="language" style="float:right;">
