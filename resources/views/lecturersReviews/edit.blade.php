@@ -52,31 +52,31 @@
                     @endif
                     <center>
                         <div class="form-group">
-                            <h2 style="margin-left: -55%;">Edit questionary</h2> 
+                            <h2 style="margin-left: -55%;">{{trans('messages.editQuestionary')}}</h2> 
 
                         </div>
                         {!! Form::model($lecturerReview, array('route' => array('updateLecturerReview', $lecturerReview->id), 'method' => 'PUT','id'=>'editLecturerReview','files' => true)) !!}
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Select task</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.selectTask')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::select('task_id', $tasks, $lecturerReview->task_id,['class'=>'form-control','id'=>'selectLecturerReview'])!!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Description</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.description')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::textarea('description', null, array('class' => 'form-control')) !!}      
 
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Upload new questionary</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.uploadNewQuestionary')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <input type="file" class="btn  floatRight"  name="questionary"/>
                             </div>
                         </div> 
                         <div class="form-group" id="year" >
-                            <label class="col-md-offset-3 col-md-2 control-label">End date</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.endDate')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <div class="input-group input-append date" id="endDate">
                                     <input type="text" class="form-control" name="end_date" />
@@ -89,10 +89,10 @@
 
                         <div class="form-group">
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::button('Go to questionaries', array('class' => 'btn buttonBack','id'=>'back')) !!}
+                                {!! Form::button(trans('messages.goToReviews'), array('class' => 'btn buttonBack','id'=>'back')) !!}
                             </div>
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::submit('Update', array('class' => 'btn button')) !!}
+                                {!! Form::submit(trans('messages.update'), array('class' => 'btn button')) !!}
                             </div>
                         </div>
                         {!! Form::close() !!}
@@ -137,15 +137,15 @@ $(document).ready(function () {
         // Specify the validation error messages
         messages: {
             task_id: {
-                required: "Please select task",
-                maxlength: 100
+                required: "{{trans('messages.taskRequired')}}",
+                maxlength: "{{trans('messages.maxLenght100')}}"+100
             },
             description: {
-                maxlength: 100
+                maxlength: "{{trans('messages.maxLenght100')}}"+100
             },
             end_date: {
-                required: "Please select end date",
-                maxlength: 100
+                required: "{{trans('messages.endDateRequired')}}",
+                maxlength: "{{trans('messages.maxLenght100')}}"+100
             }
         }
     });

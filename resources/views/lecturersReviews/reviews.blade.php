@@ -39,10 +39,10 @@
                 <div class="panel-body">                 
 
                     <center>
-                        <h2>Reviews</h2>
+                        <h2>{{trans('messages.questionaries')}}</h2>
                     </center>
                     <div class="row">
-                        <button type="button" class="btn button" id="create" >Create questionary</button>
+                        <button type="button" class="btn button" id="create" >{{trans('messages.createQuestionary')}}</button>
                     </div>
                     @if(!($lecturersReviews->isEmpty()))
                     <div class="table-responsive">
@@ -50,13 +50,13 @@
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Task name</th>
-                                    <th>Task description</th>
-                                    <th>Created at</th>
-                                    <th>End date</th>
-                                    <th>Questionary</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>{{trans('messages.taskName')}}</th>
+                                    <th>{{trans('messages.description')}}</th>
+                                    <th>{{trans('messages.sentAt')}}</th>
+                                    <th>{{trans('messages.endDate')}}</th>
+                                    <th>{{trans('messages.questionary')}}</th>
+                                    <th>{{trans('messages.edit')}}</th>
+                                    <th>{{trans('messages.delete')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,10 +85,10 @@
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                                <div id="dialog{{$lecturerReview->id}}" title="Delete task?" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>Are you sure you want to delete these review task?</h5>
+                                <div id="dialog{{$lecturerReview->id}}" title="{{trans('messages.deleteQuestionary')}}" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.areYouSureYouWantToDeleteTheseReviewTask')}}</h5>
                                 <button type="button" class="button" style="float:right" id="onDelete{{$lecturerReview->id}}">
-                                    Delete
+                                    {{trans('messages.delete')}}
                                 </button>
                             </div>
                                 @endforeach
@@ -99,7 +99,8 @@
                     <div>
                         <center>
                             <h5>
-                                No questionaries found.
+                                {{trans('messages.noQuestionaryFound')}}
+                                {{trans('messages.mustCreatedReviewTask')}}
                                 You must have created courses, groups and tasks to create questionaries.
                             </h5>
                         </center>

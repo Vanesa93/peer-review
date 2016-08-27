@@ -56,13 +56,13 @@
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
-                    <h2 style="margin-bottom: 2%;">Create review tasks</h2>                   
+                    <h2 style="margin-bottom: 2%;">{{trans('messages.createReviewTask')}}</h2>                   
 
                     <div class="form-group" id="users">
-                        <label class="col-md-offset-3 col-md-2 control-label"> Select task</label>
+                        <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.selectTask')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             <select class="form-control " id="selectTask" name="task_id"   style="width:250px;">
-                                <option value="">Select task</option>
+                                <option value="">{{trans('messages.selectTask')}}</option>
                                 @foreach($tasks as $task)
                                 <option value="{{$task->id}}">
                                     {{$task->name}}
@@ -74,20 +74,20 @@
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-md-offset-3 col-md-2 control-label">Description</label>
+                        <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.description')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             <textarea class="form-control"  name="description"></textarea>
                         </div>
                         <label for="description" generated="true"  class="error"></label>
                     </div> 
                     <div class="form-group" >
-                        <label class="col-md-offset-3 col-md-2 control-label">Upload questionary</label>
+                        <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.uploadQuestionary')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             <input type="file" class="btn  floatRight"  name="questionary"/>
                         </div>
                     </div> 
                     <div class="form-group" id="end_date" >
-                        <label class="col-md-offset-3 col-md-2 control-label">End date</label>
+                        <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.endDate')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             <div class="input-group input-append date" id="endDate">
                                 <input type="text" class="form-control" name="end_date" readonly/>
@@ -99,10 +99,10 @@
                     <input type="hidden" name="_token" id="csrf-token" value="{{ \Session::token() }}" />
                     <div class="form-group">
                         <div class="col-md-6 " style="margin-bottom: 1%;">
-                            <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Go to reviews" />
+                            <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="{{trans('messages.goToReviews')}}" />
                         </div>
                         <div class="col-md-6  " style="margin-bottom: 1%;">
-                            <input type="submit" name="submit" id='submit' class="btn button action-button floatRight" style="float: right;" value="Submit" />
+                            <input type="submit" name="submit" id='submit' class="btn button action-button floatRight" style="float: right;" value="{{trans('messages.submit')}}" />
                         </div>
                     </div>
                 </div>
@@ -140,18 +140,18 @@ $(document).ready(function () {
         // Specify the validation error messages
         messages: {
             task_id: {
-                required: "Please select task",
-                maxlength: 100
+                required: "{{trans('messages.taskRequired')}}",
+                maxlength:"{{trans('messages.maxLenght100')}}"+100
             },
             description: {
-                maxlength: 100
+                maxlength: "{{trans('messages.maxLenght100')}}"+100
             },
             end_date: {
-                required: "Please select end date",
-                maxlength: 100
+                required: "{{trans('messages.endDateRequired')}}",
+                maxlength: "{{trans('messages.maxLenght100')}}"+100
             },
             questionary: {
-                required: "Please upload questionary",
+                required: "{{trans('messages.questionaryRequired')}}",
             }
         }
     });
