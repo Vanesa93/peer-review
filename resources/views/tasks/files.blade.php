@@ -40,15 +40,15 @@
                 <div class="panel-body"> 
                     <div class="row">
                         <div class="col-md-6 " style="margin-bottom: 1%;">
-                            <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Go to tasks" />
+                            <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="{{trans('messages.goToTasks')}}" />
                         </div>
-                        <div class="col-md-6 " style="margin-bottom: 1%;">
-                            <input type="button" name="button" id='upload' class="btn buttonBack action-button floatRight" style="float: right;background-color: #5cb85c!important;color:white" value="Go to upload" />
+                         <div class="col-md-6 " style="margin-bottom: 1%;">
+                            <input type="button" name="button" id='upload' class="btn buttonBack action-button floatRight" style="float: right;background-color: #5cb85c!important;color:white" value="{{trans('messages.goToUpload')}}" />
                         </div>
                        
                     </div>
                     <center>
-                        <h2 style="margin-bottom:2%;"> Help materials for task {{$task->name}}</h2>
+                        <h2 style="margin-bottom:2%;"> {{trans('messages.helpMaterialsForTask')}}{{$task->name}}</h2>
                     </center>
                     {!!Form::open(['url' => 'files','id'=>'filesLecturer','files'=>'true'])!!}
                     <input type="hidden" id="token" name="token" value="{{ csrf_token() }}">
@@ -57,19 +57,19 @@
                         @foreach($files as $file)                        
                         <tr>
                             <td><a href="/file/{{$file->id}}/{{ $file->filename }}/open">{{ $file->filename }}</a></td>
-                            <td style="float:right"><button type="button" class="btn btn-sm btn-danger" id="delete{{$file->id}}" >Remove</button></td>
+                            <td style="float:right"><button type="button" class="btn btn-sm btn-danger" id="delete{{$file->id}}" >{{trans('messages.remove')}}</button></td>
                         </tr>
                         
-                        <div id="dialog{{$file->id}}" title="Delete file?" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>Are you sure you want to delete these file?</h5>
+                        <div id="dialog{{$file->id}}" title="{{trans('messages.deleteHelpMaterial')}}?" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.areYouSureYouWantToDeleteTheseHelpMaterial')}}</h5>
                                 <button type="button" type="button" class="button" style="float:right" id="onDelete{{$file->id}}">
-                                    Delete
+                                    {{trans('messages.delete')}}
                                 </button>
                             </div>
                         @endforeach
                     </table>
                     @else
-                    <h4>No helps files for these task</h4>
+                    <h4>{{trans('messages.noHelpMaterialsFound')}}</h4>
                     @endif
                     {!!Form::close()!!}
                 </div>

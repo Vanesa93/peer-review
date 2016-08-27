@@ -57,20 +57,20 @@
                         </div>
                         {!! Form::model($task, array('route' => array('updateTask', $task->id), 'method' => 'PUT','id'=>'editTask')) !!}
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Task name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.taskName')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('name', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Task description</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.description')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::textarea('description', null, array('class' => 'form-control')) !!}      
 
                             </div>
                         </div>
                         <div class="form-group" id="year" >
-                            <label class="col-md-offset-3 col-md-2 control-label">End date</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.endDate')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <div class="input-group input-append date" id="endDate">
                                     <input type="text" class="form-control" name="end_date" />
@@ -80,13 +80,13 @@
                             <label for="end_date" generated="true" id="labelForYear" class="error"></label>
                         </div>
                          <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Course name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.course')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::select('course_id', $courses, $task->course_name,['class'=>'form-control','id'=>'selectCourse'])!!}
                             </div>
                         </div>
                        <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Group</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.group')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::select('group_id', $allGroups, $task->group_id,['class'=>'form-control'])!!}
                             </div>
@@ -94,10 +94,10 @@
                         
                         <div class="form-group">
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::button('Go to groups', array('class' => 'btn buttonBack','id'=>'back')) !!}
+                                {!! Form::button(trans('messages.goToTasks'), array('class' => 'btn buttonBack','id'=>'back')) !!}
                             </div>
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::submit('Update', array('class' => 'btn button')) !!}
+                                {!! Form::submit(trans('messages.update'), array('class' => 'btn button')) !!}
                             </div>
                         </div>
                         {!! Form::close() !!}
@@ -169,20 +169,20 @@ $(document).ready(function () {
             // Specify the validation error messages
             messages: {
                 name: {
-                    required: "Please enter name of the task",
-                    maxlength: 100
+                    required: "{{trans('messages.nameRequired')}}",
+                    maxlength: "{{trans('messages.maxLenght100')}}"+100
                 },
                 description: {
-                    required: "Please enter description",
-                    maxlength: 100
+                    required: "{{trans('messages.descriptionRequired')}}",
+                    maxlength:"{{trans('messages.maxLenght100')}}"+ 100
                 },
                 course_id: {
-                    required: "Please select course",
-                    maxlength: 100
+                    required: "{{trans('messages.courseRequired')}}",
+                    maxlength: "{{trans('messages.maxLenght100')}}"+100
                 },
                 group_id: {
-                    required: "Please select groups",
-                    maxlength: 100
+                    required: "{{trans('messages.groupRequired')}}",
+                    maxlength: "{{trans('messages.maxLenght100')}}"+100
                 }
             }
         });

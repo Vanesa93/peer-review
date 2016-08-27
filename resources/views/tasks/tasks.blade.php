@@ -40,10 +40,10 @@
                 <div class="panel-body">                 
 
                     <center>
-                        <h2>Tasks</h2>
+                        <h2>{{trans('messages.tasks')}}</h2>
                     </center>
                     <div class="row">
-                        <button type="button" class="btn button" id="create" >Create Task</button>
+                        <button type="button" class="btn button" id="create" >{{trans('messages.createTask')}}</button>
                     </div>
                     @if(!($tasks->isEmpty()))
                     <div class="table-responsive">
@@ -51,17 +51,17 @@
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Task name</th>
-                                    <th>Task description</th>
-                                    <th>Created at</th>
-                                    <th>End date</th>
-                                    <th>Course</th>
-                                    <th>Group</th>
-                                     <th>Upload</th>
-                                    <th>Files</th>
-                                    <th>Students</th>
-                                     <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>{{trans('messages.taskName')}}</th>
+                                    <th>{{trans('messages.description')}}</th>
+                                    <th>{{trans('messages.sentAt')}}</th>
+                                    <th>{{trans('messages.endDate')}}</th>
+                                    <th>{{trans('messages.course')}}</th>
+                                    <th>{{trans('messages.group')}}</th>
+                                     <th>{{trans('messages.upload')}}</th>
+                                    <th>{{trans('messages.helpMaterials')}}</th>
+                                    <th>{{trans('messages.students')}}</th>
+                                     <th>{{trans('messages.edit')}}</th>
+                                    <th>{{trans('messages.delete')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -104,10 +104,10 @@
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                            <div id="dialog{{$task->id}}" title="Delete task?" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>Are you sure you want to delete these task?</h5>
+                            <div id="dialog{{$task->id}}" title="{{trans('messages.deleteTask')}}" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.areYouSureYouWantToDeleteTheseTask')}}</h5>
                                 <button type="button" class="button" style="float:right" id="onDelete{{$task->id}}">
-                                    Delete
+                                    {{trans('messages.delete')}}
                                 </button>
                             </div>
 
@@ -120,8 +120,7 @@
                     <div>
                         <center>
                             <h5>
-                                No tasks found.
-                                You must have created courses and groups to create groups.
+                                {{trans('messages.noTasksFound')}}
                             </h5>
                         </center>
                     </div>

@@ -51,46 +51,46 @@
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
                     <center>
-                        <h2 style="margin-bottom:2%;"> Details for task {{$task->name}}</h2>
+                        <h2 style="margin-bottom:2%;"> {{trans('messages.detailsForTask')}} {{$task->name}}</h2>
                     </center>
                     <div class="form-group" >
-                        <label class="col-md-offset-3 col-md-2 control-label">Task name</label>
+                        <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.taskName')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             {!! Form::text('name', $task->name, array('class' => 'form-control')) !!}       
                         </div>
                     </div>   
                     <div class="form-group" >
-                        <label class="col-md-offset-3 col-md-2 control-label">Task description</label>
+                        <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.description')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             {!! Form::text('description', $task->description, array('class' => 'form-control')) !!}       
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-md-offset-3 col-md-2 control-label">Created at</label>
+                        <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.sentAt')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             {!! Form::text('sent_at', $task->sent_at, array('class' => 'form-control')) !!}       
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-md-offset-3 col-md-2 control-label">End date</label>
+                        <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.endDate')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             {!! Form::text('end_date', $task->end_date, array('class' => 'form-control')) !!}       
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-md-offset-3 col-md-2 control-label">Course</label>
+                        <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.course')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             {!! Form::text('course_id', $task->course_name, array('class' => 'form-control')) !!}       
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-md-offset-3 col-md-2 control-label">Group</label>
+                        <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.group')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             {!! Form::text('group_id', $task->group_name, array('class' => 'form-control')) !!}       
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-md-offset-3 col-md-2 control-label">Students</label>
+                        <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.students')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             <button type="button" class="buttonEdit" style="float:left;"  id="studentsForTask{{$task->id}}">
                                 <span class="glyphicon glyphicon-user"></span>
@@ -98,7 +98,7 @@
                         </div>
                     </div>
                     <div class="form-group" >
-                        <label class="col-md-offset-3 col-md-2 control-label">Files</label>
+                        <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.helpMaterials')}}</label>
                         <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                             <button type="button" class="buttonEdit" style="float:left;"  id="filesForTask{{$task->id}}">
                                 <span class="glyphicon glyphicon-file"></span>
@@ -110,10 +110,10 @@
                     <input type="hidden" name="_token" id="csrf-token" value="{{ \Session::token() }}" />
                     <div class="form-group">
                         <div class="col-md-6 " style="margin-bottom: 1%;">
-                            <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Go to tasks" />
+                            <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value=" {{trans('messages.goToTasks')}}" />
                         </div>
                         <div class="col-md-6  " style="margin-bottom: 1%;">
-                            <input type="submit" name="submit" id='submit' class="btn button action-button floatRight" style="float: right;" value="Submit" />
+                            <input type="submit" name="submit" id='submit' class="btn button action-button floatRight" style="float: right;" value=" {{trans('messages.submit')}}" />
                         </div>
                     </div>
 

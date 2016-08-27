@@ -52,23 +52,23 @@
             <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
                 <div class="panel panel-default" style="border-radius: 0px;">
                     <div class="panel-body">
-                        <h2 style="margin-bottom: 2%;">Create task</h2>
+                        <h2 style="margin-bottom: 2%;">{{trans('messages.createTask')}}</h2>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Task name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.taskName')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <input type="text" class="form-control" id="enterYear" name="name"/>
                             </div>
                             <label for="name" generated="true"  class="error"></label>
                         </div>    
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Task description</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.description')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <textarea class="form-control"  name="description"></textarea>
                             </div>
                             <label for="description" generated="true"  class="error"></label>
                         </div> 
                         <div class="form-group" id="year" >
-                            <label class="col-md-offset-3 col-md-2 control-label">End date</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.endDate')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <div class="input-group input-append date" id="endDate">
                                     <input type="text" class="form-control" name="end_date" readonly/>
@@ -78,10 +78,10 @@
                             <label for="end_date" generated="true" id="labelForYear" class="error"></label>
                         </div>  
                         <div class="form-group" id="users">
-                            <label class="col-md-offset-3 col-md-2 control-label"> Choose course</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.selectCourse')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <select class="form-control " id="selectCourse" name="course_id"   style="width:250px;">
-                                    <option value="">Select course</option>
+                                    <option value="">{{trans('messages.selectCourse')}}</option>
                                     @foreach($courses as $course)
                                     <option value="{{$course->id}}">
                                         {{$course->name}}
@@ -93,10 +93,10 @@
                             </div>
                         </div>
                         <div class="form-group" id="users">
-                            <label class="col-md-offset-3 col-md-2 control-label"> Choose group</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.selectGroup')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <select class="form-control " id="selectGroups" name="group_id"   style="width:250px;" disabled>
-                                    <option value="">Select group</option>
+                                    <option value="">{{trans('messages.selectGroup')}}</option>
                                     @foreach($groups as $group)
                                     <option value="{{$group->id}}">
                                         {{$group->name}}
@@ -108,7 +108,7 @@
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Upload help materials</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.uploadHelpMaterials')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                     <input type="file" class="btn  floatRight"  name="filefield"/>
                             </div>
@@ -117,10 +117,10 @@
                         <input type="hidden" name="_token" id="csrf-token" value="{{ \Session::token() }}" />
                         <div class="form-group">
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Go to tasks" />
+                                <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="{{trans('messages.goToTasks')}}" />
                             </div>
                             <div class="col-md-6  " style="margin-bottom: 1%;">
-                                <input type="submit" name="submit" id='submit' class="btn button action-button floatRight" style="float: right;" value="Submit" />
+                                <input type="submit" name="submit" id='submit' class="btn button action-button floatRight" style="float: right;" value="{{trans('messages.submit')}}" />
                             </div>
                         </div>
 
@@ -187,24 +187,24 @@ $(document).ready(function () {
         // Specify the validation error messages
         messages: {
             name: {
-                required: "Please enter name of the task",
-                maxlength: 100
+                required: "{{trans('messages.nameRequired')}}",
+                maxlength: "{{trans('messages.maxLenght100')}}"+100
             },
             description: {
-                required: "Please enter description",
-                maxlength: 100
+                required: "{{trans('messages.descriptionRequired')}}",
+                maxlength: "{{trans('messages.maxLenght100')}}"+1000
             },
             end_date: {
-                required: "Please enter end dare",
-                maxlength: 100
+                required: "{{trans('messages.endDateRequired')}}",
+                maxlength: "{{trans('messages.maxLenght100')}}"+100
             },
             course_id: {
-                required: "Please select course",
-                maxlength: 100
+                required: "{{trans('messages.courseRequired')}}",
+                maxlength: "{{trans('messages.maxLenght100')}}"+100
             },
             group_id: {
-                required: "Please select group/s",
-                maxlength: 100
+                required: "{{trans('messages.groupRequired')}}",
+                maxlength: "{{trans('messages.maxLenght100')}}"+100
             }
         }
     });
