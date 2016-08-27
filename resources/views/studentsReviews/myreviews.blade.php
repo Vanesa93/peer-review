@@ -39,7 +39,7 @@
                 <div class="panel-body">                 
 
                     <center>
-                        <h2>Reviews</h2>
+                        <h2>{{trans('messages.reviewTasks')}}</h2>
                     </center>               
                     @if(!($reviews->isEmpty()))
                     <div class="table-responsive">
@@ -47,18 +47,18 @@
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Task name</th>
-                                    <th>Sent at</th>
-                                    <th>Questionary to fill</th>
-                                    <th>Solution to review</th>
-                                    <th>Upload review</th>
-                                    <th>Open review solution</th>
+                                    <th>{{trans('messages.taskName')}}</th>
+                                    <th>{{trans('messages.sentAt')}}</th>
+                                    <th>{{trans('messages.questionaryToFill')}}</th>
+                                    <th>{{trans('messages.solutionToReview')}}</th>
+                                    <th>{{trans('messages.uploadReview')}}</th>
+                                    <th>{{trans('messages.openReviewSolution')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($reviews as $review)
                                 <tr>
-                                    <td style="word-wrap: break-word;"><a href='{{url('task')}}/{{$review->task_id}}'>{{$review->task_name}}</a></td>
+                                    <td style="word-wrap: break-word;"><a href='{{url('mytasks')}}/{{$review->task_id}}'>{{$review->task_name}}</a></td>
                                     <td style="word-wrap: break-word;">{{$review->sent_at}}</td>
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" >
@@ -88,8 +88,8 @@
                                         </button>     
                                     </td>
                                     @endif-->
-                            <div id="dialogReview{{$review->id}}" title="No review!" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>There is no uploaded review for these task.</h5>
+                            <div id="dialogReview{{$review->id}}" title="{{trans('messages.noReview')}}" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.noUploadedReview')}}</h5>
                             </div>
 
                             {!! Form::close() !!}
@@ -102,7 +102,7 @@
                     <div>
                         <center>
                             <h5>
-                                No review tasks found.
+                                {{trans('messages.noUploadedReview')}}
                             </h5>
                         </center>
                     </div>
