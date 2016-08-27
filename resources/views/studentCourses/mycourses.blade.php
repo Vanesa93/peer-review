@@ -38,19 +38,19 @@
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">                  
                     <center>
-                        <h2>My Courses</h2>
+                        <h2>{{trans('messages.myCourses')}}</h2>
                     </center>
                     <div class="table-responsive">
                         <table id="coursesTable" class="display" style="border: solid;
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3;">
-                                    <th>Tutor</th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Duration</th>
-                                    <th>Prerequisites</th>
-                                    <th>Language</th>                                  
+                                    <th>{{trans('messages.tutor')}}</th>
+                                    <th>{{trans('messages.name')}}</th>
+                                    <th>{{trans('messages.description')}}</th>
+                                    <th>{{trans('messages.duration')}}</th>
+                                    <th>{{trans('messages.prerequisites')}}</th>
+                                    <th>{{trans('messages.language')}}</th>                                  
                                 </tr>
                             </thead>
                             <tbody>
