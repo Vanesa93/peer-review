@@ -39,7 +39,7 @@
                 <div class="panel-body">                 
 
                     <center>
-                        <h2>My groups</h2>
+                        <h2>{{trans('messages.myGroups')}}</h2>
                     </center>
 
                     @if(!empty($groups))
@@ -48,12 +48,12 @@
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Tutor name</th>
-                                    <th>Group name</th>
-                                    <th>Course name</th>
-                                    <th>Faculty name</th>
-                                    <th>Major name</th>
-                                    <th>Student year</th>
+                                    <th>{{trans('messages.tutor')}}</th>
+                                    <th>{{trans('messages.group')}}</th>
+                                    <th>{{trans('messages.course')}}</th>
+                                    <th>{{trans('messages.faculty')}}</th>
+                                    <th>{{trans('messages.major')}}</th>
+                                    <th>{{trans('messages.year')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,8 +78,7 @@
                     <div>
                         <center>
                             <h5>
-                                No groups found.
-                                You must have created faculties,majors and courses to  create groups.
+                               {{trans('messages.noGroupsFound')}}
                             </h5>
                         </center>
                     </div>
