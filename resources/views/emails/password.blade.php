@@ -1,1 +1,1 @@
-Click here to reset your password: {{ url('password/reset/'.$token) }}
+{{trans('mesaages.clickHereToResetYourPassword')}}: {{ url('password/reset/'.$token) }}

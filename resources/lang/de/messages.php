@@ -121,7 +121,7 @@ return [
     'prerequisitiesRequired'=>'Voraussetzungen erforderlich',
     'maxLenght100'=>'Maximale Anzahl von Zeichen ',
     'editCourse'=>'Kurs redigieren',
-    ''=>'',
+    'clickHereToResetYourPassword'=>'Klicken Sie bitte hier, um Ihre Passwort zu verändern',
     ''=>'',
     ''=>'',
     ''=>'',

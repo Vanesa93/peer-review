@@ -126,7 +126,7 @@ return [
     'prerequisitiesRequired'=>'Prerequisites required',
     'maxLenght100'=>'Maximum number of characters ',
     'editCourse'=>'Edit course',
-    ''=>'',
+    'clickHereToResetYourPassword'=>'Click here to reset your password',
     ''=>'',
     ''=>'',
     ''=>'',
