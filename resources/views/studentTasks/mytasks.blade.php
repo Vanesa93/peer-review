@@ -40,7 +40,7 @@
                 <div class="panel-body">                 
 
                     <center>
-                        <h2>My Tasks</h2>
+                        <h2>{{trans('messages.myTasks')}}</h2>
                     </center>
                     @if(!empty($tasks))
                     <div class="table-responsive">
@@ -48,18 +48,18 @@
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Task name</th>
-                                    <th>Tutor name</th>                                   
-                                    <th>Task description</th>
-                                    <th>Sent at</th>
-                                    <th>End date</th>
-                                    <th>Course</th>
-                                    <th>Group</th>
-                                    <th>Solution</th>
-                                    <th>Upload solution</th>
-                                    <th>Help materials</th>
-                                    <th>Review</th>
-                                    <th>Grade</th>
+                                    <th>{{trans('messages.taskName')}}</th>
+                                    <th>{{trans('messages.tutor')}}</th>                                   
+                                    <th>{{trans('messages.description')}}</th>
+                                    <th>{{trans('messages.sentAt')}}</th>
+                                    <th>{{trans('messages.endDate')}}</th>
+                                    <th>{{trans('messages.course')}}</th>
+                                    <th>{{trans('messages.group')}}</th>
+                                    <th>{{trans('messages.solution')}}</th>
+                                    <th>{{trans('messages.uploadSolution')}}</th>
+                                    <th>{{trans('messages.helpMaterials')}}</th>
+                                    <th>{{trans('messages.review')}}</th>
+                                    <th>{{trans('messages.grade')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -124,11 +124,11 @@
                                     </td>
                                     @endif
 
-                            <div id="dialog{{$task->task_id}}" title="No solution!" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>There is no uploaded solution for these task.</h5>
+                            <div id="dialog{{$task->task_id}}" title="{{trans('messages.noSolution')}}" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.noUploadedSolution')}}</h5>
                             </div>
-                            <div id="dialogReview{{$task->task_id}}" title="No review!" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>There is no uploaded review for these task.</h5>
+                            <div id="dialogReview{{$task->task_id}}" title="{{trans('messages.noReview')}}" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.noUploadedReview')}}</h5>
                             </div>
 
                             @endforeach
@@ -140,8 +140,8 @@
                     <div>
                         <center>
                             <h5>
-                                No tasks found.
-                                You must have created courses and groups to create groups.
+                                {{trans('messages.noTasksFound')}}
+                                
                             </h5>
                         </center>
                     </div>

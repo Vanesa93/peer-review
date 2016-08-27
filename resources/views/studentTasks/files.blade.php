@@ -40,11 +40,11 @@
                 <div class="panel-body"> 
                     <div class="row">
                         <div class="col-md-6 " style="margin-bottom: 1%;">
-                            <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Go to My tasks" />
+                            <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="{{trans('messages.goToMyTasks')}}" />
                         </div>                       
                     </div>
                     <center>
-                        <h2 style="margin-bottom:2%;"> Help materials for task {{$task->name}}</h2>
+                        <h2 style="margin-bottom:2%;">{{trans('messages.helpMaterials')}} {{$task->name}}</h2>
                     </center>
                     {!!Form::open(['url' => 'files','id'=>'filesLecturer','files'=>'true'])!!}
                     <input type="hidden" id="token" name="token" value="{{ csrf_token() }}">
@@ -57,7 +57,7 @@
                         @endforeach
                     </table>
                     @else
-                    <h4>No helps materials for these task</h4>
+                    <h4>{{trans('messages.noHelpMaterials')}}</h4>
                     @endif
                     {!!Form::close()!!}
                 </div>

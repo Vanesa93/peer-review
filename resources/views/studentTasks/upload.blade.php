@@ -40,11 +40,11 @@
                 <div class="panel-body"> 
                     <div class="row">
                         <div class="col-md-6 " style="margin-bottom: 1%;">
-                            <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="Go to My tasks" />
+                            <input type="button" name="button" id='back' class="btn buttonBack action-button floatRight" style="float: left;" value="{{trans('messages.goToMyTasks')}}" />
                         </div>
                     </div>
                     <center>
-                        <h2 style="margin-bottom:5%;"> Upload solution for task {{$task->name}}</h2>
+                        <h2 style="margin-bottom:5%;"> {{trans('messages.uploadSolutionForTask')}} {{$task->name}} {{trans('messages.uploadSoltionTaskEndStatement')}}</h2>
                     </center>
                     {!!Form::open(['url' => 'upload/solution/'.$task->id,'id'=>'uploadFileForTask', 'files' => true])!!}
                     @if (count($errors) > 0)
@@ -67,7 +67,7 @@
                         </div>
                         <div class='row'>
                             <div class="form-group">
-                                <input type="submit" name="submit" id='submit' class="btn button action-button"  value="Submit" />
+                                <input type="submit" name="submit" id='submit' class="btn button action-button"  value="{{trans('messages.submit')}}" />
                             </div>
                         </div>
                     </center>
@@ -91,7 +91,7 @@
             // Specify the validation error messages
             messages: {
                 filefield: {
-                    required: "Please upload file",
+                    required: "{{trans('messages.solutionRequired')}}",
                 }
             }
         });

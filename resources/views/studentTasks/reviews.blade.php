@@ -39,17 +39,17 @@
                 <div class="panel-body">                 
                     @if(!empty($review))
                     <center>
-                        <h2>Review to task {{$review->task_name}}</h2>
+                        <h2>{{trans('messages.reviewToTask')}} {{$review->task_name}}</h2>
                     </center>               
                     <div class="table-responsive">
                         <table id="lecturersReviewsTable" class="display" style="border: solid;
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Task name</th>
-                                    <th>Sent at</th>
-                                    <th>Questionary</th>
-                                    <th>Review</th>
+                                    <th>{{trans('messages.taskName')}}</th>
+                                    <th>{{trans('messages.sentAt')}}</th>
+                                    <th>{{trans('messages.questionary')}}</th>
+                                    <th>{{trans('messages.review')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -77,7 +77,7 @@
                     <div>
                         <center>
                             <h5>
-                                No review tasks found.
+                               {{trans('messages.noReviewTasksFound')}}
                             </h5>
                         </center>
                     </div>
