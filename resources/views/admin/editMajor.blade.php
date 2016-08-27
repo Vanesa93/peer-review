@@ -49,8 +49,9 @@
                     @endif
                     <center>
                         <div class="form-group">
+                            <center>
                             <h2 style="margin-left: -55%;">{{trans('messages.editMajor')}}</h2> 
-
+                            </center>
                         </div>
                         {!! Form::model($major, array('route' => array('updateMajor', $major->id), 'method' => 'PUT','id'=>'editMajor')) !!}
 

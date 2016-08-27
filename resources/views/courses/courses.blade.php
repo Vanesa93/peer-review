@@ -38,7 +38,7 @@
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
                     <div class="row">
-                        <button type="button" class="btn button" id="create" >Create Course</button>
+                        <button type="button" class="btn button" id="create" >{{trans('messages.createCourse')}}</button>
                     </div>
                     <center>
                         <h2>Courses</h2>
@@ -48,13 +48,13 @@
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Duration</th>
-                                    <th>Prerequisites</th>
-                                    <th>Language</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>{{trans('messages.name')}}</th>
+                                    <th>{{trans('messages.description')}}</th>
+                                    <th>{{trans('messages.duration')}}</th>
+                                    <th>{{trans('messages.prerequisites')}}</th>
+                                    <th>{{trans('messages.language')}}</th>
+                                    <th>{{trans('messages.edit')}}</th>
+                                    <th>{{trans('messages.delete')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,10 +85,10 @@
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                            <div id="dialog{{$course->id}}" title="Delete course?" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>Are you sure you want to delete course <b>{{$course->name}}<b></h5>
+                            <div id="dialog{{$course->id}}" title="{{trans('messages.deleteCourse')}}" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.areYouSureYouWantToDeleteCourse')}} <b>{{$course->name}}<b> {{trans('messages.deleteWant')}}</h5>
                                             <button type="button" class="button" style="float:right" id="onDelete{{$course->id}}">
-                                    Delete
+                                    {{trans('messages.delete')}}
                                 </button>
                             </div>
 

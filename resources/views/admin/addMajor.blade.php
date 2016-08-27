@@ -44,8 +44,9 @@
             <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
                 <div class="panel panel-default" style="border-radius: 0px;">
                     <div class="panel-body">
-
+                        <center>
                         <h2 style="margin-bottom: 2%;">{{trans('messages.addMajor')}}</h2>
+                        <center>
                         <div class="form-group" >
                             <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.selectFaculty')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
