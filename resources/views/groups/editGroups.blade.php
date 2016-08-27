@@ -62,48 +62,48 @@ div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-cle
         <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
-@if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
                     <center>
                         <div class="form-group">
-                            <h2 style="margin-left: -55%;">Edit group</h2> 
+                            <h2 style="margin-left: -55%;">{{trans('messages.editGroup')}}</h2> 
 
                         </div>
                         {!! Form::model($group, array('route' => array('updateGroup', $group->id), 'method' => 'PUT','id'=>'editGroup')) !!}
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Group name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.name')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::text('name', null, array('class' => 'form-control')) !!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Course name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.course')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                {!! Form::select('course_id', $courses, $group->course_id,['class'=>'form-control'])!!}           
 
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Faculty name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.faculty')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                {!! Form::select('faculty_id', $faculties, $group->faculty_id,['class'=>'form-control','id'=>'selectFaculty'])!!}
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Major name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.major')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 {!! Form::select('major_id', $majors, $group->major_id,['class'=>'form-control','id'=>'selectMajor'])!!}
                             </div>
                         </div>
                        <div class="form-group" id="year" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Year</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.year')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <div class="input-group date" id="studentFirstYear" data-provide="datepicker">
                                     <input type="text" style="display:none;" class="form-control" id="getDate" name="student_first_year"  style="width:250px;"/>
@@ -112,7 +112,7 @@ div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-cle
                             <label for="student_first_year" generated="true" id="labelForYear" class="error"></label>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Users</label>  
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.users')}}</label>  
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <select class="form-group usersSelect" id="selectUsers" name="student_ids[]"  multiple="multiple" style="width:250px;">
                                 @foreach($studentsAll as $student) 
@@ -123,10 +123,10 @@ div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-cle
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::button('Go to groups', array('class' => 'btn buttonBack','id'=>'back')) !!}
+                                {!! Form::button(trans('messages.goToGroups'), array('class' => 'btn buttonBack','id'=>'back')) !!}
                             </div>
                             <div class="col-md-6 " style="margin-bottom: 1%;">
-                                {!! Form::submit('Update', array('class' => 'btn button')) !!}
+                                {!! Form::submit(trans('messages.update'), array('class' => 'btn button')) !!}
                             </div>
                         </div>
                         {!! Form::close() !!}
@@ -187,7 +187,7 @@ div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-cle
                 type: 'get',
                 data: {facId: facId},
                 success: function (response) {     
-                    $('#selectMajor').append('<option value="">Select major</option>');
+                    $('#selectMajor').append('<option value="">{{trans('messages.selectCourseOfStudy')}}</option>');
                    $.each(response.majors, function (key, value) {
                             
                             $('#selectMajor').append('<option value="' + value.id + '">' + value.name + '</option>');
@@ -226,16 +226,16 @@ div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-cle
         });
         
          $('#editGroup').validate({
-            rules: {
+             rules: {
                 name:{
                      required: true,
                     maxlength: 100
                 },
-                 course_id: {
+                faculty_id: {
                     required: true,
                     maxlength: 100
                 },
-                faculty_id: {
+                course_id: {
                     required: true,
                     maxlength: 100
                 },
@@ -243,7 +243,7 @@ div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-cle
                     required: true,
                     maxlength: 100
                 },
-                student_id: {
+                student_ids: {
                     required: true,
                     maxlength: 100
                 },
@@ -256,34 +256,34 @@ div.ui-datepicker-inline.ui-datepicker.ui-widget.ui-widget-content.ui-helper-cle
             // Specify the validation error messages
             messages: {
                 name: {
-                    required: "Please enter name of the group",
-                    maxlength: 100
+                    required: "{{trans('messages.nameRequired')}}",
+                    maxlength:"{{trans('messages.maxLenght100')}}"+ 100
                 },
                 faculty_id: {
-                    required: "Please select faculty",
-                    maxlength: 100
+                    required: "{{trans('messages.facultyRequired')}}",
+                    maxlength:"{{trans('messages.maxLenght100')}}"+ 100
                 },
-                course_id: {
-                    required: "Please select faculty",
-                    maxlength: 100
+                 course_id: {
+                    required: "{{trans('messages.courseRequired')}}",
+                    maxlength: "{{trans('messages.maxLenght100')}}"+100
                 },
                 major_id: {
-                    required: "Please select major",
-                    maxlength: 100
+                    required: "{{trans('messages.courseOfStudyRequired')}}",
+                    maxlength:"{{trans('messages.maxLenght100')}}"+ 100
                 },
-                student_id: {
-                    required: "Please select users",
-                    maxlength: 100
+                student_ids: {
+                    required: "{{trans('messages.usersRequired')}}",
+                    maxlength:"{{trans('messages.maxLenght100')}}"+ 100
                 },
                 student_first_year: {
-                    required: "Please enter year",
-                    date: "Date",
-                    maxlength: 100
+                    required: "{{trans('messages.yearRequired')}}",
+                    date: "{{trans('messages.notValidYear')}}",
+                    maxlength: "{{trans('messages.maxLenght100')}}"+100
                 },
-            }
-        });
-         
-    });
+            },
+            });
+        });        
+
 </script>
 
 @stop

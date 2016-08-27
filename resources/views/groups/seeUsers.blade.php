@@ -25,22 +25,22 @@
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">  
                     <!--<div class="row">-->
-                        <button type="button" class="btn button" id="back" >Back to groups</button>
+                        <button type="button" class="btn button" id="back" >{{trans('messages.goToGroups')}}</button>
                     <!--</div>-->    
                     @if(!(empty($students)))
                     <center>
-                        <h2>Students from group {{$groupName}}</h2>
+                        <h2>{{trans('messages.studentsFromGroup')}} {{$groupName}}</h2>
                     </center>
                     <div class="table-responsive">
                         <table id="usersToGroupTable" class="display" style="border: solid;
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Faculty number</th>
-                                    <th>Forename</th>
-                                    <th>Family name</th>        
-                                    <th>Email</th>
-                                    <th>Mobile</th>
+                                    <th>{{trans('messages.facultyNumber')}}</th>
+                                    <th>{{trans('messages.forename')}}</th>
+                                    <th>{{trans('messages.familyName')}}</th>        
+                                    <th>{{trans('messages.email')}}</th>
+                                    <th>{{trans('messages.mobile')}}</th>
                                 </tr>
                             </thead>
                             <tbody>                             
@@ -59,7 +59,7 @@
                     </div>
                     @else
                     <center>
-                        <h5>No users from these group</h5>
+                        <h5>{{trans('messages.noUsersInTheseGroup')}}</h5>
                     </center>
                     @endif
                 </div>

@@ -66,19 +66,19 @@
             <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 col-md-offset-1">
                 <div class="panel panel-default" style="border-radius: 0px;">
                     <div class="panel-body">                      
-                        <h2 style="margin-bottom: 2%;">Create group</h2>
+                        <h2 style="margin-bottom: 2%;">{{trans('messages.createGroup')}}</h2>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Group name</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.name')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <input type="text" class="form-control" id="enterYear" name="name"/>
                             </div>
                             <label for="name" generated="true"  class="error"></label>
                         </div>    
                          <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Choose course</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.selectCourse')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <select class="form-control" name="course_id">
-                                    <option value="">Select course</option>
+                                    <option value="">{{trans('messages.selectCourse')}}</option>
                                     @foreach($courses as $course)
                                     <option value="{{$course->id}}">{{$course->name}}</option>
                                     @endforeach
@@ -86,10 +86,10 @@
                             </div>
                         </div>
                         <div class="form-group" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Choose faculty</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.selectFaculty')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <select class="form-control" id='selectFaculty' name="faculty_id">
-                                    <option value="">Select faculty</option>
+                                    <option value="">{{trans('messages.selectFaculty')}}</option>
                                     @foreach($faculties as $faculty)
                                     <option value="{{$faculty->id}}">{{$faculty->name}}</option>
                                     @endforeach
@@ -97,10 +97,10 @@
                             </div>
                         </div>
                         <div class="form-group" id="majors" >
-                            <label class="col-md-offset-3 col-md-2 control-label"> Choose major</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.selectCourseOfStudy')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <select class="form-control"  id="selectMajor" name="major_id">
-                                    <option value="">Select major</option>
+                                    <option value="">{{trans('messages.selectCourseOfStudy')}}</option>
                                     @foreach($majors as $major)
                                     <option value="{{$major->id}}">{{$major->name}}</option>
                                     @endforeach
@@ -108,7 +108,7 @@
                             </div>
                         </div>  
                          <div class="form-group" id="year" >
-                            <label class="col-md-offset-3 col-md-2 control-label">Year</label>
+                            <label class="col-md-offset-3 col-md-2 control-label">{{trans('messages.year')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <div class="input-group date" name="student_first_year" id="studentFirstYear" data-provide="datepicker">
                                     <input type="text" style="display:none;" class="form-control" id="getDate" name="student_first_year"/>
@@ -118,7 +118,7 @@
                         </div>
                         
                         <div class="form-group" id="users">
-                            <label class="col-md-offset-3 col-md-2 control-label"> Choose users</label>
+                            <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.selectUsers')}}</label>
                             <div class="col-md-5 col-md-offset-right-2 " style="margin-bottom: 1%;">
                                 <select class="form-group usersSelect" id="selectUsers" name="student_ids[]"  multiple="multiple" style="width:250px;">
                                     @foreach($users as $user)
@@ -193,7 +193,7 @@
                 type: 'get',
                 data: {facId: facId},
                 success: function (response) {     
-                    $('#selectMajor').append('<option value="">Select major</option>');
+                    $('#selectMajor').append('<option value="">{{trans('messages.selectCourseOfStudy')}}</option>');
                    $.each(response.majors, function (key, value) {
                             
                             $('#selectMajor').append('<option value="' + value.id + '">' + value.name + '</option>');
@@ -260,29 +260,29 @@
             // Specify the validation error messages
             messages: {
                 name: {
-                    required: "Please enter name of the group",
-                    maxlength: 100
+                    required: "{{trans('messages.nameRequired')}}",
+                    maxlength:"{{trans('messages.maxLenght100')}}"+ 100
                 },
                 faculty_id: {
-                    required: "Please select faculty",
-                    maxlength: 100
+                    required: "{{trans('messages.facultyRequired')}}",
+                    maxlength:"{{trans('messages.maxLenght100')}}"+ 100
                 },
                  course_id: {
-                    required: "Please select course",
-                    maxlength: 100
+                    required: "{{trans('messages.courseRequired')}}",
+                    maxlength: "{{trans('messages.maxLenght100')}}"+100
                 },
                 major_id: {
-                    required: "Please select major",
-                    maxlength: 100
+                    required: "{{trans('messages.courseOfStudyRequired')}}",
+                    maxlength:"{{trans('messages.maxLenght100')}}"+ 100
                 },
                 student_ids: {
-                    required: "Please select users",
-                    maxlength: 100
+                    required: "{{trans('messages.usersRequired')}}",
+                    maxlength:"{{trans('messages.maxLenght100')}}"+ 100
                 },
                 student_first_year: {
-                    required: "Please enter year",
-                    date: "Date",
-                    maxlength: 100
+                    required: "{{trans('messages.yearRequired')}}",
+                    date: "{{trans('messages.notValidYear')}}",
+                    maxlength: "{{trans('messages.maxLenght100')}}"+100
                 },
             }
         });

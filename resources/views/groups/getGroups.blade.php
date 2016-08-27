@@ -39,10 +39,10 @@
                 <div class="panel-body">                 
                   
                     <center>
-                        <h2>Groups</h2>
+                        <h2>{{trans('messages.groups')}}</h2>
                     </center>
                     <div class="row">
-                        <button type="button" class="btn button" id="create" >Add Group</button>
+                        <button type="button" class="btn button" id="create" >{{trans('messages.addGroup')}}</button>
                     </div>
                     @if(!($groups->isEmpty()))
                     <div class="table-responsive">
@@ -50,14 +50,14 @@
                                border-width: 0.8px;border-color:#979797;">
                             <thead>
                                 <tr style="background-color: #b3b3b3; ">
-                                    <th>Group name</th>
-                                    <th>Course name</th>
-                                    <th>Faculty name</th>
-                                    <th>Major name</th>
-                                    <th>Student year</th>
-                                    <th>Students</th>
-                                    <th></th>
-                                    <th></th>
+                                    <th>{{trans('messages.name')}}</th>
+                                    <th>{{trans('messages.course')}}</th>
+                                    <th>{{trans('messages.faculty')}}</th>
+                                    <th>{{trans('messages.major')}}</th>
+                                    <th>{{trans('messages.studentYear')}}</th>
+                                    <th>{{trans('messages.students')}}</th>
+                                    <th>{{trans('messages.edit')}}</th>
+                                    <th>{{trans('messages.delete')}}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,10 +89,10 @@
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>
-                            <div id="dialog{{$group->id}}" title="Delete group?" style="display:none;max-width:400px;word-wrap: break-word;">
-                                <h5>Are you sure you want to delete these group?</h5>
+                            <div id="dialog{{$group->id}}" title="{{trans('messages.deleteGroup')}}" style="display:none;max-width:400px;word-wrap: break-word;">
+                                <h5>{{trans('messages.areYouSureYouWantToDeleteTheseGroup')}}</h5>
                                 <button type="button" class="button" style="float:right" id="onDelete{{$group->id}}">
-                                    Delete
+                                    {{trans('messages.delete')}}
                                 </button>
                             </div>
 
@@ -105,8 +105,8 @@
                     <div>
                         <center>
                         <h5>
-                        No groups found.
-                        You must have created faculties,majors and courses to  create groups.
+                        {{trans('messages.noGroupsFound')}}
+                        {{trans('messages.createFacMajGroups')}}                      
                         </h5>
                             </center>
                     </div>
