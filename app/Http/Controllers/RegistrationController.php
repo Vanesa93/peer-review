@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\Auth\Registrar;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use DB;
 use Request;

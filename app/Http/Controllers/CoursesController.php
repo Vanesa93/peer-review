@@ -7,9 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Courses;
 use Auth;
 use Input;
-use Redirect;
-use Illuminate\Validation\Validator;
 use Session;
+
 class CoursesController extends Controller {
 
     public function __construct() {
@@ -61,16 +60,6 @@ class CoursesController extends Controller {
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id) {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -88,7 +77,7 @@ class CoursesController extends Controller {
      * @return Response
      */
     public function update($id) {
-
+        
         $rules = array(
             'name' => 'required|max:100',
             'description' => 'required|max:1000',
@@ -96,8 +85,8 @@ class CoursesController extends Controller {
             'duration' => 'max:100',
             'requirments' => 'max:100',
         );
+        
         $validator = \Validator::make(Input::all(), $rules);
-
         // process the login
         if ($validator->fails()) {
             return \Redirect::to('courses/edit/' . $id)

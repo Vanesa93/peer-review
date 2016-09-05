@@ -5,32 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Services\Registrar;
 use Illuminate\Http\Request;
-use App\User;
-use DB;
 use App\Faculty;
 use Input;
 use App\Major;
 use Session;
-use Response;
 
 class FacultiesController extends Controller {
-    
-     public function __construct(Registrar $registrar) {
+
+    public function __construct(Registrar $registrar) {
         $this->middleware('admin');
         $this->middleware('auth');
         $this->middleware('language');
-        
     }
+
     public function getFaculties() {
         $faculties = Faculty::all();
         return view('admin.faculties')->with('faculties', $faculties);
     }
-    
-    public function addFaculty() {
 
+    public function addFaculty() {
         return view('admin.addFaculty');
     }
-    
+
     public function storeFaculty(Request $request) {
         $faculty = new Faculty([
             'bg_name' => $request->get('bg_name'),
@@ -41,8 +37,7 @@ class FacultiesController extends Controller {
 
         return redirect('faculties');
     }
-    
-    
+
     public function removeFaculty($id) {
         dd(\App\Students::all());
         $faculty = Faculty::find($id);
@@ -53,12 +48,12 @@ class FacultiesController extends Controller {
         }
         Session::flash('message', 'Successfully deleted !');
     }
-    
-     public function editFaculty($id) {
+
+    public function editFaculty($id) {
         $faculty = Faculty::find($id);
         return view('admin.editFaculty')->with('faculty', $faculty);
     }
-    
+
     public function updateFaculty($id) {
 
         $rules = array(

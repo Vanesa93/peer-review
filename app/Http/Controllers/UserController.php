@@ -64,7 +64,6 @@ class UserController extends Controller {
      * @return User
      */
     public function create(Request $data) {
-
         $rules = array(
             'username' => 'required',
             'forename' => 'required|max:100',
@@ -121,7 +120,6 @@ class UserController extends Controller {
      * @return Response
      */
     public function edit($id) {
-
         $user = User::find($id);
         $sessionLanguage = Session::get('locale') . '_name';
         if (empty(Session::get('locale'))) {

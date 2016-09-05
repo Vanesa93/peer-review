@@ -34,9 +34,4 @@ class Students extends Model implements AuthenticatableContract, CanResetPasswor
      *
      * @var array
      */
-
-//    public function user() {
-//        return $this->belongsTo('User');
-//    }
-
 }

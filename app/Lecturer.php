@@ -29,10 +29,7 @@ class Lecturer extends Model implements AuthenticatableContract, CanResetPasswor
      * The attributes excluded from the model's JSON form.
      *
      * @var array
-     */
-    
-//     public function user() {
-//        return $this->belongsTo('User');
-//    }
+     */    
+
 
 }

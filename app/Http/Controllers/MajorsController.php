@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Services\Registrar;
 use Illuminate\Http\Request;
-use App\User;
 use DB;
 use App\Faculty;
 use Input;
@@ -14,13 +13,12 @@ use Session;
 use Response;
 
 class MajorsController extends Controller {
-    
-     public function __construct(Registrar $registrar) {
+
+    public function __construct(Registrar $registrar) {
         $this->middleware('admin');
         $this->middleware('auth');
         $this->registrar = $registrar;
     }
-
 
     public function getMajors($facultyId) {
         $majors = Major::where('faculty_id', $facultyId)->get();
@@ -34,8 +32,8 @@ class MajorsController extends Controller {
         return view('admin.majors')->with('majors', $majors)->with('faculty', $faculty)
                         ->with('facultyName', $facultyName);
     }
-    
-     public function addMajor($id) {
+
+    public function addMajor($id) {
         if (!empty(Session::get('locale'))) {
             $locale = Session::get('locale') . '_name';
         } else {
@@ -46,7 +44,7 @@ class MajorsController extends Controller {
         return view('admin.addMajor')->with('faculty', $faculty)->with('locale', $locale)
                         ->with('facultyName', $facultyName);
     }
-    
+
     public function storeMajor(Request $request) {
         $facultyId = $request->get('faculty_id');
         $faculty = new Major([
@@ -60,17 +58,14 @@ class MajorsController extends Controller {
         return redirect('majors/' . $facultyId);
     }
 
-   
-
-
     public function removeMajor($id) {
 
         $major = Major::find($id);
         $major->delete();
         Session::flash('message', 'Successfully deleted !');
     }
-    
-     public function editMajor($id) {
+
+    public function editMajor($id) {
         $major = Major::find($id);
 
         $facultyColumnName = Session::get('locale') . '_name';
@@ -84,8 +79,7 @@ class MajorsController extends Controller {
         return view('admin.editMajor')->with('major', $major)->with('faculties', $faculties)
                         ->with('choosenFaculty', $choosenFaculty);
     }
-    
-    
+
     public function updateMajor($id) {
 
         $rules = array(
@@ -111,8 +105,8 @@ class MajorsController extends Controller {
             return \Redirect::to('faculties');
         }
     }
-    
-        public function getMajorsForRegister(Request $request) {
+
+    public function getMajorsForRegister(Request $request) {
         $majors = Major::where('faculty_id', $request->get('facId'))->get();
         if ($majors->isEmpty()) {
             $message = "No majors for these faculty. Please choose another";
@@ -133,20 +127,18 @@ class MajorsController extends Controller {
                     'majors' => $majors,
         ));
     }
-    
+
     public function createMajorWithAllFaculties() {
         if (!empty(Session::get('locale'))) {
             $locale = Session::get('locale') . '_name';
         } else {
             $locale = 'en_name';
         }
-        $faculties= Faculty::all();
-        foreach($faculties as $faculty){
-            $faculty->name=$faculty->$locale;
-            
+        $faculties = Faculty::all();
+        foreach ($faculties as $faculty) {
+            $faculty->name = $faculty->$locale;
         }
         return view('admin.majorsForAllFaculties')->with('faculties', $faculties)->with('locale', $locale);
     }
-
 
 }

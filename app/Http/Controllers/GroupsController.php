@@ -11,7 +11,6 @@ use Input;
 use Session;
 use App\Group;
 use App\GroupToStudent;
-use Illuminate\Http\Response;
 use Auth;
 use App\Courses;
 use Carbon\Carbon;
