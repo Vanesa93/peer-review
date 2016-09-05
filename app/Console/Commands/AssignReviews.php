@@ -50,7 +50,7 @@ class AssignReviews extends Command {
         if (!($endedTasks->isEmpty())) {
             foreach ($endedTasks as $endedTask) {
                 //questionary created from lecturer
-                $questionary = LecturersReviews::where('task_id', $endedTask->id)->where('active', 0)->first();
+                  $questionary = LecturersReviews::where('task_id', $endedTask->id)->where('active',1)->first();
                 //students in this task
                 $allStudentsToTheseTask = TasksToStudents::where('task_id', $endedTask->id)->where('ready', 1)->get();
                 //function to assign questionary to student
