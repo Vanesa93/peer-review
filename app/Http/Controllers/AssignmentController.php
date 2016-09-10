@@ -251,13 +251,12 @@ class AssignmentController extends Controller {
                 ->join('users', 'students.user_id_students', '=', 'users.id')
                 ->where('task_to_students.task_id', $id)
                 ->where('users.account_type', 2)
-                ->get();
+                ->get();        
         foreach ($students as $student) {
-            $student->solution = StudentsReviews::where('student_id_writer', $student->student_id)->first();
-            $student->review_to_solution = TasksSolutions::where('student_id', $student->student_id)->first();
+            $student->solution = TasksSolutions::where('student_id', $student->student_id)->first();
+            $student->review_to_solution = StudentsReviews::where('student_id_for_review', $student->student_id)->first();
             $student->grade = Grade::where('task_id', $student->task_id)->where('student_id', $student->student_id)->pluck('grade');
         }
-
 
         return view('tasks.studentsToTasks')->with('students', $students)->with('task', $task);
     }

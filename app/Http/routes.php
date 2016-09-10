@@ -108,7 +108,7 @@ Route::get('file/{id}/{filename}/open', 'AssignmentController@openFilesForTask')
 Route::get('tasks/{id}/upload', 'AssignmentController@uploadFileToTask');
 Route::post('upload/{id}', 'AssignmentController@upload');
 Route::delete('file/remove/{filename}', 'AssignmentController@deleteFileFromTask');
-Route::get('myreviews/solutionreviews/{id}/{filename}/open', 'AssignmentController@openUploadedSolution');
+Route::get('tasks/solution/{id}/{filename}/open', 'AssignmentController@openUploadedSolution');
 Route::post('storeGrade','AssignmentController@storeGrade');
 
 //reviews

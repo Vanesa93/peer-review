@@ -64,7 +64,7 @@ class StudentsReviewsController extends Controller {
 
     public function openSolutionToReview($id, $filename) {
         $taskSolution = TasksSolutions::where('id', $id)->where('filename', '=', $filename)->first();
-        $file = Storage::disk('local')->get($taskSolution->filename);
+         $file = Storage::disk('local')->get($taskSolution->filename);
         return Response::make($file, 200, [
                     'Content-Type' => $taskSolution->mime,
                     'Content-Disposition' => 'inline; filename="' . $taskSolution->original_filename . '"',

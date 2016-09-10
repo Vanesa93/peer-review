@@ -62,7 +62,7 @@
                                     @if( !empty( $student->solution) )
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" >
-                                            <a href="/myreviews/writerreview/{{ $student->solution->id}}/{{  $student->solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
+                                            <a href="/tasks/solution/{{ $student->solution->id}}/{{  $student->solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
                                         </button>
                                     </td>
                                     @else
@@ -75,7 +75,7 @@
                                     @if( !empty( $student->review_to_solution) )
                                     <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;" >
-                                            <a href="/myreviews/solutionreviews/{{ $student->review_to_solution->id}}/{{  $student->review_to_solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
+                                            <a href="/myreviews/writerreview/{{ $student->review_to_solution->id}}/{{  $student->review_to_solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
                                         </button>
                                     </td>
                                     @else
