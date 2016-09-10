@@ -65,14 +65,14 @@
                                 @if(!empty($lecturers))
                                 @foreach($lecturers as $lecturer)
                                 <tr>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$lecturer->username}}</td>
+                                    <td style="max-width:80px!important;word-wrap: break-word;">{{$lecturer->username}}</td>
 
 
                                     <td style="max-width:40px;">{{$lecturer->forename}}</td>
 
-                                    <td style="max-width:60px;">{{$lecturer->familyName}}</td>
+                                    <td style="max-width:40px;">{{$lecturer->familyName}}</td>
 
-                                    <td style="max-width:40px;word-wrap: break-word;">{{$lecturer->email}}</td>
+                                    <td style="max-width:120px;word-wrap: break-word;">{{$lecturer->email}}</td>
                                     <td style="max-width:40px;">{{$lecturer->department}}</td>
                                     <td style="max-width:40px;">{{$lecturer->degree}}</td>
                                     <td style="max-width:40px;">{{$lecturer->mobile}}</td>
@@ -130,16 +130,16 @@
                                 @if(!empty($students))
                                 @foreach($students as $student)
                                 <tr>
-                                    <td style="max-width:60px!important;word-wrap: break-word;">{{$student->username}}</td>
+                                    <td style="max-width:80px!important;word-wrap: break-word;">{{$student->username}}</td>
 
-                                    <td style="max-width:100px;">{{$student->forename}}</td>
+                                    <td style="max-width:40px;">{{$student->forename}}</td>
 
                                     <td style="max-width:40px;">{{$student->familyName}}</td>
 
-                                    <td style="max-width:60px;word-wrap: break-word;">{{$student->email}}</td>
+                                    <td style="max-width:120px;word-wrap: break-word;">{{$student->email}}</td>
 
                                     <td style="max-width:40px;">{{$student->faculty}}</td>
-                                     <td style="max-width:40px;">{{$student->major}}</td>
+                                     <td style="max-width:80px;">{{$student->major}}</td>
                                     <td style="max-width:40px;">{{$student->year}}</td>
                                     <td style="max-width:40px;">{{$student->semester}}</td>
                                     <td style="max-width:40px;">{{$student->group}}</td>

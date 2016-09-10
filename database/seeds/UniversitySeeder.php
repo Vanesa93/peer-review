@@ -147,7 +147,8 @@ class UniversitySeeder extends Seeder {
                         'major' => '1',
                         'degree' => 'Bachelor',
                         'faculty' => '1',
-                        'user_id_students' => 3
+                        'user_id_students' => 3,
+                        'semester'=>'1'
                     ],
                     [
                         'id' => 2,
@@ -157,7 +158,8 @@ class UniversitySeeder extends Seeder {
                         'major' => '1',
                         'degree' => 'Bachelor',
                         'faculty' => '1',
-                        'user_id_students' => 4
+                        'user_id_students' => 4,
+                        'semester'=>'1'
                     ],
                     [
                         'id' => 3,
@@ -167,7 +169,8 @@ class UniversitySeeder extends Seeder {
                         'major' => '3',
                         'degree' => 'Bachelor',
                         'faculty' => '2',
-                        'user_id_students' => 5
+                        'user_id_students' => 5,
+                        'semester'=>'1'
                     ],
         ));
     }
