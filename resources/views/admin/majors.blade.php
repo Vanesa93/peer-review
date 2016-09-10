@@ -43,7 +43,7 @@
                         <button type="button" class="btn button" id="create" >{{trans('messages.addMajorToTheseFaculty')}}</button>
                     </div>                    
                     <center>
-                        <h2>{{trans('messages.majorsForFaculty')}}{{$facultyName}}</h2>
+                        <h2>{{trans('messages.majorsForFaculty')}} {{$facultyName}}</h2>
                     </center>
                     <div class="table-responsive">
                         <table id="coursesTable" class="display" style="border: solid;

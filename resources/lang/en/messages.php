@@ -53,7 +53,7 @@ return [
     'enterDeName'=>'Name in German required',
     'addMajor'=>'Add course of study',
     'selectFaculty'=>'Select faculty',
-    'majors'=>'Courses of study',
+    'majors'=>'Courses of study ',
     'editFaculty'=>'Edit faculty',
     'update'=>'Save updates',
     'editMajor'=>'Edit course of study',
