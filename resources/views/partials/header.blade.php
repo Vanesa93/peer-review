@@ -11,8 +11,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">ReviewIt</a>
-            </div>
+               <img src="{{url("./images/tuSofiaLogo.png")}}" alt="Smiley face" height="42" width="42">            </div>
             <div class="collapse navbar-collapse" id="languages">
                 <ul class="nav navbar-nav">
                     @if(Auth::guest())

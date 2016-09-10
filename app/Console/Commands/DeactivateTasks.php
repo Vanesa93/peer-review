@@ -43,16 +43,16 @@ class DeactivateTasks extends Command {
     public function fire() {
         $today = Carbon::today();
         $tasks = Tasks::all();
+        $lecturersReviews = LecturersReviews::all();
         foreach ($tasks as $task) {
             if ($task->end_date < $today) {
                 $task->active = 0;
                 $task->save();
             }
         }
-        $lecturersReviews=  LecturersReviews::all();
         foreach ($lecturersReviews as $lecturersReview) {
             if ($lecturersReview->end_date < $today) {
-                
+
                 $lecturersReview->active = 0;
                 $lecturersReview->save();
             }

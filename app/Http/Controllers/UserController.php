@@ -128,7 +128,7 @@ class UserController extends Controller {
         $faculties = Faculty::lists($sessionLanguage, 'id');
         $majors = Major::lists($sessionLanguage, 'id');
         $userAccountType = DB::table('account_types')->where('account_type', $user->account_type)->pluck($sessionLanguage);
-        $user = $this->lecturerOrUser($user);
+        $user = $this->lecturerOrStudent($user);
         if ($user->account_type == 1) {
             $userId = $user->user_id_lecturer;
         } elseif ($user->account_type == 2) {
@@ -161,7 +161,7 @@ class UserController extends Controller {
             $user->familyName = Input::get('familyName');
             $user->email = Input::get('email');
             $user->save();
-            $accounTypeAdditionlData = $this->lecturerOrUserData($user, Input::all());
+            $accounTypeAdditionlData = $this->lecturerOrStudentData($user, Input::all());
         } else {
             return redirect()->back();
         }
@@ -170,7 +170,7 @@ class UserController extends Controller {
         return \Redirect::to('users');
     }
 
-    private function lecturerOrUser($user) {
+    private function lecturerOrStudent($user) {
         if ($user->account_type == 1) {
             $lecturers = DB::table('users')
                     ->join('lecturer', 'users.id', '=', 'lecturer.user_id_lecturer')
@@ -195,7 +195,7 @@ class UserController extends Controller {
         return $user;
     }
 
-    private function lecturerOrUserData($user, $input) {
+    private function lecturerOrStudentData($user, $input) {
         if ($user->account_type == 1) {
             $additionalData = Lecturer::where('user_id_lecturer', $user->id)->first();
             $additionalData->mobile = Input::get('mobile');
