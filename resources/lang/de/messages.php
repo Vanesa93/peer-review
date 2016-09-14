@@ -206,5 +206,7 @@ return [
     'loggedIn' => 'Sie sind eingelogt!',
     'home' => 'Willkommen!',
     'noQuestionariesFound' => 'Keine Fragebogen gefunden',
+    'usernameOrEmailReq'=>'Benutzername(Lecturer)/Fakultät Nummer(Student) erforderlich',
+    'passwordReq'=>'Passwort erforderlich'
 ];
 ?>

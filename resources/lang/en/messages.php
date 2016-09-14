@@ -211,5 +211,7 @@ return [
     'loggedIn'=>'You are logged in!',
     'home'=>'Welcome!',
     'noQuestionariesFound'=>'No questionnaires found',  
+    'usernameOrEmailReq'=>'Username(lecturer)/Faculty number(student) required',
+    'passwordReq'=>'Password required'
 ];
 ?>
