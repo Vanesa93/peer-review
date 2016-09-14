@@ -62,7 +62,7 @@ class LecturersReviewsController extends Controller {
             'task_id' => 'required|max:100',
             'description' => 'required|max:1000',
             'end_date' => 'required|max:100',
-            'questionary' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,bmp,pdf'
+            'questionary' => 'max:10000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,bmp,pdf'
         );
         $validator = \Validator::make(Input::all(), $rules);
 
@@ -137,7 +137,7 @@ class LecturersReviewsController extends Controller {
             'task_id' => 'required|max:100',
             'description' => 'required|max:1000',
             'end_date' => 'required|max:100',
-            'questionary' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,bmp,pdf'
+            'questionary' => 'max:10000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,bmp,pdf'
         );
 
         $validator = \Validator::make(Input::all(), $rules);

@@ -90,7 +90,7 @@ class AssignmentController extends Controller {
             'description' => 'required|max:1000',
             'course_id' => 'required|max:100',
             'group_id' => 'required|max:100',
-            'filefield' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
+            'filefield' => 'max:10000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
         );
 
         $validator = \Validator::make(Input::all(), $rules);
@@ -204,16 +204,12 @@ class AssignmentController extends Controller {
             $studentsTasksToDelete = TasksToStudents::where('task_id', $id)->get();
             $studentToTasks[] = TasksToStudents::where('task_id', $id)->pluck('student_id');
             foreach ($studentsTasksToDelete as $oldId) {
-                if (in_array($oldId->student_id, $allStudentsToAdd)) {
-                    
-                } else {
+                if (!(in_array($oldId->student_id, $allStudentsToAdd))) { 
                     $oldId->delete();
                 }
             }
             foreach ($allStudentsToAdd as $newId) {
-                if (in_array($newId, $studentToTasks)) {
-                    
-                } else {
+                if (!in_array($newId, $studentToTasks)) {
                     $newStudent = new TasksToStudents([
                         'task_id' => $id,
                         'student_id' => $newId,
@@ -296,7 +292,7 @@ class AssignmentController extends Controller {
 
     public function upload(Request $file, $task) {
         $rules = array(
-            'filefield' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
+            'filefield' => 'max:10000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
         );
         $validator = \Validator::make(Input::all(), $rules);
         if ($validator->fails()) {

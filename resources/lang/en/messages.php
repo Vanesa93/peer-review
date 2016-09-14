@@ -157,7 +157,7 @@ return [
     'createQuestionary'=>'Create questionnaire',
     'taskName'=>'Task name',
     'sentAt'=>'Sent at',
-    'questionary'=>'Fragebogen',
+    'questionary'=>'Questionnaire ',
     'deleteQuestionary'=>'Delete questionnaire?',
     'areYouSureYouWantToDeleteTheseReviewTask'=>'Are you sure you want to delete this questionnaire?',
     'questionaries'=>'Questionnaires',

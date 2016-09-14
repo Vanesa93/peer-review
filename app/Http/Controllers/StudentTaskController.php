@@ -103,7 +103,7 @@ class StudentTaskController extends Controller {
 
     public function upload(Request $file, $task) {
         $rules = array(
-            'filefield' => 'max:50000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
+            'filefield' => 'max:10000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,jpg,bmp,pdf'
         );
 
         $validator = \Validator::make(Input::all(), $rules);

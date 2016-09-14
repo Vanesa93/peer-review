@@ -167,9 +167,9 @@ class GroupsController extends Controller {
     private function saveGroup($request) {
         $tutor_id = Auth::user()->id;
         $usersToGroup = $request->get('student_ids');
-        $year= $request->get('student_first_year');
-        if(empty($year)){
-            $year=  Carbon::today()->format('Y');
+        $year = $request->get('student_first_year');
+        if (empty($year)) {
+            $year = Carbon::today()->format('Y');
         }
         $group = new Group([
             'tutor_id' => $tutor_id,
@@ -242,12 +242,12 @@ class GroupsController extends Controller {
                 ->where('groups_to_students.group_id', $id)
                 ->where('users.account_type', 2)
                 ->get();
-                
+
         $studentsAll = DB::table('users')
-                ->join('students',  'users.id', '=','students.user_id_students')
+                ->join('students', 'users.id', '=', 'students.user_id_students')
                 ->where('students.faculty', $group->faculty_id)
                 ->where('users.account_type', 2)
-                ->get();       
+                ->get();
         $group->faculty_id = Faculty::where('id', $group->faculty_id)->pluck($locale);
         $group->course_id = Courses::where('id', $group->course_id)->where('tutor_id', $userId)->pluck('name');
         $group->major = Major::where('id', $group->major_id)->pluck($locale);
@@ -259,7 +259,7 @@ class GroupsController extends Controller {
                         ->with('studentsAll', $studentsAll);
     }
 
-    public function update($id,  Request $request) {
+    public function update($id, Request $request) {
         $rules = array(
             'name' => 'required|max:100',
             'faculty_id' => 'required|max:1000',
@@ -270,42 +270,38 @@ class GroupsController extends Controller {
         );
         $validator = \Validator::make(Input::all(), $rules);
         if ($validator->fails()) {
-            return \Redirect::to('groups/edit/'.$id)
+            return \Redirect::to('groups/edit/' . $id)
                             ->withErrors($validator);
         } else {
             $group = Group::find($id);
+            $currentGroupToStudents = GroupToStudent::where('group_id', $id)->lists('student_id', 'id');
             $group->name = Input::get('name');
             $group->faculty_id = Input::get('faculty_id');
             $group->major_id = Input::get('major_id');
-            if(!empty($request->get('student_first_year'))){
-               $group->student_first_year = $request->get('student_first_year');     
-            }                  
+            if (!empty($request->get('student_first_year'))) {
+                $group->student_first_year = $request->get('student_first_year');
+            }
             $group->course_id = Input::get('course_id');
             $group->save();
-            
             $updatedUsersIds = Input::get('student_ids');
-            $groupToStudentsToDelete = GroupToStudent::where('group_id', $id)->get(); 
-            $groupToStudents[] = GroupToStudent::where('group_id', $id)->pluck('student_id');
-            foreach ($groupToStudentsToDelete as $oldId) {
-                if (in_array($oldId->student_id, $updatedUsersIds)) {
-                    
-                } else {
-                    $oldId->delete();
+            $updatedGroupId = $group;
+            foreach ($currentGroupToStudents as $oldId) {
+                if (!(in_array($oldId, $updatedUsersIds))) { 
+                    GroupToStudent::where('group_id',$id)->where('student_id', $oldId)->delete();
                 }
             }
             foreach ($updatedUsersIds as $newId) {
-                if (in_array($newId, $groupToStudents)) {
-                    
-                } else {
+                if ((!in_array($newId, $currentGroupToStudents))) {
                     $newStudent = new GroupToStudent([
                         'group_id' => $id,
                         'student_id' => $newId,
                     ]);
                     $newStudent->save();
                 }
-            } 
-            return \Redirect::to('groups');
+            }
+            
         }
+        return \Redirect::to('groups');
     }
 
     public function destroy($id) {

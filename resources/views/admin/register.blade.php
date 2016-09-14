@@ -244,7 +244,7 @@
             messages: {
                 username: {
                     required: "{{trans('messages.usernameRequired')}}",
-                    remote: "{{trans('message.notUnique')}}",
+                    remote: "{{trans('messages.notUnique')}}",
                 },
                 forename: {
                     required: "{{trans('messages.forenameRequired')}}"
