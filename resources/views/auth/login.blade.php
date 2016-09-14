@@ -22,17 +22,10 @@
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                         <div class="form-group">
-                            <!--                                                     <div class="form-group has-feedback">
-                                                <div>
-                                                    <input type="text" class="form-control" name="login" placeholder="{{trans('staticTexts.usernameOrEmail')}}">
-                                                    <span class="glyphicon form-control-feedback" id="fname1"></span>
-                                                </div>
-                                            </div>-->
+
                             <label class="col-md-4 control-label">{{trans('messages.usernameFacNumberEmail')}}</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="login" >
-
-<!--								<input type="email" class="form-control" name="email" value="{{ old('email') }}">-->
                             </div>
                         </div>
 
@@ -83,10 +76,10 @@
         },
         messages: {
             password: {
-                required: "{{trans('staticTexts.passwordReq')}}",
+                required: "{{trans('messages.passwordReq')}}",
             },
             login: {
-                required: "{{trans('staticTexts.usernameOrEmailReq')}}",
+                required: "{{trans('messages.usernameOrEmailReq')}}",
             },
         }
     });
