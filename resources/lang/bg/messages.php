@@ -213,6 +213,7 @@ return [
     'successChangePassword'=>'Успешно променихте паролата си!',
     'currentPasswordRequired' => 'Изисква се текуща парола',
     'newPasswordRequired'=>'Изисква се нова парола',
-    'passwordNoMatch'=>'Въведената парола е грешна'
+    'passwordNoMatch'=>'Въведената парола е грешна',
+    'somethingWentWrong'=>'Нещо се обърка! Моля, опитайте отново.'
 ];
 ?>

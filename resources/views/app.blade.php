@@ -67,6 +67,7 @@
             @yield('reviews_to_task')
             @yield('my_profile')
             @yield('change_password')
+            @yield('custom_errors')
         </div>
     </body>
 </html>
