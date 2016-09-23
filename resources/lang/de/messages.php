@@ -214,6 +214,9 @@ return [
     'changePassword'=>'Kennwort ändern',
     'oldPassword'=>'Aktuelles Kennwort',
     'newPassword'=>'Neues Kennwort',
-    'successChangePassword'=>'Sie haben Ihr Kennwort erfolgreich geändert!'   
+    'successChangePassword'=>'Sie haben Ihres Kennwort erfolgreich geändert!',
+    'currentPasswordRequired' => 'Aktuelles Kennwort erforderlich',
+    'newPasswordRequired'=>'Neues Kennwort erforderlich',
+    'passwordNoMatch'=>'Das eingegebene Kennwort ist falsch'
 ];
 ?>

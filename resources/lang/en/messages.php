@@ -218,6 +218,9 @@ return [
     'changePassword'=>'Change password',
     'oldPassword'=>'Current password',
     'newPassword'=>'New password',
-    'successChangePassword'=>'You have successfully changed your password!'
+    'successChangePassword'=>'You have successfully changed your password!',
+    'currentPasswordRequired' => 'Current password required',
+    'newPasswordRequired'=>'New password required',
+    'passwordNoMatch'=>'The password you entered is incorrect'
 ];
 ?>

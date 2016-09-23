@@ -85,14 +85,14 @@
             // Specify the validation error messages
             messages: {
                 old_password: {
-                    required: "Please enter your current password",
-                    remote:"Parolata ne syvpada"
+                    required: "{{trans('messages.currentPasswordRequired')}}",
+                    remote:"{{trans('messages.passwordNoMatch')}}"
                 },
                 new_password: {
-                    required: "Please enter your new password",
+                    required: "{{trans('messages.newPasswordRequired')}}",
                 },
                 confirm_password: {
-                    equalTo: "Password doesn't match"
+                    equalTo: "{{trans('messages.passwortDontMatch')}}"
                 }
             }
         });
