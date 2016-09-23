@@ -251,7 +251,7 @@ $(document).ready(function () {
             mobile: {
                 required: "Please enter your mobile number",
                 phone: 'Please enter valid mobile'
-            },
+            }
         }
     });
 });

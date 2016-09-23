@@ -1,39 +1,5 @@
 @extends('app')
 @section('my_profile')
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-<style>
-    .button {
-        background-color: #002b80; /* Green */
-        border: solid;
-        border-width: 1px;
-        color: white;
-        padding: 12px 29px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin-left: 2%;
-        border-radius: 5px;
-        margin-bottom: 2%;
-    }
-    .buttonEdit{
-        /*          background-color: #002b80;  Green */
-        border: solid;
-        border-width: 1px;
-        color: white;
-        padding: 5px 8px 4px 8px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        border-radius: 5px;
-    }
-    .btn:hover, .btn:focus, .btn.focus {
-        color: #99bbff; 
-        text-decoration: none;
-    }
-</style>
 <div class="container-fluid">
     {!!Form::open()!!}
     @if (count($errors) > 0)
@@ -50,7 +16,7 @@
             <div class="panel panel-default" style="border-radius: 0px;">
                 <div class="panel-body">
                     <center>
-                        <h2 style="margin-bottom:2%;">  {{trans('messages.myProfile')}}</h2>
+                        <h2 style="margin-bottom:2%;">{{trans('messages.myProfile')}}</h2>
                     </center>
                     <div class="form-group" >
                         <label class="col-md-offset-3 col-md-2 control-label"> {{trans('messages.username')}}</label>

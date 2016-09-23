@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\User;
 use DB;
 use Session;
-use App\Lecturer;
-use App\Students;
+use Input;
 use App\Faculty;
 use App\Major;
+use Redirect;
+use Auth;
+use Hash;
+use Request; 
 
 class MyProfileController extends Controller {
 
@@ -45,6 +46,36 @@ class MyProfileController extends Controller {
             }
         }
         return view('auth.myProfile')->with('userData', $userData[0]);
+    }
+
+    public function changePassword() {
+        return view('auth.changePassword');
+    }
+
+    public function resetPassword(Request $request) {
+        $rules = array(
+            'new_password' => 'required'
+        );
+        $validator = \Validator::make(Input::all(), $rules);
+        if ($validator->fails()) {
+            return Redirect::to('password')
+                            ->withErrors($validator);
+        } else {
+            $user = Auth::user();           
+            $user->password = bcrypt(Request::input('new_password'));
+            $user->save();
+            Session::flash('message', trans('messages.successChangePassword'));
+            return redirect('password');
+        }
+    }
+    
+     public function checkOldPassword() {        
+        $userPassword = User::where('id',Auth::user()->id)->first();
+        $passwordCheck = Hash::check(Request::input('old_password'),$userPassword->password);
+        if ($passwordCheck===true) {   // <-- if no database match
+            return \Response::json(array('msg' => 'true'));
+        }
+        return \Response::json(array('msg' => 'false'));
     }
 
 }

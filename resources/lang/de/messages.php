@@ -210,6 +210,10 @@ return [
     'passwordReq'=>'Passwort erforderlich',
     'courseOfStudy'=>'Studiengang',
     'username'=>'Benutzername',
-    'myProfile'=>'Mein Profil'
+    'myProfile'=>'Mein Profil',
+    'changePassword'=>'Kennwort ändern',
+    'oldPassword'=>'Aktuelles Kennwort',
+    'newPassword'=>'Neues Kennwort',
+    'successChangePassword'=>'Sie haben Ihr Kennwort erfolgreich geändert!'   
 ];
 ?>

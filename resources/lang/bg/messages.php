@@ -206,6 +206,10 @@ return [
     'usernameOrEmailReq'=>'Изисква се потребителско име(преподавател)/факултетен номер(студент)',
     'passwordReq'=>'Изисква се парола',
     'courseOfStudy'=>'Специалност',
-    'myProfile'=>'Моят профил'
+    'myProfile'=>'Моят профил',
+    'changePassword'=>'Смяна на парола',
+    'oldPassword'=>'Текуща парола',
+    'newPassword'=>'Нова парола',
+    'successChangePassword'=>'Успешно променихте паролата си!'
 ];
 ?>

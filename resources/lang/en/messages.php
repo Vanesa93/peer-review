@@ -214,6 +214,10 @@ return [
     'usernameOrEmailReq'=>'Username(lecturer)/Faculty number(student) required',
     'passwordReq'=>'Password required',
     'courseOfStudy'=>'Course of study',
-    'myProfile'=>'My Profile'
+    'myProfile'=>'My Profile',
+    'changePassword'=>'Change password',
+    'oldPassword'=>'Current password',
+    'newPassword'=>'New password',
+    'successChangePassword'=>'You have successfully changed your password!'
 ];
 ?>

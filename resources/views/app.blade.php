@@ -66,6 +66,7 @@
             @yield('upload_review_solution')
             @yield('reviews_to_task')
             @yield('my_profile')
+            @yield('change_password')
         </div>
     </body>
 </html>

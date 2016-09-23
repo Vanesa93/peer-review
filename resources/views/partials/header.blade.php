@@ -71,7 +71,8 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->username }}  <span class="glyphicon glyphicons-globe caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href='{{url('profile')}}/{{ Auth::user()->id}}'>My profile</a></li>
+                            <li><a href='{{url('profile')}}/{{ Auth::user()->id}}'> {{trans('messages.myProfile')}}</a></li>
+                            <li><a href='{{url('password')}}'> {{trans('messages.changePassword')}}</a></li>
                             <li><a href="/auth/logout">{{trans('messages.logout')}}</a></li>
                         </ul>
                     </li>

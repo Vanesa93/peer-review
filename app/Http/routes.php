@@ -31,7 +31,9 @@ Route::get('/checkFacNumbers', 'RegistrationController@checkExistingFacNumber');
 
 //profile
 Route::get('profile/{id}', 'MyProfileController@getProfileData');
-
+Route::get('password', 'MyProfileController@changePassword');
+Route::post('save/password', 'MyProfileController@resetPassword');
+Route::get('/checkOldPassword', 'MyProfileController@checkOldPassword');
 //lecturer's courses
 Route::get('courses', 'CoursesController@index');
 Route::get('courses/create', 'CoursesController@create');
