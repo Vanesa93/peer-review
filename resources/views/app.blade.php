@@ -65,6 +65,7 @@
             @yield('myreviews')
             @yield('upload_review_solution')
             @yield('reviews_to_task')
+            @yield('my_profile')
         </div>
     </body>
 </html>

@@ -207,6 +207,9 @@ return [
     'home' => 'Willkommen!',
     'noQuestionariesFound' => 'Keine Fragebogen gefunden',
     'usernameOrEmailReq'=>'Benutzername(Lecturer)/Fakultät Nummer(Student) erforderlich',
-    'passwordReq'=>'Passwort erforderlich'
+    'passwordReq'=>'Passwort erforderlich',
+    'courseOfStudy'=>'Studiengang',
+    'username'=>'Benutzername',
+    'myProfile'=>'Mein Profil'
 ];
 ?>

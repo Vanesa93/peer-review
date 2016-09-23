@@ -228,6 +228,5 @@ class UserController extends Controller {
         $user = User::find($id);
         $user->delete();
         Session::flash('message', 'Successfully deleted the nerd!');
-    }
-
+    } 
 }

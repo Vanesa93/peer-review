@@ -14,7 +14,7 @@ return [
     'student' => 'Student',
     'next' => 'Next',
     'back' => 'Back',
-    'major' => 'Courses of studies',
+    'major' => 'Course of study',
     'department' => 'Department',
     'faculty' => "Faculty",
     'degree' => 'Degree',
@@ -212,6 +212,8 @@ return [
     'home'=>'Welcome!',
     'noQuestionariesFound'=>'No questionnaires found',  
     'usernameOrEmailReq'=>'Username(lecturer)/Faculty number(student) required',
-    'passwordReq'=>'Password required'
+    'passwordReq'=>'Password required',
+    'courseOfStudy'=>'Course of study',
+    'myProfile'=>'My Profile'
 ];
 ?>

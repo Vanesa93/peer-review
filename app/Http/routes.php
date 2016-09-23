@@ -25,17 +25,12 @@ Route::get('/language/{locale}', [
     'as' => 'language-chooser',
     'uses' => 'LanguageController@chooser']);
 
-//files
-//Route::get('fileentry', 'FileEntryController@index');
-//Route::get('fileentry/get/{filename}', [
-//    'as' => 'getentry', 'uses' => 'FileEntryController@get']);
-//Route::post('/addFileFromLecturer', [
-//    'as' => 'addFileFromLecturer', 'uses' => 'FileEntryController@addFileFromLecturer']);
-
-//registration validation
 Route::get('/checkUsername', 'RegistrationController@checkExistingUseraname');
 Route::get('/checkEmail', 'RegistrationController@checkExistingEmail');
 Route::get('/checkFacNumbers', 'RegistrationController@checkExistingFacNumber');
+
+//profile
+Route::get('profile/{id}', 'MyProfileController@getProfileData');
 
 //lecturer's courses
 Route::get('courses', 'CoursesController@index');
