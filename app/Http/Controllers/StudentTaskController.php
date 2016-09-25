@@ -172,7 +172,9 @@ class StudentTaskController extends Controller {
     }
 
     public function reviewToTask($taskId) {
-        $review = StudentsReviews::where('task_id', $taskId)->first();
+        $userId = Auth::user()->id;
+        $studentId = Students::where('user_id_students', $userId)->pluck('id');
+        $review = StudentsReviews::where('task_id', $taskId)->where('student_id_for_review',$studentId)->first();
         $review->task_name = Tasks::where('id', $taskId)->pluck('name');
         $questionaryToStudent = QuestionaryToStudent::where('id', $review->questionary_to_student_id)->first();
         $lecturersReview = LecturersReviews::where('id', $questionaryToStudent->lecturers_review_id)->first();
@@ -189,9 +191,9 @@ class StudentTaskController extends Controller {
         ]);
     }
 
-    public function reviewToTaskOpen($id, $filename) {
+    public function reviewToTaskOpen($id, $filename) {        
         $userId = Auth::user()->id;
-        $studentId = Students::where('user_id_students', $userId)->pluck('id');
+        $studentId = Students::where('user_id_students', $userId)->pluck('id');   
         $review = StudentsReviews::where('id', $id)->where('filename', '=', $filename)->where('student_id_for_review', $studentId)->first();
         $file = Storage::disk('local')->get($review->filename);
         return Response::make($file, 200, [

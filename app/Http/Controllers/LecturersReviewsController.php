@@ -60,7 +60,7 @@ class LecturersReviewsController extends Controller {
     public function store(Request $request) {
         $rules = array(
             'task_id' => 'required|max:100',
-            'description' => 'required|max:1000',
+            'description' => 'max:1000',
             'end_date' => 'required|max:100',
             'questionary' => 'max:10000|mimes:doc,docx,jpeg,png,xlsm,xlsx,jpg,bmp,pdf'
         );
