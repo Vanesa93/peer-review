@@ -1,7 +1,22 @@
 @extends('app')
 @section('students_to_task')
 <style>
+     .button {
+        background-color: #002b80; /* Green */
+        border: solid;
+        border-width: 1px;
+        color: white;
+        padding: 12px 29px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-left: 2%;
+        border-radius: 5px;
+        margin-bottom: 2%;
+    }
     .buttonEdit{
+        background: #b3c6ff;  
         border: solid;
         border-width: 1px;
         color: white;
@@ -61,9 +76,9 @@
                                     <td style="max-width:100px;"><input type="checkbox" disabled name="ready" id='readyTask{{$student->id}}' value="{{$student->ready}}"></td>
                                     @if( !empty( $student->solution) )
                                     <td style="word-wrap: break-word;">
-                                        <button type="button" class="buttonEdit" style="float:right;" >
-                                            <a href="/tasks/solution/{{ $student->solution->id}}/{{  $student->solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
-                                        </button>
+                                        <!--<button type="button" >-->
+                                            <a href="/tasks/solution/{{ $student->solution->id}}/{{  $student->solution->filename }}/open" class="buttonEdit" style="float:right;" > <span class="glyphicon glyphicon-open"></span></a>
+                                        <!--</button>-->
                                     </td>
                                     @else
                                     <td style="word-wrap: break-word;">
@@ -74,12 +89,10 @@
                                     @endif
                                     @if( !empty( $student->review_to_solution) )
                                     <td style="word-wrap: break-word;">
-                                        <button type="button" class="buttonEdit" style="float:right;" >
-                                            <a href="/myreviews/writerreview/{{ $student->review_to_solution->id}}/{{  $student->review_to_solution->filename }}/open"> <span class="glyphicon glyphicon-open"></span></a>
-                                        </button>
+                                            <a href="/myreviews/writerreview/{{ $student->review_to_solution->id}}/{{  $student->review_to_solution->filename }}/open"  type="button" class="buttonEdit" style="float:right;"> <span class="glyphicon glyphicon-open"></span></a>
                                     </td>
-                                    @else
-                                    <td style="word-wrap: break-word;">
+                                            @else
+                                   <td style="word-wrap: break-word;">
                                         <button type="button" class="buttonEdit" style="float:right;"  id="noUploadedReview{{$student->id}}">
                                             <span class="glyphicon glyphicon-unchecked"></span>
                                         </button>     
