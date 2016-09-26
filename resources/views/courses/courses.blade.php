@@ -41,7 +41,7 @@
                         <button type="button" class="btn button" id="create" >{{trans('messages.createCourse')}}</button>
                     </div>
                     <center>
-                        <h2>Courses</h2>
+                        <h2>{{trans('messages.courses')}}</h2>
                     </center>
                     <div class="table-responsive">
                         <table id="coursesTable" class="display" style="border: solid;
