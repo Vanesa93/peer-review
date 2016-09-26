@@ -133,7 +133,7 @@ class AssignmentController extends Controller {
                 $taskToStudent = new TasksToStudents([
                     'task_id' => $task->id,
                     'student_id' => $groupToStudent->student_id,
-                ]);
+                                    ]);
                 $taskToStudent->save();
             }
         }

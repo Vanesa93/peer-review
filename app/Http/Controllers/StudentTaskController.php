@@ -63,7 +63,7 @@ class StudentTaskController extends Controller {
             $familyName = User::where('id', $task->user_id_lecturer)->pluck('familyName');
             $task->tutor_name = $forename . " " . $familyName;
             $task->grade = Grade::where('task_id', $task->task_id)->where('student_id', $studentId)->pluck('grade');
-            $task->uploaded_review = StudentsReviews::where('task_id', $task->task_id)->where('student_id_writer', $studentId)->get();
+            $task->uploaded_review = StudentsReviews::where('task_id', $task->task_id)->where('student_id_for_review', $studentId)->get();
         }
         return $tasks;
     }

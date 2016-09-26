@@ -52,7 +52,6 @@ class DeactivateTasks extends Command {
         }
         foreach ($lecturersReviews as $lecturersReview) {
             if ($lecturersReview->end_date < $today) {
-
                 $lecturersReview->active = 0;
                 $lecturersReview->save();
             }
